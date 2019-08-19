@@ -1,0 +1,40 @@
+<aura:component controller="TCR_DivisionSearchController" implements="flexipage:availableForAllPageTypes">
+
+    <aura:attribute name="listOfDivisions" type="Account[]" default="null"/>
+
+    <aura:handler event="c:TCR_E_Clear" action="{!c.handleClearSearchResultsEvent}"/>
+    <aura:handler name="searchDivisionEvent" event="c:TCR_E_SearchDivision" action="{!c.handleSearchComponentEvent}"/>
+    <aura:registerEvent name="sendDivisionLocations" type="c:TCR_E_PassDivisions"/>
+
+    <c:TCR_DivisionSearchForm aura:id="searchForm"/>
+
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <div class="slds-spinner_container">
+            <lightning:spinner aura:id="spinner"
+                               variant="brand"
+                               size="medium"/>
+        </div>
+    </aura:if>
+
+
+    <lightning:card class="slds-container--medium" title="{!$Label.c.TCR_Label_Search_Results}">
+        <div class="slds-p-left_medium slds-p-right_medium">
+            <ul class="slds-list_vertical slds-has-dividers_top-space">
+                <aura:if isTrue="{!v.listOfDivisions.length!=0}">
+                    <aura:iteration items="{!v.listOfDivisions}" var="division">
+                        <li class="slds-list__item">
+                            <c:TCR_DivisionItem item="{!division}"/>
+                        </li>
+                    </aura:iteration>
+                    <aura:set attribute="else">
+                        <ui:message title="Information" severity="info" closable="false">
+                            Nothing to display. Please change your search criteria and try again
+                        </ui:message>
+                    </aura:set>
+                </aura:if>
+            </ul>
+        </div>
+    </lightning:card>
+</aura:component>

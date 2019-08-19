@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Action_Dismiss</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Dismiss</shortDescription>
+        <value>Dismiss</value>
+    </labels>
+    <labels>
+        <fullName>Action_Select</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Select</shortDescription>
+        <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>Button_Cancel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Button_Clear</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Clear</shortDescription>
+        <value>Clear</value>
+    </labels>
+    <labels>
+        <fullName>Button_Copy_To_Clipboard</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Copy_To_Clipboard</shortDescription>
+        <value>Copy to Clipboard</value>
+    </labels>
+    <labels>
+        <fullName>Button_Delete</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Delete</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>Button_Deselect_All</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button Deselect All</shortDescription>
+        <value>Deselect All</value>
+    </labels>
+    <labels>
+        <fullName>Button_Details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Details</shortDescription>
+        <value>Details</value>
+    </labels>
+    <labels>
+        <fullName>Button_Dismiss</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Dismiss</shortDescription>
+        <value>Dismiss</value>
+    </labels>
+    <labels>
+        <fullName>Button_Download_CSV</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Download_CSV</shortDescription>
+        <value>Download CSV</value>
+    </labels>
+    <labels>
+        <fullName>Button_Download_CSV_Import_Templ</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Download_CSV_Import_Templ</shortDescription>
+        <value>Download template</value>
+    </labels>
+    <labels>
+        <fullName>Button_Download_JSON</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Download_JSON</shortDescription>
+        <value>Download JSON</value>
+    </labels>
+    <labels>
+        <fullName>Button_Download_PDF</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Download_PDF</shortDescription>
+        <value>Download PDF</value>
+    </labels>
+    <labels>
+        <fullName>Button_Download_XLS</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Download_XLS</shortDescription>
+        <value>Download XLS</value>
+    </labels>
+    <labels>
+        <fullName>Button_Edit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>Button_Hire</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Hire</shortDescription>
+        <value>Hire</value>
+    </labels>
+    <labels>
+        <fullName>Button_Import</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button Import</shortDescription>
+        <value>Import</value>
+    </labels>
+    <labels>
+        <fullName>Button_Process</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Process</shortDescription>
+        <value>Process</value>
+    </labels>
+    <labels>
+        <fullName>Button_Remove</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button Remove</shortDescription>
+        <value>Remove</value>
+    </labels>
+    <labels>
+        <fullName>Button_Reverse_Selection</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button Reverse Selection</shortDescription>
+        <value>Reverse</value>
+    </labels>
+    <labels>
+        <fullName>Button_Save</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>Button_Search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Button_Select_All</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button Select All</shortDescription>
+        <value>Select All</value>
+    </labels>
+    <labels>
+        <fullName>Button_Send</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Send</shortDescription>
+        <value>Send</value>
+    </labels>
+    <labels>
+        <fullName>Button_Template</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Template</shortDescription>
+        <value>Template</value>
+    </labels>
+    <labels>
+        <fullName>Button_Update</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button_Update</shortDescription>
+        <value>Update</value>
+    </labels>
+    <labels>
+        <fullName>Button_X</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button X</shortDescription>
+        <value>X</value>
+    </labels>
+    <labels>
+        <fullName>CSV_Export_Separator_Double_Pipe</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CSV Export Separator Double Pipe</shortDescription>
+        <value>||</value>
+    </labels>
+    <labels>
+        <fullName>CSV_Export_Separator_Semicolon</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CSV_Export_Separator_Semicolon</shortDescription>
+        <value>;</value>
+    </labels>
+    <labels>
+        <fullName>CSV_Export_Separator_coma</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CSV Export Separator coma</shortDescription>
+        <value>,</value>
+    </labels>
+    <labels>
+        <fullName>CS_Workshop_City</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CS_Workshop_City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>CS_Workshop_Country</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CS_Workshop_Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>CS_Workshop_Endpoint</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CS Workshop Endpoint</shortDescription>
+        <value>client_id={0}&amp;client_secret={1}&amp;username={2}&amp;password={3}</value>
+    </labels>
+    <labels>
+        <fullName>CS_Workshop_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CS_Workshop_Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>CS_Workshop_Phone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CS_Workshop_Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>CS_Workshop_Website</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CS_Workshop_Website</shortDescription>
+        <value>Website</value>
+    </labels>
+    <labels>
+        <fullName>CS_Workshop_ZipCode</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CS_Workshop_ZipCode</shortDescription>
+        <value>Zip Code</value>
+    </labels>
+    <labels>
+        <fullName>Countries</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Countries</shortDescription>
+        <value>AU,NL,PL,UA,USA</value>
+    </labels>
+    <labels>
+        <fullName>CreateHttpRequest</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CreateHttpRequest</shortDescription>
+        <value>{&quot;wrappedWorkshopsList&quot;:{0}}</value>
+    </labels>
+    <labels>
+        <fullName>Email_To_Administrator</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email To Administrator</shortDescription>
+        <value>Please be noted that we encountered some problems trying to synchronized given Workshops: {0}
+Regards</value>
+    </labels>
+    <labels>
+        <fullName>Endpoint</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Endpoint</shortDescription>
+        <value>client_id={0}&amp;client_secret={1}&amp;username={2}&amp;password={3}</value>
+    </labels>
+    <labels>
+        <fullName>Error_Contract_Collided_Dates</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Contract Collided Dates</shortDescription>
+        <value>{0} {1} {2}</value>
+    </labels>
+    <labels>
+        <fullName>Error_Contract_Collides_With</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Contract Collides With</shortDescription>
+        <value>Contract collides with:</value>
+    </labels>
+    <labels>
+        <fullName>Error_Field_Required</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Field Required</shortDescription>
+        <value>This field is required!</value>
+    </labels>
+    <labels>
+        <fullName>Error_Incorrect_End_Date</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error_Incorrect_End_Date</shortDescription>
+        <value>Incorrect End Date</value>
+    </labels>
+    <labels>
+        <fullName>Error_Invalid_Session_Id</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Invalid Session Id</shortDescription>
+        <value>Invalid Session Id</value>
+    </labels>
+    <labels>
+        <fullName>Error_Mechanic_Exists</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Mechanic Exists</shortDescription>
+        <value>Mechanic with given credentials already exists.</value>
+    </labels>
+    <labels>
+        <fullName>Error_No_Contract_Start_Date</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error_No_Contract_Start_Date</shortDescription>
+        <value>Required fields are missing: [Contract Start Date]</value>
+    </labels>
+    <labels>
+        <fullName>Error_No_File_Selected</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error No File Selected</shortDescription>
+        <value>No file was selected. Please select a {0} file and try again.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Page_Crashed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Page Crashed</shortDescription>
+        <value>Ups! Something went wrong!&amp;nbsp;</value>
+    </labels>
+    <labels>
+        <fullName>Error_While_Login</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error While Login</shortDescription>
+        <value>An unexpected error occured while logging in</value>
+    </labels>
+    <labels>
+        <fullName>GApiKey</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>GApiKey</shortDescription>
+        <value>BbiTjwR8z1eBST0mNpJvtWvmgvEdrgGXs5szHHahQdD86Zd50nyAzG0QAkxwmgieQrLQ</value>
+    </labels>
+    <labels>
+        <fullName>Group_System_Administrators</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Group System Administrators</shortDescription>
+        <value>System Administrators</value>
+    </labels>
+    <labels>
+        <fullName>Info_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Info Error</shortDescription>
+        <value>Error,{0},{1}</value>
+    </labels>
+    <labels>
+        <fullName>Info_Last_Name_is_Required</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Info Last Name is Required</shortDescription>
+        <value>Last name is required</value>
+    </labels>
+    <labels>
+        <fullName>Info_Mechanic_Added</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Info_Mechanic_Added</shortDescription>
+        <value>Mechanic Added</value>
+    </labels>
+    <labels>
+        <fullName>Info_Mechanic_Edited_Successfully</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Info Mechanic Edited Successfully</shortDescription>
+        <value>Changes have been saved</value>
+    </labels>
+    <labels>
+        <fullName>Info_Name_is_required</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Info Name is required</shortDescription>
+        <value>Name is required</value>
+    </labels>
+    <labels>
+        <fullName>Info_Required_field_is_empty</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Info Required field is empty</shortDescription>
+        <value>Required field is empty!</value>
+    </labels>
+    <labels>
+        <fullName>Info_Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Info Success</shortDescription>
+        <value>Success,{0}</value>
+    </labels>
+    <labels>
+        <fullName>MW_Bad_File_Extension</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MW Bad File Extension</shortDescription>
+        <value>Incorrect file format. Only {0} files are allowed.</value>
+    </labels>
+    <labels>
+        <fullName>MW_File_Too_Big</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MW File Too Big</shortDescription>
+        <value>File size exceeds the {0} limit allowed.</value>
+    </labels>
+    <labels>
+        <fullName>MW_Popup_Confirmation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MW_Popup_Confirmation</shortDescription>
+        <value>Are you sure?</value>
+    </labels>
+    <labels>
+        <fullName>Pagination_First_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Pagination First Page</shortDescription>
+        <value>«« First</value>
+    </labels>
+    <labels>
+        <fullName>Pagination_Last_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Pagination Last Page</shortDescription>
+        <value>Last »»</value>
+    </labels>
+    <labels>
+        <fullName>Pagination_Next_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Pagination Next Page</shortDescription>
+        <value>Next »</value>
+    </labels>
+    <labels>
+        <fullName>Pagination_Prev_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Pagination Prev Page</shortDescription>
+        <value>« Previous</value>
+    </labels>
+    <labels>
+        <fullName>Pagination_Text_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Pagination Text Page</shortDescription>
+        <value>Page:</value>
+    </labels>
+    <labels>
+        <fullName>Pagination_Text_Records_per_Page</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Pagination Text Records per Page</shortDescription>
+        <value>Records per page:</value>
+    </labels>
+    <labels>
+        <fullName>Regex_Phone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Regex Phone</shortDescription>
+        <value>[0-9]+.</value>
+    </labels>
+    <labels>
+        <fullName>Section_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Section_Address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>Section_Agreements</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Section_Agreements</shortDescription>
+        <value>Agreements</value>
+    </labels>
+    <labels>
+        <fullName>Section_Details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Section_Details</shortDescription>
+        <value>Details</value>
+    </labels>
+    <labels>
+        <fullName>Section_Edit</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Section_Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>Section_History_Tracking</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Section_History_Tracking</shortDescription>
+        <value>History Tracking</value>
+    </labels>
+    <labels>
+        <fullName>Section_Results</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Section Results</shortDescription>
+        <value>Results</value>
+    </labels>
+    <labels>
+        <fullName>Special_Sign_Arrow_Down</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Special_Sign_Arrow_Down</shortDescription>
+        <value>▼</value>
+    </labels>
+    <labels>
+        <fullName>Special_Sign_Arrow_Up</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Special_Sign_Arrow_Up</shortDescription>
+        <value>▲</value>
+    </labels>
+    <labels>
+        <fullName>Status_Failure</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Status Failure</shortDescription>
+        <value>Failure</value>
+    </labels>
+    <labels>
+        <fullName>Status_Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Status Success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Clear</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Clear</shortDescription>
+        <value>Clear</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Division_Billing_City</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Division Billing City</shortDescription>
+        <value>Division Billing City</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Division_Billing_Country</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Division Billing Country</shortDescription>
+        <value>Division Billing Country</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Division_Billing_Postal_Code</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Division Billing Postal Code</shortDescription>
+        <value>Division Billing Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Division_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR_Division_Name</shortDescription>
+        <value>Division Name</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Label_Division_Details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Label Division Details</shortDescription>
+        <value>Division Details</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Label_Division_Map</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Label Division Map</shortDescription>
+        <value>Division Map</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Label_Search_Form</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Label Search Form</shortDescription>
+        <value>Search Form</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Label_Search_Results</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Label Search Results</shortDescription>
+        <value>Search Results</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Table_Column_Actions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Table_Column_Actions</shortDescription>
+        <value>Actions</value>
+    </labels>
+    <labels>
+        <fullName>Table_Column_City</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Table_Column_City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>Table_Column_Country</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Table_Column_Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>Table_Column_Email</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Table_Column_Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>Table_Column_Full_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Table_Column_Full_Name</shortDescription>
+        <value>Full Name</value>
+    </labels>
+    <labels>
+        <fullName>Table_Column_Info</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Table_Column_Info</shortDescription>
+        <value>Info</value>
+    </labels>
+    <labels>
+        <fullName>Table_Column_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Table_Column_Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>Table_Column_To_Import</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Table_Column_To_Import</shortDescription>
+        <value>To import</value>
+    </labels>
+    <labels>
+        <fullName>Test_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Test Title</shortDescription>
+        <value>(&apos;Hello {0}&apos;, mechanic.First_Name__c)</value>
+    </labels>
+    <labels>
+        <fullName>Title_Add_Mechanic</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Add Mechanic</shortDescription>
+        <value>Add new Mechanic</value>
+    </labels>
+    <labels>
+        <fullName>Title_Add_Workshop</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Add Workshop</shortDescription>
+        <value>Add new Workshop</value>
+    </labels>
+    <labels>
+        <fullName>Title_Choose_CSV_file</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Choose CSV file</shortDescription>
+        <value>Choose CSV file</value>
+    </labels>
+    <labels>
+        <fullName>Title_Edit_Mechanic</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Edit Mechanic</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>Title_Edit_Workshop</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Edit Workshop</shortDescription>
+        <value>Edit Workshop</value>
+    </labels>
+    <labels>
+        <fullName>Title_Hire_Mechanic</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Hire Mechanic</shortDescription>
+        <value>Hire {0} {1} to...</value>
+    </labels>
+    <labels>
+        <fullName>Title_Mechanics_to_import</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Mechanics to import</shortDescription>
+        <value>Mechanics to import</value>
+    </labels>
+    <labels>
+        <fullName>Title_Search_For_Mechanics</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Search For Mechanics</shortDescription>
+        <value>Search for mechanics</value>
+    </labels>
+    <labels>
+        <fullName>Title_Search_Mechanic</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Search Mechanic</shortDescription>
+        <value>Search Your Mechanic</value>
+    </labels>
+    <labels>
+        <fullName>Title_Search_Workshops</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title Search Workshops</shortDescription>
+        <value>Search for workshop</value>
+    </labels>
+    <labels>
+        <fullName>Workshop_City</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Workshop City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>Workshop_Country</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Workshop Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>Workshop_Endpoint</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Workshop Endpoint</shortDescription>
+        <value>client_id={0}&amp;client_secret={1}&amp;username={2}&amp;password={3}</value>
+    </labels>
+    <labels>
+        <fullName>Workshop_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Workshop Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>Workshop_Phone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Workshop  Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>Workshop_Website</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Workshop Website</shortDescription>
+        <value>Website</value>
+    </labels>
+    <labels>
+        <fullName>Workshop_ZipCode</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Workshop  ZipCode</shortDescription>
+        <value>Zip Code</value>
+    </labels>
+</CustomLabels>

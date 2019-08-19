@@ -1,0 +1,25 @@
+<aura:component description="TCR_DivisionDetails" implements="flexipage:availableForAllPageTypes">
+
+    <aura:handler event="c:TCR_E_PassDivision" action="{!c.getId}"/>
+    <aura:handler event="c:TCR_E_Clear" action="{!c.clearDetails}"/>
+
+    <aura:attribute name="fieldId" type="Id"/>
+
+    <aura:attribute name="isIdFilled" type="Boolean" default="false"/>
+
+    <lightning:card title="{!$Label.c.TCR_Label_Division_Details}">
+        <aura:if isTrue="{!v.isIdFilled}">
+            <lightning:recordForm aura:id="editForm"
+                                  recordId="{!v.fieldId}"
+                                  objectApiName="Account"
+                                  columns="3"
+                                  layoutType="Full"
+                                  mode="View"/>
+            <aura:set attribute="else">
+                <ui:message title="Information" severity="info" closable="false">
+                    No Division selected
+                </ui:message>
+            </aura:set>
+        </aura:if>
+    </lightning:card>
+</aura:component>

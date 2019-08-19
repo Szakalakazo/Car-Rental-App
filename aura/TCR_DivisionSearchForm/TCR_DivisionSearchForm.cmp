@@ -1,0 +1,53 @@
+<aura:component controller="TCR_DivisionSearchController" implements="flexipage:availableForAllPageTypes">
+
+    <aura:registerEvent name="clearSearchFormEvent" type="c:TCR_E_Clear"/>
+    <aura:registerEvent name="searchDivisionEvent" type="c:TCR_E_SearchDivision"/>
+
+    <aura:attribute name="searchedDivision"
+                    type="Account"
+                    default=
+                            "{'sobjectType':'Account',
+                              'Id':'',
+                              'Name':'',
+                              'BillingStreet':'',
+                              'BillingCity':'',
+                              'BillingPostalCode':'',
+                              'BillingCountry':''
+                              }"/>
+
+    <lightning:card title="Search Form" class="slds-container--medium">
+        <fieldset class="slds-form-element slds-form-element_stacked">
+
+            <lightning:input aura:id="divisionForm"
+                             label="{!$Label.c.TCR_Division_Name}"
+                             name="divisionName"
+                             value="{!v.searchedDivision.Name}"/>
+
+            <lightning:input aura:id="divisionForm"
+                             label="{!$Label.c.TCR_Division_Billing_City}"
+                             name="divisionShippingCity"
+                             value="{!v.searchedDivision.BillingCity}"/>
+
+            <lightning:input aura:id="divisionForm"
+                             label="{!$Label.c.TCR_Division_Billing_Postal_Code}"
+                             name="divisionShippingPostalCode"
+                             value="{!v.searchedDivision.BillingPostalCode}"/>
+
+            <lightning:input aura:id="divisionForm"
+                             label="{!$Label.c.TCR_Division_Billing_Country}"
+                             name="divisionShippingCountry"
+                             value="{!v.searchedDivision.BillingCountry}"/>
+            <br/>
+
+            <lightning:button label="{!$Label.c.TCR_Search}"
+                              class="slds-m-top-medium"
+                              variant="brand"
+                              onclick="{!c.fireSearchItemEvent}"/>
+
+            <lightning:button label="{!$Label.c.TCR_Clear}"
+                              class="slds-m-top-medium"
+                              variant="brand"
+                              onclick="{!c.fireClearResultListEvent}"/>
+        </fieldset>
+    </lightning:card>
+</aura:component>
