@@ -1,0 +1,9 @@
+<aura:component description="TCR_Spinner">
+    <aura:if isTrue="{!v.showSpinner}">
+        <div class="slds-spinner_container">
+            <lightning:spinner aura:id="spinner"
+                               variant="brand"
+                               size="medium"/>
+        </div>
+    </aura:if>
+</aura:component>

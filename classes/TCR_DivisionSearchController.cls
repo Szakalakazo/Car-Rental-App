@@ -6,13 +6,11 @@ public with sharing class TCR_DivisionSearchController {
     @AuraEnabled
     public static List<Account> getDivisions(String searchedDivision) {
         List<Account> result = new List<Account>();
-
-        if(String.isBlank(searchedDivision)) {
+        if (String.isBlank(searchedDivision)) {
             return null;
         }
-
         try {
-            Account searchedAccount = (Account) JSON.deserialize(searchedDivision, Account.class);
+            Account searchedAccount = (Account) JSON.deserialize(searchedDivision, Callout_Log__c.class);
             result = fetchRecords(searchedAccount);
         } catch (Exception e) {
             AuraHandledException ae = new AuraHandledException(e.getMessage());
@@ -23,17 +21,17 @@ public with sharing class TCR_DivisionSearchController {
     }
 
     private static String getValueOrBlankSpace(String field) {
+
         if (String.isNotBlank(field)) {
-            if (conditionWithOrder == ''){
-                conditionWithOrder = '1';
-            }else{
+            if (conditionWithOrder == '') {
+                conditionWithOrder = '' + index;
+            } else {
                 conditionWithOrder += ' AND ' + index;
             }
             index++;
         } else {
             index++;
         }
-
         return field;
     }
 

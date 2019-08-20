@@ -1,35 +1,26 @@
 ({
     fireSearchItemEvent: function(component, event, helper) {
+        let cmpEvent = component.getEvent("searchDivisionEvent");
+        let searchedDivision = component.get("v.searchedDivision");
+        component.set("v.isAnyFieldFilled" , false);
 
-        var cmpEvent = component.getEvent("searchDivisionEvent");
-        cmpEvent.setParams({
-            "searchedDivision": JSON.stringify(component.get("v.searchedDivision"))
-        });
-        cmpEvent.fire();
-
-
-        /*
-        let zmienna = component.find('divisionForm');
-        console.log('-----> ' + zmienna);
-
-        var allValid = zmienna.reduce(function(accumulator, currentValue, currentIndex, array) {
-            console.log('-----> ' + ((accumulator + currentValue) !== 0));
-            return ((accumulator + currentValue) !== 0);
-        }, true);
-        if (allValid) {
-            var cmpEvent = component.getEvent("searchDivisionEvent");
+        if ((searchedDivision.Name != null && searchedDivision.Name.length !== 0) ||
+            (searchedDivision.BillingCity != null && searchedDivision.BillingCity.length !== 0) ||
+            (searchedDivision.BillingPostalCode != null && searchedDivision.BillingPostalCode.length !== 0) ||
+            (searchedDivision.BillingCountry != null && searchedDivision.BillingCountry.length !== 0)) {
             cmpEvent.setParams({
-                "searchedDivision": JSON.stringify(component.get("v.searchedDivision"))
+                "searchedDivision": JSON.stringify(searchedDivision)
             });
             cmpEvent.fire();
+        } else {
+            component.set("v.isAnyFieldFilled" , true);
         }
-        */
     },
 
     fireClearResultListEvent: function(component, event, helper) {
         var cmpEvent = $A.get("e.c:TCR_E_Clear");
-        var name = component.find("divisionForm");
         component.set("v.searchedDivision", {});
+        component.set("v.isAnyFieldFilled", false);
         cmpEvent.setParams({
             "searchedDivision": JSON.stringify(component.get("v.searchedDivision"))
         });

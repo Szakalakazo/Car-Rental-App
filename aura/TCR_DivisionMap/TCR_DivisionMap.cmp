@@ -1,14 +1,14 @@
 <aura:component description="TCR_DivisionMap" implements="flexipage:availableForAllPageTypes">
 
-    <aura:handler event="c:TCR_E_PassDivisions" action="{!c.getMap}"/>
-    <aura:handler event="c:TCR_E_Clear" action="{!c.clearMap}"/>
-    <lightning:flexipageRegionInfo width="{!v.width}"/>
-
-
     <aura:attribute name="mapMarkers" default="" type="Object"/>
     <aura:attribute name="center" default="" type="Object"/>
     <aura:attribute name="zoomLevel" type="Integer"/>
     <aura:attribute name="listView" type="String" />
+
+    <aura:handler event="c:TCR_E_PassDivisions" action="{!c.getMap}"/>
+    <aura:handler event="c:TCR_E_Clear" action="{!c.clearMap}"/>
+
+    <lightning:flexipageRegionInfo width="{!v.width}"/>
 
     <lightning:card title="{!$Label.c.TCR_Label_Division_Map}">
             <fieldset class="slds-form-element slds-form-element_stacked">

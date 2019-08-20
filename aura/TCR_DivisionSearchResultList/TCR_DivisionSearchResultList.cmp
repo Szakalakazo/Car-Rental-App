@@ -1,14 +1,16 @@
 <aura:component controller="TCR_DivisionSearchController" implements="flexipage:availableForAllPageTypes">
 
     <aura:attribute name="listOfDivisions" type="Account[]" default="null"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+
+    <aura:registerEvent name="sendDivisionLocations" type="c:TCR_E_PassDivisions"/>
 
     <aura:handler event="c:TCR_E_Clear" action="{!c.handleClearSearchResultsEvent}"/>
     <aura:handler name="searchDivisionEvent" event="c:TCR_E_SearchDivision" action="{!c.handleSearchComponentEvent}"/>
-    <aura:registerEvent name="sendDivisionLocations" type="c:TCR_E_PassDivisions"/>
 
     <c:TCR_DivisionSearchForm aura:id="searchForm"/>
 
-    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <c:TCR_Toast aura:id="toastCmp"/>
 
     <aura:if isTrue="{!v.showSpinner}">
         <div class="slds-spinner_container">
@@ -29,8 +31,8 @@
                         </li>
                     </aura:iteration>
                     <aura:set attribute="else">
-                        <ui:message title="Information" severity="info" closable="false">
-                            Nothing to display. Please change your search criteria and try again
+                        <ui:message title="{!$Label.c.TCR_Information}" severity="info" closable="false">
+                            {!$Label.c.TCR_Nothing_to_display}
                         </ui:message>
                     </aura:set>
                 </aura:if>

@@ -597,6 +597,20 @@ Regards</value>
         <value>Division Name</value>
     </labels>
     <labels>
+        <fullName>TCR_Division_No_Division_selected</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Division No Division selected</shortDescription>
+        <value>No Division selected</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Information</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Information</shortDescription>
+        <value>Information</value>
+    </labels>
+    <labels>
         <fullName>TCR_Label_Division_Details</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -625,11 +639,39 @@ Regards</value>
         <value>Search Results</value>
     </labels>
     <labels>
+        <fullName>TCR_No_Form_Filled_Message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR No Form Filled Message</shortDescription>
+        <value>Please fill at least one field</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Nothing_filled</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Nothing filled</shortDescription>
+        <value>Nothing filled</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Nothing_to_display</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Nothing to display</shortDescription>
+        <value>Nothing to display. Please change your search criteria and try again</value>
+    </labels>
+    <labels>
         <fullName>TCR_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>TCR Search</shortDescription>
         <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>TCR_Toast_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TCR Toast Error Message</shortDescription>
+        <value>An unexpected error occurred</value>
     </labels>
     <labels>
         <fullName>Table_Column_Actions</fullName>
