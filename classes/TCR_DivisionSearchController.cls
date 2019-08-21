@@ -1,5 +1,6 @@
 public with sharing class TCR_DivisionSearchController {
 
+    public static final String DIVISION = 'Division';
     public static String conditionWithOrder = '';
     public static Integer index = 1;
 
@@ -10,7 +11,7 @@ public with sharing class TCR_DivisionSearchController {
             return null;
         }
         try {
-            Account searchedAccount = (Account) JSON.deserialize(searchedDivision, Callout_Log__c.class);
+            Account searchedAccount = (Account) JSON.deserialize(searchedDivision, Account.class);
             result = fetchRecords(searchedAccount);
         } catch (Exception e) {
             AuraHandledException ae = new AuraHandledException(e.getMessage());
@@ -38,6 +39,7 @@ public with sharing class TCR_DivisionSearchController {
     public static List<Account> fetchRecords(Account searchedAccount) {
         QueryBuilder newQuery = new QueryBuilder(Account.class)
                 .addField(Account.Id)
+                .addField(Account.Type)
                 .addField(Account.Name)
                 .addField(Account.Industry)
                 .addField(Account.NumberOfEmployees)
@@ -47,6 +49,7 @@ public with sharing class TCR_DivisionSearchController {
                 .addField(Account.BillingCountry)
                 .addField(Account.Phone)
                 .addConditions()
+                .add(new QueryBuilder.LikeCondition(Account.Type).likeAnyRight(getValueOrBlankSpace(DIVISION)))
                 .add(new QueryBuilder.LikeCondition(Account.Name).likeAnyRight(getValueOrBlankSpace(searchedAccount.Name)))
                 .add(new QueryBuilder.LikeCondition(Account.BillingStreet).likeAnyRight(getValueOrBlankSpace(searchedAccount.BillingStreet)))
                 .add(new QueryBuilder.LikeCondition(Account.BillingCity).likeAnyRight(getValueOrBlankSpace(searchedAccount.BillingCity)))
