@@ -1,4 +1,5 @@
-<apex:page standardController="Lead"
+<apex:page standardController="Survey__c"
+           extensions="TCR_ViewSurveyController"
            showHeader="false"
            sideBar="false"
            standardStylesheets="false"
@@ -13,9 +14,13 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge"/>
         <title>Salesforce Lightning Design System </title>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <apex:includeScript value="{!$Resource.svg4everybody}" />
+        <apex:includeScript value="{!$Resource.svg4everybody}"/>
         <script>
             svg4everybody();
+
+
+
+
         </script>
         <apex:slds/>
     </head>
@@ -32,23 +37,13 @@
 
 
     </style>
-    <!--  ----------------------------------------------------------------------  -->
-    <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
-    <!--  If necessary, please modify the charset parameter to specify the        -->
-    <!--  character set of your HTML page.                                        -->
-    <!--  ----------------------------------------------------------------------  -->
 
-    <!--<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">-->
-
-    <!--  ----------------------------------------------------------------------  -->
-    <!--  NOTE: Please add the following <FORM> element to your page.             -->
-    <!--  ----------------------------------------------------------------------  -->
-
-
-    <div id="scopeDiv" class="slds-scope">
-        <div id="headerDiv" class="slds-page-header">
-            <div id="mediaDiv" class="slds-media">
-                <div id="figureDiv" class="slds-media__figure">
+    <apex:outputPanel id="webToLead" rendered="{!!isSurveyVisible}">
+    <!--<apex:outputPanel id="webToLead">-->
+        <div id="scopeDiv" class="slds-scope">
+            <div id="headerDiv" class="slds-page-header">
+                <div id="mediaDiv" class="slds-media">
+                    <div id="figureDiv" class="slds-media__figure">
 
                     <span class="slds-icon_container slds-icon-standard-account" title="">
                       <svg aria-hidden="true" class="slds-icon">
@@ -57,64 +52,182 @@
                       <span class="slds-assistive-text">Account Icon</span>
                     </span>
 
-                </div>
-                <div id="headerBodyDiv" class="slds-media__body">
-                    <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Web-to-lead">Web to
-                        lead</h1>
-                    <p class="slds-text-body_small slds-line-height_reset">Insert yourself as lead</p>
+                    </div>
+                    <div id="headerBodyDiv" class="slds-media__body">
+                        <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Web-to-lead">Web to
+                            lead</h1>
+                        <p class="slds-text-body_small slds-line-height_reset">Insert yourself as lead</p>
+                    </div>
                 </div>
             </div>
+
+
+            <div id="outsideDiv" class="slds">
+                <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+                    <input type="hidden" name="oid" value="00D2p00000134ts"/>
+                    <input type="hidden" name="retURL" value="http://google.com"/>
+
+                    <div class="slds-align_absolute-center">
+                        <table id="formTable">
+                            <tbody>
+                            <tr>
+                                <td><label class="slds-form-element__label" for="first_name">First name:</label></td>
+                                <td><input id="first_name" maxlength="40" name="first_name" size="20" type="text"
+                                           required="true"/></td>
+                            </tr>
+                            <tr>
+                                <td><label class="slds-form-element__label" for="last_name">Last name: </label></td>
+                                <td><input id="last_name" maxlength="80" name="last_name" size="20" type="text"
+                                           required="true"/></td>
+                            </tr>
+                            <tr>
+                                <td><label class="slds-form-element__label" for="phone">Phone: </label></td>
+                                <td><input id="phone" maxlength="40" name="phone" size="20" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td><label class="slds-form-element__label" for="email">Email: </label></td>
+                                <td><input id="email" maxlength="80" name="email" size="20" type="email"/></td>
+                            </tr>
+                            <tr>
+                                <td><label class="slds-form-element__label" for="company">Company: </label></td>
+                                <td><input id="company" maxlength="40" name="company" size="20" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td><label class="slds-form-element__label" for="city">City: </label></td>
+                                <td><input id="city" maxlength="40" name="city" size="20" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td><label class="slds-form-element__label" for="state">State: </label></td>
+                                <td><input id="state" maxlength="20" name="state" size="20" type="text"/></td>
+                            </tr>
+                            <tr>
+                                <td><label class="slds-form-element__label" for="country">Country</label></td>
+                                <td><input id="country" maxlength="40" name="country" size="20" type="text"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="slds-align_absolute-center">
+                        <input type="submit" name="submit" class="slds-button slds-button--brand" value="Send"/>
+                    </div>
+                </form>
+            </div>
         </div>
+    </apex:outputPanel>
+
+    <apex:outputPanel id="survey" rendered="{!isSurveyVisible}">
+    <!--<apex:outputPanel id="survey">-->
+        <apex:includeScript value="{! $Resource.SurveyForce_jquery}"/>
+        <apex:includeScript value="{! $Resource.SurveyForce + '/surveyforce.js'}"/>
+        <apex:stylesheet value="{! $Resource.SurveyForce + '/surveyforce.css'}"/>
+        <apex:stylesheet value="{! $Resource.SurveyForce + '/surveyforce_pagemessage_override.css'}"/>
+        <apex:stylesheet
+                value="{! $Resource.SurveyForce_SLDS + '/assets/styles/salesforce-lightning-design-system-vf.min.css'}"/>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+        <script>
+        $(document).ready(function(){
+            //Convert any elements with "convertToLDS" style to SLDS styles
+            //Used in certain places where it's not easy to use SLDS for those elements like "apex:selectCheckboxes"
+            convertCheckBoxToLDS();
+        });
+        </script>
+        <!-- Custom CSS added by survey admin -->
+        <style>
+        <apex:outputText value="{!HTMLENCODE(surveyContainerCss)}" escape="false"/>
+
+        </style>
+        <div id="survey_container" class="surveyforce">
+            <apex:form id="theForm">
+
+                <apex:outputPanel id="seeSurvey"
+                                  rendered="{! If((Survey__c.Hide_Survey_Name__c == false || Survey__c.Survey_Header__c != ''), True, False )}">
+                    <div class="slds-box slds-theme--shade">
+                        <div class="slds-text-heading--large">
+                            <apex:outputText value="{!Survey__c.Survey_Header__c}" escape="false"/>
+                        </div>
+                        <apex:outputPanel rendered="{!Survey__c.Hide_Survey_Name__c == false}">
+                            <div class="slds-text-heading--medium">{!Survey__c.Name}</div>
+                        </apex:outputPanel>
+                    </div>
+                </apex:outputPanel>
 
 
-        <div id="outsideDiv" class="slds">
-            <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
-                <input type="hidden" name="oid" value="00D2p00000134ts"/>
-                <input type="hidden" name="retURL" value="http://google.com"/>
+                <script>
+                $(document).ready(function(){
+                    overridePageMessages();
+                });
+                </script>
 
-                <div class="slds-align_absolute-center">
-                    <table id="formTable">
-                        <tbody>
-                        <tr>
-                            <td><label class="slds-form-element__label" for="first_name">First name:</label></td>
-                            <td><input id="first_name" maxlength="40" name="first_name" size="20" type="text" required="true" /></td>
-                        </tr>
-                        <tr>
-                            <td><label class="slds-form-element__label" for="last_name">Last name: </label></td>
-                            <td><input id="last_name" maxlength="80" name="last_name" size="20" type="text" required="true" /></td>
-                        </tr>
-                        <tr>
-                            <td><label class="slds-form-element__label" for="phone">Phone: </label></td>
-                            <td><input id="phone" maxlength="40" name="phone" size="20" type="text"/></td>
-                        </tr>
-                        <tr>
-                            <td><label class="slds-form-element__label" for="email">Email: </label></td>
-                            <td><input id="email" maxlength="80" name="email" size="20" type="email"/></td>
-                        </tr>
-                        <tr>
-                            <td><label class="slds-form-element__label" for="company">Company: </label></td>
-                            <td><input id="company" maxlength="40" name="company" size="20" type="text"/></td>
-                        </tr>
-                        <tr>
-                            <td><label class="slds-form-element__label" for="city">City: </label></td>
-                            <td><input id="city" maxlength="40" name="city" size="20" type="text"/></td>
-                        </tr>
-                        <tr>
-                            <td><label class="slds-form-element__label" for="state">State: </label></td>
-                            <td><input id="state" maxlength="20" name="state" size="20" type="text"/></td>
-                        </tr>
-                        <tr>
-                            <td><label class="slds-form-element__label" for="country">Country</label></td>
-                            <td><input id="country" maxlength="40" name="country" size="20" type="text"/></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="slds-align_absolute-center">
-                    <input type="submit" name="submit" class="slds-button slds-button--brand" value="Send"/>
-                </div>
-            </form>
+                <apex:pageMessages/>
+
+                <c:uiMessage severity="success" message="{!surveyThankYouText}" renderMe="{!thankYouRendered == true}"/>
+
+                <apex:outputPanel rendered="{!thankYouRendered == false}">
+                    <div class="slds-form--stacked">
+                        <apex:repeat value="{!allQuestions}" var="qPreview" id="aQPreview">
+                            <div class="slds-box slds-theme--default">
+                                <div class="slds-form-element">
+                                    <label class="slds-form-element__label">
+                                    {!qPreview.orderNumber + ': ' + qPreview.question}
+                                        <apex:outputText rendered="{! qPreview.required}"
+                                                         value="({!$Label.LABS_SF_Required})"/>
+                                    </label>
+                                </div>
+                                <apex:outputPanel rendered="{!qPreview.renderSelectRadio}">
+                                    <apex:selectRadio styleClass="convertToLDS" layout="pageDirection"
+                                                      rendered="{!qPreview.renderSelectRadio}"
+                                                      value="{!qPreview.selectedOption}">
+                                        <apex:selectOptions value="{!qPreview.singleOptions}"/>
+                                    </apex:selectRadio>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel rendered="{!qPreview.renderSelectCheckboxes}">
+                                    <apex:selectCheckboxes styleClass="convertToLDS" layout="pageDirection"
+                                                           rendered="{!qPreview.renderSelectCheckboxes}"
+                                                           value="{!qPreview.selectedOptions}">
+                                        <apex:selectOptions value="{!qPreview.multiOptions}"/>
+                                    </apex:selectCheckboxes>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!qPreview.renderFreeText}">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <apex:inputTextArea styleClass="slds-textarea" cols=""
+                                                                rows="{!qPreview.noOfRowsForTextArea}"
+                                                                rendered="{!qPreview.renderFreeText}"
+                                                                value="{!qPreview.choices}"/>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!qPreview.renderSelectRow}">
+                                    <apex:selectRadio styleClass="convertToLDS" rendered="{!qPreview.renderSelectRow}"
+                                                      value="{!qPreview.selectedOption}">
+                                        <apex:selectOptions value="{!qPreview.rowOptions}"/>
+                                    </apex:selectRadio>
+                                </apex:outputPanel>
+                            </div>
+                        </apex:repeat>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!thankYouRendered == false}">
+                    <div class="slds-box slds-theme--default">
+                        <apex:outputPanel rendered="{!isInternal}">
+                            <span class="slds-text-body--regular">{!$Label.LABS_SF_Answer_as}:</span>
+                            <apex:selectRadio styleClass="convertToLDS" value="{!anonymousAnswer}">
+                                <apex:selectOptions value="{!anonymousOrUser}"/>
+                                <apex:actionSupport event="onchange" rerender="hiddenAnonymousAnswer"/>
+                            </apex:selectRadio>
+                            <apex:inputHidden value="{!anonymousAnswer}" id="hiddenAnonymousAnswer"/>
+                            <br/>
+                        </apex:outputPanel>
+                        <apex:commandButton styleClass="slds-button slds-button--brand" action="{!submitResults}"
+                                            value="{!$Label.LABS_SF_SubmitSurvey}" rerender="theForm,seeSurvey"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:form>
         </div>
-    </div>
+    </apex:outputPanel>
+
     </html>
 </apex:page>
