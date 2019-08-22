@@ -1,7 +1,6 @@
 global virtual with sharing class TCR_ViewSurveyController {
     public Boolean isSurveyVisible { get; set; }
     public String qQuestion { get; set; }
-    public Boolean qRequired { get; set; }
     public String qChoices { get; set; }
     public String surveyName { get; set; }
     public String surveyHeader { get; set; }
@@ -13,19 +12,13 @@ global virtual with sharing class TCR_ViewSurveyController {
         }
     }
     public String renderSurveyPreview { get; set; }
-    public String questionName { get; set; }
-    public String questionType { get; set; }
-    public Boolean questionRequired { get; set; }
-    public List<SelectOption> singleOptions { get; set; }
-    public List<SFQuestion> allQuestions { get; set; }
-    public List<String> responses { get; set; }
     public Integer allQuestionsSize { get; set; }
     public String templateURL { get; set; }
     public String surveyThankYouText { get; set; }
     public String surveyContainerCss { get; set; }
     public String surveyThankYouURL { get; set; }
-    public String caseId { get; set; }
-    public String contactId { get; set; }
+//    public String caseId { get; set; }
+//    public String contactId { get; set; }
     public String leadId { get; set; }
     public String anonymousAnswer { get; set; }
     public List<SelectOption> anonymousOrUser { get; set; }
@@ -35,12 +28,13 @@ global virtual with sharing class TCR_ViewSurveyController {
     public String userName { get; set; }
     public String surveyTakerId { get; set; }
     public Boolean thankYouRendered { get; set; }
+    public List<SFQuestion> allQuestions { get; set; }
     public List<String> newOrder { get; set; }
 
     public TCR_ViewSurveyController(ApexPages.StandardController stdController) {
         surveyId = Apexpages.currentPage().getParameters().get('id');
-        caseId = Apexpages.currentPage().getParameters().get('caId');
-        contactId = Apexpages.currentPage().getParameters().get('cId');
+//        caseId = Apexpages.currentPage().getParameters().get('caId');
+//        contactId = Apexpages.currentPage().getParameters().get('cId');
         leadId = Apexpages.currentPage().getParameters().get('lid');
 
         if (Apexpages.currentPage().getParameters().get('id') != null) {
@@ -92,7 +86,7 @@ global virtual with sharing class TCR_ViewSurveyController {
         Survey__c s = [SELECT Name, Id, URL__c, Thank_You_Text__c, thankYouText__c, thankYouLink__c, Survey_Header__c, Survey_Container_CSS__c FROM Survey__c WHERE Id = :sId];
         surveyName = s.Name;
         surveyHeader = s.Survey_Header__c;
-        templateURL = s.URL__c + 'id=' + sId;//+'&cId={!Contact.Id}'+'&caId='+'{!Case.id}';
+        templateURL = s.URL__c + 'id=' + sId;
         surveyThankYouText = s.Thank_You_Text__c;
         if (surveyThankYouText == null) {
             surveyThankYouText = System.Label.LABS_SF_Survey_Submitted_Thank_you;
@@ -101,13 +95,13 @@ global virtual with sharing class TCR_ViewSurveyController {
         surveyContainerCss = s.Survey_Container_CSS__c;
     }
 
-    public Pagereference updateSurveyName() {
+    public PageReference updateSurveyName() {
         Survey__c s = [SELECT Name, Id, URL__c, thankYouText__c, thankYouLink__c FROM Survey__c WHERE Id = :surveyId];
         s.Name = surveyName;
         try {
             update s;
         } catch (Exception e) {
-            Apexpages.addMessages(e);
+            ApexPages.addMessages(e);
         }
         return null;
     }
@@ -119,12 +113,12 @@ global virtual with sharing class TCR_ViewSurveyController {
         try {
             update s;
         } catch (Exception e) {
-            Apexpages.addMessages(e);
+            ApexPages.addMessages(e);
         }
         return null;
     }
 
-    public Pagereference refreshQuestionList() {
+    public PageReference refreshQuestionList() {
         setupQuestionList();
         return null;
     }
@@ -147,7 +141,6 @@ global virtual with sharing class TCR_ViewSurveyController {
         for (SurveyQuestionResponse__c r : qr) {
             resp.add(r.Response__c);
         }
-
         return resp;
     }
 
@@ -189,7 +182,7 @@ global virtual with sharing class TCR_ViewSurveyController {
                 SurveyQuestionResponse__c sqr = new SurveyQuestionResponse__c();
                 if (q.renderSelectRadio == 'true') {
                     if (q.required && (q.selectedOption == null || q.selectedOption == '')) {
-                        Apexpages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please fill out all required fields'));
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please fill out all required fields'));
                         return;
                     }
 
@@ -202,7 +195,7 @@ global virtual with sharing class TCR_ViewSurveyController {
                     sqrList.add(sqr);
                 } else if (q.renderFreeText == 'true') {
                     if (q.required && q.choices == '') {
-                        Apexpages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please fill out all required fields'));
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please fill out all required fields'));
                         return;
                     }
                     sqr.Response__c = q.choices;
@@ -210,7 +203,7 @@ global virtual with sharing class TCR_ViewSurveyController {
                     sqrList.add(sqr);
                 } else if (q.renderSelectCheckboxes == 'true') {
                     if (q.required && (q.selectedOptions == null || q.selectedOptions.size() == 0)) {
-                        Apexpages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please fill out all required fields'));
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please fill out all required fields'));
                         return;
                     }
                     for (String opt : q.selectedOptions) {
@@ -225,7 +218,7 @@ global virtual with sharing class TCR_ViewSurveyController {
                     }
                 } else if (q.renderSelectRow == 'true') {
                     if (q.required && (q.selectedOption == null || q.selectedOption == '')) {
-                        Apexpages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please fill out all required fields'));
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please fill out all required fields'));
                         return;
                     }
                     if (q.selectedOption == null || q.selectedOption == '') {
@@ -240,26 +233,23 @@ global virtual with sharing class TCR_ViewSurveyController {
             if (AddSurveyTaker()) {
                 for (SurveyQuestionResponse__c sqr : sqrList) {
                     sqr.SurveyTaker__c = surveyTakerId;
+                    sqr.RelatedLead__c = leadId;
                 }
                 insert sqrList;
                 thankYouRendered = true;
             }
         } catch (Exception e) {
             if (isInternal) {
-                Apexpages.addMessages(e);
+                ApexPages.addMessages(e);
             } else {
                 System.debug('Exception: ' + e.getMessage());
-                Apexpages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Some error occured while saving response'));
-                Apexpages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, e.getMessage()));
-                Apexpages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, e.getCause().getMessage()));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Some error occured while saving response'));
             }
         }
-
     }
 
     private Boolean AddSurveyTaker() {
         String userId;
-
         if (surveyId == null) {
             return false;
         }
@@ -268,11 +258,12 @@ global virtual with sharing class TCR_ViewSurveyController {
         st.Survey__c = surveyId;
         st.Taken__c = 'false';
         st.Lead_Id__c = leadId;
+        st.Name = 'Survey';
 
-        try{
-            insert st;
+        try {
+            INSERT st;
         } catch (DmlException e) {
-            System.debug('-------> Exception DML ' + e.getMessage());
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Some error occured while saving response'));
         }
         surveyTakerId = st.Id;
         return true;
