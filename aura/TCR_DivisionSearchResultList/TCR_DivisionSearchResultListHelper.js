@@ -12,12 +12,12 @@
             if (response.getState() === "SUCCESS") {
                 component.set("v.listOfDivisions", response.getReturnValue());
                 self.fireDivisionLocationEvent(component, event);
-                component.set("v.showSpinner", false);
             } else {
-                component.set("v.showSpinner", false);
                 let errors = response.getError();
                 component.find("toastCmp").showToastModel("error", $A.get("$Label.c.TCR_Toast_Error_Message"), errors[0].message);
             }
+            component.set("v.showSpinner", false);
+
         });
         $A.enqueueAction(action);
     },
