@@ -1,0 +1,296 @@
+<apex:page standardcontroller="Survey__c" extensions="TCR_PublicSiteController">
+    <apex:includeScript value="{! $Resource.SurveyForce_jquery}"/>
+    <!-- convertCheckBoxToLDS() is in surveyforce.js -->
+    <apex:includeScript value="{! $Resource.SurveyForce + '/surveyforce.js'}"/>
+    <apex:stylesheet value="{! $Resource.SurveyForce + '/surveyforce.css'}"/>
+    <apex:stylesheet value="{! $Resource.SurveyForce + '/surveyforce_pagemessage_override.css'}"/>
+    <apex:stylesheet value="{! $Resource.SurveyForce_SLDS + '/assets/styles/salesforce-lightning-design-system-vf.min.css'}"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <!--<apex:includeScript value="{! URLFOR($Resource.jsTemplate,'js/html5shiv.js')}"/>
+    <apex:includeScript value="{! URLFOR($Resource.jsTemplate,'js/skel.min.js')}"/>
+    <apex:includeScript value="{! URLFOR($Resource.jsTemplate,'js/skel-panels.min.js')}"/>
+    <apex:includeScript value="{! URLFOR($Resource.jsTemplate,'js/init.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.cssTemplate,'cssTemplate/css/skel-noscript.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.cssTemplate,'cssTemplate/style.css')}"/>-->
+    <style>
+    body, html {
+    height: 100%;
+    font-family: "Inconsolata", sans-serif;
+    }
+    .bgimg {
+    background-position: center;
+    background-size: cover;
+    background-image: url("/w3images/coffeehouse.jpg");
+    min-height: 75%;
+    }
+    .menu {
+    display: none;
+    }
+    body,h1 {font-family: "Raleway", Arial, sans-serif}
+    h1 {letter-spacing: 6px}
+    .w3-row-padding img {margin-bottom: 12px}
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <script>
+        $(document).ready(function(){
+            //Convert any elements with "convertToLDS" style to SLDS styles
+            //Used in certain places where it's not easy to use SLDS for those elements like "apex:selectCheckboxes"
+            convertCheckBoxToLDS();
+        });
+
+
+    </script>
+    <!-- Custom CSS added by survey admin -->
+    <style>
+        <apex:outputText value="{!HTMLENCODE(surveyContainerCss)}" escape="false"/>
+
+    </style>
+    <apex:outputPanel id="surveyPanel">
+        <apex:outputPanel rendered="{!showSurvey}">
+            <div id="survey_container" class="surveyforce">
+                <apex:form id="theForm">
+
+                    <apex:outputPanel id="seeSurvey"
+                                      rendered="{! If((Survey__c.Hide_Survey_Name__c == false || Survey__c.Survey_Header__c != ''), True, False )}">
+                        <div class="slds-box slds-theme--shade">
+                            <div class="slds-text-heading--large">
+                                <apex:outputText value="{!Survey__c.Survey_Header__c}" escape="false"/>
+                            </div>
+                            <apex:outputPanel rendered="{!Survey__c.Hide_Survey_Name__c == false}">
+                                This survey is about our seller {!ownerName} {!ownerLastName}
+                                <div class="slds-text-heading--medium">{!Survey__c.Name}</div>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                    <script>
+                $(document).ready(function(){
+                    overridePageMessages();
+                });
+
+                    </script>
+                    <apex:pageMessages />
+                    <!--<c:uiMessage severity="success" message="{!surveyThankYouText}"-->
+                                 <!--renderMe="{!thankYouRendered == true}"/>-->
+                    <apex:outputPanel rendered="{!thankYouRendered == false}">
+                        <div class="slds-form--stacked">
+                            <apex:repeat value="{!allQuestions}" var="qPreview" id="aQPreview">
+                                <div class="slds-box slds-theme--default">
+                                    <div class="slds-form-element">
+                                        <label class="slds-form-element__label">
+                                        {!qPreview.orderNumber + ': ' + qPreview.question}
+                                            <apex:outputText rendered="{! qPreview.required}"
+                                                             value="({!$Label.LABS_SF_Required})"/>
+                                        </label>
+                                    </div>
+                                    <apex:outputPanel rendered="{!qPreview.renderSelectRadio}">
+                                        <apex:selectRadio styleClass="convertToLDS" layout="pageDirection"
+                                                          rendered="{!qPreview.renderSelectRadio}"
+                                                          value="{!qPreview.selectedOption}">
+                                            <apex:selectOptions value="{!qPreview.singleOptions}"/>
+                                        </apex:selectRadio>
+                                    </apex:outputPanel>
+
+                                    <apex:outputPanel rendered="{!qPreview.renderSelectCheckboxes}">
+                                        <apex:selectCheckboxes styleClass="convertToLDS" layout="pageDirection"
+                                                               rendered="{!qPreview.renderSelectCheckboxes}"
+                                                               value="{!qPreview.selectedOptions}">
+                                            <apex:selectOptions value="{!qPreview.multiOptions}"/>
+                                        </apex:selectCheckboxes>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!qPreview.renderFreeText}">
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <apex:inputTextArea styleClass="slds-textarea" cols=""
+                                                                    rows="{!qPreview.noOfRowsForTextArea}"
+                                                                    rendered="{!qPreview.renderFreeText}"
+                                                                    value="{!qPreview.choices}"/>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!qPreview.renderSelectRow}">
+                                        <apex:selectRadio styleClass="convertToLDS"
+                                                          rendered="{!qPreview.renderSelectRow}"
+                                                          value="{!qPreview.selectedOption}">
+                                            <apex:selectOptions value="{!qPreview.rowOptions}"/>
+                                        </apex:selectRadio>
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:repeat>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!thankYouRendered == false}">
+                        <div class="slds-box slds-theme--default">
+                            <apex:outputPanel rendered="{!isInternal}">
+                                <span class="slds-text-body--regular">{!$Label.LABS_SF_Answer_as}:</span>
+                                <apex:selectRadio styleClass="convertToLDS" value="{!anonymousAnswer}">
+                                    <apex:selectOptions value="{!anonymousOrUser}"/>
+                                    <apex:actionSupport event="onchange" rerender="hiddenAnonymousAnswer"/>
+                                </apex:selectRadio>
+                                <apex:inputHidden value="{!anonymousAnswer}" id="hiddenAnonymousAnswer"/>
+                                <br/>
+                            </apex:outputPanel>
+                            <apex:commandButton styleClass="slds-button slds-button--brand" action="{!submitResults}"
+                                                value="{!$Label.LABS_SF_SubmitSurvey}" rerender="theForm,seeSurvey"/>
+                        </div>
+                    </apex:outputPanel>
+                </apex:form>
+            </div>
+        </apex:outputPanel>
+    </apex:outputPanel>
+
+    <apex:outputPanel id="buttonPanel">
+        <apex:outputPanel rendered="{!!showSurvey}">
+            <div class="w3-content" style="max-width:1500px">
+                <header class="w3-panel w3-center w3-opacity">
+                    <div class="w3-padding-32">
+                        <div class="w3-bar w3-border">
+                            <apex:form >
+                               <!-- <apex:commandButton reRender="doctorBlock, contactPanel" action="{!changeTab}" style="float: left"
+                                                    value="Doctor"></apex:commandButton>
+                                <apex:commandButton reRender="contactPanel, doctorBlock" action="{!hideDoctors}" style="float: left"
+                                                    value="Contact"></apex:commandButton>-->
+                            </apex:form>
+                        </div>
+                    </div>
+                </header>
+            </div>
+        </apex:outputPanel>
+    </apex:outputPanel>
+
+    <apex:outputPanel id="contactPanel">
+        <apex:outputPanel rendered="{!showContact}">
+            <div class="w3-container" id="where" style="padding-bottom:32px;">
+                <div class="w3-content" style="max-width:700px">
+                    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">Contact US</span></h5>
+                    <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+                        <input type="hidden" name="oid" value="00D1t000000smhl"/>
+                        <input type="hidden" name="retURL"
+                               value="https://carrentalapp-dev-ed--c.visualforce.com/apex/takesurvey?id=a0J2p00000rKYgQEAW&cId=none&caId=none"/>
+                               <!--value="https://piotrtoporowski-developer-edition.eu16.force.com/"/>-->
+
+                        <label for="first_name">First Name</label><input class="w3-input w3-padding-16 w3-border"
+                                                                         id="first_name" maxlength="40"
+                                                                         name="first_name"
+                                                                         size="20" type="text"/>
+                        <label for="last_name">Last Name</label><input class="w3-input w3-padding-16 w3-border"
+                                                                       id="last_name" maxlength="80" name="last_name"
+                                                                       size="20" type="text"/>
+                        <label for="email">Email</label><input class="w3-input w3-padding-16 w3-border" id="email"
+                                                               maxlength="80" name="email" size="20"
+                                                               type="text"/>
+                        <label for="company">Company</label><input class="w3-input w3-padding-16 w3-border" id="company"
+                                                                   maxlength="40" name="company" size="20"
+                                                                   type="text"/>
+                        <label for="city">City</label><input class="w3-input w3-padding-16 w3-border" id="city"
+                                                             maxlength="40" name="city" size="20" type="text"/>
+
+                        <label for="country">Country</label><input class="w3-input w3-padding-16 w3-border" id="country"
+                                                                   maxlength="40" name="country" size="20"
+                                                                   type="text"/>
+                        <label for="phone">Phone</label><input class="w3-input w3-padding-16 w3-border" id="phone"
+                                                               maxlength="40" name="phone" size="20"
+                                                               type="text"/>
+                        <label for="title">Title</label><input class="w3-input w3-padding-16 w3-border" id="title"
+                                                               maxlength="40" name="title" size="20"
+                                                               type="text"/>
+                        <input style="display: none" class="w3-input w3-padding-16 w3-border" value="Web"
+                               id="lead_source" name="lead_source"
+                               type="text"/>
+                        <input class="w3-button w3-black" type="submit" name="submit"/>
+                    </form>
+                </div>
+            </div>
+
+            <style type='text/css'>
+	.embeddedServiceHelpButton .helpButton .uiButton {
+		background-color: #005290;
+		font-family: "Salesforce Sans", sans-serif;
+	}
+	.embeddedServiceHelpButton .helpButton .uiButton:focus {
+		outline: 1px solid #005290;
+	}
+	@font-face {
+		font-family: 'Salesforce Sans';
+		src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+		url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+	}
+</style>
+
+            <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+            <script type='text/javascript'>
+	var initESW = function(gslbBaseURL) {
+		embedded_svc.settings.displayHelpButton = true; //Or false
+		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+
+		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+
+		//embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+		// Settings for Live Agent
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+		//embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
+
+		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+		embedded_svc.settings.entryFeature = 'LiveAgent';
+
+		embedded_svc.init(
+			'https://autoparts-dev-ed.my.salesforce.com',
+			'https://piotrtoporowski-developer-edition.eu16.force.com/',
+			gslbBaseURL,
+			'00D1t000000smhl',
+			'Chat_Agents',
+			{
+				baseLiveAgentContentURL: 'https://c.la1-c1-fra.salesforceliveagent.com/content',
+				deploymentId: '5721t0000008p7b',
+				buttonId: '5731t0000008qWH',
+				baseLiveAgentURL: 'https://d.la1-c1-fra.salesforceliveagent.com/chat',
+				eswLiveAgentDevName: 'Chat_Agents',
+				isOfflineSupportEnabled: true
+			}
+		);
+	};
+
+	if (!window.embedded_svc) {
+		var s = document.createElement('script');
+		s.setAttribute('src', 'https://autoparts-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+		s.onload = function() {
+			initESW(null);
+		};
+		document.body.appendChild(s);
+	} else {
+		initESW('https://service.force.com');
+	}
+</script>
+
+        </apex:outputPanel>
+    </apex:outputPanel>
+
+    <!--<apex:outputPanel id="doctorBlock">
+        <apex:pageBlock rendered="{!showDoctors}" title="Random doctors">
+            <apex:outputPanel >
+                <apex:pageBlockTable value="{!randomDoctors}" var="doctor">
+                    <apex:column headerValue="{!$ObjectType.Doctor__c.fields.Name.label}"
+                                 value="{!doctor.FirstNameLastName__c }"/>
+                    <apex:column headerValue="{!$ObjectType.Doctor__c.fields.Email__c.label}"
+                                 value="{!doctor.Email__c }"/>
+                    <apex:column headerValue="{!$ObjectType.Doctor__c.fields.City__c.label}"
+                                 value="{!doctor.City__c }"/>
+                    <apex:column headerValue="{!$ObjectType.Doctor__c.fields.Country__c.label}"
+                                 value="{!doctor.Country__c}"/>
+                </apex:pageBlockTable>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:outputPanel>-->
+</apex:page>
