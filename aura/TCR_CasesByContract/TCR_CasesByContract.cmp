@@ -1,0 +1,40 @@
+<aura:component controller="TCR_GetCasesByContract" implements="flexipage:availableForRecordHome,force:appHostable,lightning:actionOverride,force:hasRecordId">
+
+
+    <aura:attribute name="listOfCases" type="Case[]"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.getAllCases}"/>
+
+    <lightning:card class="slds-container--medium">
+
+
+        <div class="slds-p-left_medium slds-p-right_medium">
+            <div class="slds-clearfix">
+                <div class="slds-float_left">
+                    <lightning:avatar src="/bad/image/url.jpg" initials="" fallbackIconName="standard:case"
+                                      alternativeText="" class="slds-m-right_small"/>
+                </div>
+                <div class="slds-float_left ">
+                    <div class="slds-text-heading_small slds-text-title_bold" style="padding-top:8px">Related Cases</div>
+                </div>
+            </div>
+
+
+            <ul class="slds-list_vertical slds-has-dividers_top-space">
+                <aura:if isTrue="{!v.listOfCases.length!=0}">
+                    <br/>
+                    <aura:iteration items="{!v.listOfCases}" var="case">
+                        <li class="slds-list__item">
+                            <c:TCR_CaseItem item="{!case}"/>
+                        </li>
+                    </aura:iteration>
+                    <aura:set attribute="else">
+                        <ui:message title="{!$Label.c.TCR_Information}" severity="info" closable="false">
+                                {!$Label.c.TCR_Nothing_to_display}
+                        </ui:message>
+                    </aura:set>
+                </aura:if>
+            </ul>
+        </div>
+    </lightning:card>
+</aura:component>

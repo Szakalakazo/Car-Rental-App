@@ -17,6 +17,7 @@
         <apex:includeScript value="{!$Resource.svg4everybody}"/>
         <script>
             svg4everybody();
+
         </script>
         <apex:slds/>
     </head>
@@ -28,10 +29,76 @@
         div {
             vertical-align: center;
         }
+
     </style>
 
+
+    <style type='text/css'>
+	.embeddedServiceHelpButton .helpButton .uiButton {
+		background-color: #005290;
+		font-family: "Arial", sans-serif;
+	}
+	.embeddedServiceHelpButton .helpButton .uiButton:focus {
+		outline: 1px solid #005290;
+	}
+
+    </style>
+
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script type='text/javascript'>
+	var initESW = function(gslbBaseURL) {
+		embedded_svc.settings.displayHelpButton = true; //Or false
+		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+
+		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+
+		//embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+		// Settings for Chat
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+		//embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
+
+		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+		embedded_svc.settings.entryFeature = 'LiveAgent';
+
+		embedded_svc.init(
+			'https://carrentalapp-dev-ed.my.salesforce.com',
+			'https://tstarzak-developer-edition.eu26.force.com/TCRWebToLead',
+			gslbBaseURL,
+			'00D2p00000134ts',
+			'Chat_Agents',
+			{
+				baseLiveAgentContentURL: 'https://c.la1-c2-fra.salesforceliveagent.com/content',
+				deploymentId: '5722p0000000Fwp',
+				buttonId: '5732p0000000Ge2',
+				baseLiveAgentURL: 'https://d.la1-c2-fra.salesforceliveagent.com/chat',
+				eswLiveAgentDevName: 'Chat_Agents',
+				isOfflineSupportEnabled: false
+			}
+		);
+	};
+
+	if (!window.embedded_svc) {
+		var s = document.createElement('script');
+		s.setAttribute('src', 'https://carrentalapp-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+		s.onload = function() {
+			initESW(null);
+		};
+		document.body.appendChild(s);
+	} else {
+		initESW('https://service.force.com');
+	}
+
+    </script>
+
     <apex:outputPanel id="webToLead" rendered="{!!isSurveyVisible}">
-    <!--<apex:outputPanel id="webToLead">-->
         <div id="scopeDiv" class="slds-scope">
             <div id="headerDiv" class="slds-page-header">
                 <div id="mediaDiv" class="slds-media">
@@ -64,25 +131,30 @@
                         <table id="formTable">
                             <tbody>
                             <tr>
-                                <td><label class="slds-form-element__label" for="first_name">{!$Label.TCR_Lead_First_Name}</label></td>
+                                <td><label class="slds-form-element__label"
+                                           for="first_name">{!$Label.TCR_Lead_First_Name}</label></td>
                                 <td><input id="first_name" maxlength="40" name="first_name" size="20" type="text"
                                            required="true"/></td>
                             </tr>
                             <tr>
-                                <td><label class="slds-form-element__label" for="last_name">{!$Label.TCR_Lead_Last_Name} </label></td>
+                                <td><label class="slds-form-element__label"
+                                           for="last_name">{!$Label.TCR_Lead_Last_Name} </label></td>
                                 <td><input id="last_name" maxlength="80" name="last_name" size="20" type="text"
                                            required="true"/></td>
                             </tr>
                             <tr>
-                                <td><label class="slds-form-element__label" for="phone">{!$Label.TCR_Phone} </label></td>
+                                <td><label class="slds-form-element__label" for="phone">{!$Label.TCR_Phone} </label>
+                                </td>
                                 <td><input id="phone" maxlength="40" name="phone" size="20" type="text"/></td>
                             </tr>
                             <tr>
-                                <td><label class="slds-form-element__label" for="email">{!$Label.TCR_Email} </label></td>
+                                <td><label class="slds-form-element__label" for="email">{!$Label.TCR_Email} </label>
+                                </td>
                                 <td><input id="email" maxlength="80" name="email" size="20" type="email"/></td>
                             </tr>
                             <tr>
-                                <td><label class="slds-form-element__label" for="company">{!$Label.TCR_Company} </label></td>
+                                <td><label class="slds-form-element__label" for="company">{!$Label.TCR_Company} </label>
+                                </td>
                                 <td><input id="company" maxlength="40" name="company" size="20" type="text"
                                            required="true"/></td>
                             </tr>
@@ -91,18 +163,21 @@
                                 <td><input id="city" maxlength="40" name="city" size="20" type="text"/></td>
                             </tr>
                             <tr>
-                                <td><label class="slds-form-element__label" for="state">{!$Label.TCR_State} </label></td>
+                                <td><label class="slds-form-element__label" for="state">{!$Label.TCR_State} </label>
+                                </td>
                                 <td><input id="state" maxlength="20" name="state" size="20" type="text"/></td>
                             </tr>
                             <tr>
-                                <td><label class="slds-form-element__label" for="country">{!$Label.TCR_Country}</label></td>
+                                <td><label class="slds-form-element__label" for="country">{!$Label.TCR_Country}</label>
+                                </td>
                                 <td><input id="country" maxlength="40" name="country" size="20" type="text"/></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="slds-align_absolute-center">
-                        <input type="submit" name="submit" class="slds-button slds-button--brand" value="{!$Label.Button_Send}"/>
+                        <input type="submit" name="submit" class="slds-button slds-button--brand"
+                               value="{!$Label.Button_Send}"/>
                     </div>
                 </form>
             </div>
@@ -123,10 +198,12 @@
         $(document).ready(function(){
             convertCheckBoxToLDS();
         });
+
         </script>
 
         <style>
         <apex:outputText value="{!HTMLENCODE(surveyContainerCss)}" escape="false"/>
+
         </style>
         <div id="survey_container" class="surveyforce">
             <apex:form id="theForm">
@@ -147,6 +224,7 @@
                 $(document).ready(function(){
                     overridePageMessages();
                 });
+
                 </script>
 
                 <apex:pageMessages/>
