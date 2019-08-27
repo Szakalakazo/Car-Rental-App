@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssignmentRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignmentRule>
+        <fullName>Standard</fullName>
+        <active>false</active>
+        <ruleEntry>
+            <assignedTo>tomasz.starzak@britenet.com.pl</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Account.BillingCountry</field>
+                <operation>equals</operation>
+                <value>US,USA,United States,United States of America</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.SLA__c</field>
+                <operation>equals</operation>
+                <value>Gold,Platinum</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Type</field>
+                <operation>contains</operation>
+                <value>Customer</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>tomasz.starzak@britenet.com.pl</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Account.BillingCountry</field>
+                <operation>equals</operation>
+                <value>US,USA,United States,United States of America</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.SLA__c</field>
+                <operation>equals</operation>
+                <value>Silver,Bronze</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Type</field>
+                <operation>contains</operation>
+                <value>Customer</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>tomasz.starzak@britenet.com.pl</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Account.BillingCountry</field>
+                <operation>notEqual</operation>
+                <value>US,USA,United States,United States of America</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.SLA__c</field>
+                <operation>equals</operation>
+                <value>Gold,Platinum</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Type</field>
+                <operation>contains</operation>
+                <value>Customer</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>tomasz.starzak@britenet.com.pl</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Account.BillingCountry</field>
+                <operation>notEqual</operation>
+                <value>US,USA,United States,United States of America</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.SLA__c</field>
+                <operation>equals</operation>
+                <value>Silver,Bronze</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Type</field>
+                <operation>contains</operation>
+                <value>Customer</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>tomasz.starzak@britenet.com.pl</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Account.Type</field>
+                <operation>contains</operation>
+                <value>Partner</value>
+            </criteriaItems>
+        </ruleEntry>
+    </assignmentRule>
+    <assignmentRule>
+        <fullName>TCR Team Assignment Rule</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <assignedTo>Technical_Support_Queue</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(CONTAINS(Subject, &quot;?&quot;) ,LEN(Subject) &gt; 0)</formula>
+            <team>Technical Team</team>
+            <template>unfiled$public/Support_Tech_Case_Assigned_To_You</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Call_center_Support_Queue</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Chat</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Phone</value>
+            </criteriaItems>
+            <team>Call-center team</team>
+            <template>unfiled$public/Support_Call_center_Case_Assigned_To_You</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Complaint_Support_Queue</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <team>Complaint Team</team>
+            <template>unfiled$public/Support_Complaint_Case_Assigned_To_You</template>
+        </ruleEntry>
+    </assignmentRule>
+</AssignmentRules>
