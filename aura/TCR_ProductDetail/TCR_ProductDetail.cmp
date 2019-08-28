@@ -1,0 +1,30 @@
+<aura:component
+        implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes, force:hasRecordId"
+        access="global"
+        controller="TCR_ProductDetailController">
+    <!--
+    <aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                    access="global"
+                    controller="TCR_ProductDetailController">-->
+
+
+    <aura:attribute name="item" type="Product2"/>
+    <aura:attribute name="listOfImageUrls" type="String[]"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.getAllImages}"/>
+
+    <div class="slds-grid slds-wrap slds-m-bottom--large">
+        <div class="slds-col slds-size_6-of-12">
+            <div class="title">
+                <lightning:carousel class="imageView noContent" disableAutoScroll="false">
+                    <aura:iteration items="{!v.listOfImageUrls}" var="url">
+                        <lightning:carouselImage src="{!url}"
+                                                 alternativeText="This is a card">
+                        </lightning:carouselImage>
+                    </aura:iteration>
+                </lightning:carousel>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

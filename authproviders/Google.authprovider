@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <executionUser>tomasz.starzak@britenet.com.pl</executionUser>
+    <friendlyName>Google</friendlyName>
+    <iconUrl>https://login.salesforce.com/icons/google-white.png</iconUrl>
+    <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>
+    <providerType>Google</providerType>
+    <registrationHandler>Module3RegistrationHandler</registrationHandler>
+    <sendAccessTokenInHeader>false</sendAccessTokenInHeader>
+    <sendClientCredentialsInHeader>false</sendClientCredentialsInHeader>
+</AuthProvider>
