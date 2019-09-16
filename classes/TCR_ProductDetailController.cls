@@ -1,20 +1,38 @@
-public with sharing class TCR_ProductDetailController {
+global class TCR_ProductDetailController {
 
     @AuraEnabled
-    public static List<String> getProductImages(Id productIdInApex) {
-        List<String> listOfImageUrls = new List<String>();
-        List<Product_Image__c> listOfProductImages = [
-                SELECT Id, Image_Link__c
-                FROM Product_Image__c
-                WHERE Product__c = :productIdInApex
-        ];
+    global static List<String> getProductImages(Id productIdInApex) {
+        try {
+            List<String> listOfImageUrls = new List<String>();
 
-        if (!listOfProductImages.isEmpty()) {
-            for (Product_Image__c image : listOfProductImages) {
-                String imgUrl = image.Image_Link__c.substringBetween(' src="', '"').unescapeHtml4();
-                listOfImageUrls.add(imgUrl);
+            List<ContentDocumentLink> documentLinks = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :productIdInApex];
+            Set<Id> contentIds = new Set<Id>();
+            System.debug('Doument link ' + documentLinks );
+
+            for (ContentDocumentLink link : documentLinks) {
+                contentIds.add(link.ContentDocumentId);
             }
+
+            List<ContentVersion> contentVersions = [SELECT Id FROM ContentVersion WHERE ContentDocumentId IN :contentIds AND FileType IN('JPG', 'JPEG', 'PNG')];
+            List<String> images = new List<String>();
+
+            Set<Id> contentVersionIds = new Set<Id>();
+
+            for (ContentVersion version : contentVersions) {
+                contentVersionIds.add(version.Id);
+            }
+
+            List<ContentDistribution> listOfDistributions = [SELECT Id, DistributionPublicUrl, ContentDownloadUrl FROM ContentDistribution WHERE ContentVersionId IN :contentVersionIds];
+
+            for (ContentDistribution distribution : listOfDistributions) {
+                listOfImageUrls.add(distribution.ContentDownloadUrl);
+                System.debug('>>>>>> distribution.ContentDownloadUrl ---> ' + distribution.ContentDownloadUrl);
+            }
+
+            return listOfImageUrls;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
         }
-        return listOfImageUrls;
+        return null;
     }
 }
