@@ -1,0 +1,46 @@
+<aura:component  controller="TCR_ProductImage"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                access="global">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="posterPath" type="Object"/>
+    <aura:attribute name="listOfImages" type="Object[]"/>
+    <aura:attribute name="imageType" type="String" default="image"/>
+
+    <aura:handler event="c:TCR_ReloadRecordPageEvent" action="{!c.TCR_ReloadRecordPageEvent}"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+<!--    <c:BRCCustomToast aura:id="toastCmp"/>-->
+
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12" class="buttonPanel">
+            <lightning:layout multipleRows="false" verticalAlign="end">
+                <lightning:layoutItem>
+                    <lightning:fileUpload name="fileUploader"
+                                          multiple="false"
+                                          accept=".jpg, .jpeg, .png"
+                                          recordId="{!v.recordId}"
+                                          label=""
+                                          onuploadfinished="{! c.handleUploadFinished }"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+
+        <lightning:layoutItem size="12" class="imagesPanel">
+            <lightning:layout multipleRows="true" verticalAlign="center">
+
+                <lightning:layoutItem class="poster">
+                    <aura:if isTrue="{!not(empty(v.posterPath))}">
+                        <c:TCR_ImageGallery distribution="{!v.posterPath}" recordId="{!v.recordId}"/>
+                    </aura:if>
+                </lightning:layoutItem>
+
+                <aura:iteration items="{!v.listOfImages}" var="distribution">
+                    <lightning:layoutItem class="image">
+                        <c:TCR_ImageGallery distribution="{!distribution}" recordId="{!v.recordId}"/>
+                    </lightning:layoutItem>
+                </aura:iteration>
+
+            </lightning:layout>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

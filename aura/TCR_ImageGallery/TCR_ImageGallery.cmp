@@ -1,0 +1,45 @@
+<aura:component controller="TCR_ProductImage"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                access="global">
+
+    <aura:attribute name="distribution" type="Object"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="openModal" type="Boolean" default="false"/>
+
+    <aura:registerEvent name="reloadImages" type="c:TCR_ReloadRecordPageEvent"/>
+    <!--    <c:BRCCustomToast aura:id="toastCmp"/>-->
+
+    <aura:if isTrue="{!v.distribution}">
+        <lightning:button class="image" onclick="{!c.onSelect}">
+            <div style="{!'background-image:url(' + v.distribution.ContentDownloadUrl + ')'}" class="innertile">
+            </div>
+        </lightning:button>
+    </aura:if>
+
+    <aura:if isTrue="{!v.openModal}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container" style="max-width: 150%">
+                <header class="slds-modal__header" style="border-radius: 25px; margin: 0px; padding: 10px">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{!c.closeModel}"
+                                          alternativeText="Close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <div>
+                        <div>
+                            <img src="{!v.distribution.ContentDownloadUrl}" width="1000" style="border-radius: 25px"/>
+                        </div>
+<!--                        <div class="deleteButton">
+                            <lightning:button variant="neutral" label="Select As Poster" title="Select As Poster"
+                                              onclick="{!c.selectPoster}"/>
+                            <lightning:button variant="neutral" label="Delete" title="Delete Image"
+                                              onclick="{!c.deleteImage}"/>
+                        </div>-->
+                    </div>
+                </header>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>
