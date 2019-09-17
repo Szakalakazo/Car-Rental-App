@@ -7,8 +7,6 @@
         let recordId = component.get("v.recordId");
         let docId = event.getParam('files')[0].documentId;
         let setType = component.get('c.setImageType');
-
-        console.log('handleUploadFinished');
         setType.setParams({
             'documentId': docId,
             'imageType': 'image',
@@ -18,7 +16,6 @@
         setType.setCallback(this, function(response){
             if (response.getState() === "SUCCESS") {
                 helper.initImages(component, event,helper);
-                console.log('handleUploadFinished SUCCESS');
             } else {
                 component.find("toastCmp").showToastModel(response.getError()[0].message, "error");
             }

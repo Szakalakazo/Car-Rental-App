@@ -44,8 +44,8 @@
             if (response.getState() === "SUCCESS") {
                 console.log(response.getReturnValue());
                 component.set("v.openModal", false);
-                // let reload = $A.get("e.c:BRCReloadRecordPageEvent");
-                // reload.fire();
+                let reload = $A.get("e.c:TCR_ReloadRecordPageEvent");
+                reload.fire();
             } else {
                 component.find("toastCmp").showToastModel(response.getError()[0].message, "error");
             }

@@ -1,5 +1,5 @@
 <aura:component controller="TCR_ProductImage"
-                implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId, forceCommunity:availableForAllPageTypes"
                 access="global">
 
     <aura:attribute name="distribution" type="Object"/>
@@ -7,11 +7,11 @@
     <aura:attribute name="openModal" type="Boolean" default="false"/>
 
     <aura:registerEvent name="reloadImages" type="c:TCR_ReloadRecordPageEvent"/>
-    <!--    <c:BRCCustomToast aura:id="toastCmp"/>-->
+        <c:TCR_Toast aura:id="toastCmp"/>
 
     <aura:if isTrue="{!v.distribution}">
         <lightning:button class="image" onclick="{!c.onSelect}">
-            <div style="{!'background-image:url(' + v.distribution.ContentDownloadUrl + ')'}" class="innertile">
+            <div style="{!'background-image:url(' + v.distribution.ContentDownloadUrl + ')'}" class="small-picture">
             </div>
         </lightning:button>
     </aura:if>
@@ -20,7 +20,7 @@
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
                  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container" style="max-width: 150%">
-                <header class="slds-modal__header" style="border-radius: 25px; margin: 0px; padding: 10px">
+                <header class="slds-modal__header" style=" margin: 0px;">
                     <lightning:buttonIcon iconName="utility:close"
                                           onclick="{!c.closeModel}"
                                           alternativeText="Close"
@@ -28,14 +28,18 @@
                                           class="slds-modal__close"/>
                     <div>
                         <div>
-                            <img src="{!v.distribution.ContentDownloadUrl}" width="1000" style="border-radius: 25px"/>
+                            <img src="{!v.distribution.ContentDownloadUrl}" width="1000"/>
                         </div>
-<!--                        <div class="deleteButton">
-                            <lightning:button variant="neutral" label="Select As Poster" title="Select As Poster"
+                        <div class="deleteButton">
+                            <lightning:button variant="neutral"
+                                              label="Set as main image"
+                                              title="Set as main image"
                                               onclick="{!c.selectPoster}"/>
-                            <lightning:button variant="neutral" label="Delete" title="Delete Image"
+                            <lightning:button variant="neutral"
+                                              label="Delete"
+                                              title="Delete"
                                               onclick="{!c.deleteImage}"/>
-                        </div>-->
+                        </div>
                     </div>
                 </header>
             </div>

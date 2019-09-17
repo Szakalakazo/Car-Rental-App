@@ -1,7 +1,5 @@
 ({
     initImages : function(component, event,helper) {
-        console.log('init');
-
         let action = component.get("c.getProductImage");
         action.setParams({
             'recordId' : component.get("v.recordId")
@@ -14,9 +12,8 @@
                 component.set("v.posterPath", listPath.poster);
                 console.log('v.listOfImages -----> ' + component.get("v.listOfImages"));
                 console.log('v.posterPath -----> ' + component.get("v.posterPath"));
-
             } else {
-                console.log('FAILURE  -----> ');
+                console.log('FAILURE  ----->  2');
                 component.find("toastCmp").showToastModel(response.getError()[0].message, "error");
             }
         });

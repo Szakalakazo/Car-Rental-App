@@ -1,0 +1,72 @@
+.THIS .mainPanel {
+    border-right: 1px solid gray;
+    padding-right: 30px;
+}
+
+.THIS.card {
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 0 !important;
+    padding-bottom: 20px;
+}
+
+.THIS .headerName .slds-form-element__static {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.THIS .details {
+    padding-left: 20px;
+}
+
+.THIS .detailHeader {
+    font-size: 25px;
+    margin-top: 10px;
+    padding: 15px;
+    border-top: 1px solid gray;
+}
+
+.THIS .sectionDetails {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.THIS .sectionImages {
+    border-bottom: 1px solid gray;
+}
+
+.THIS .detailItem {
+    float: left;
+    font-size: 15px;
+    margin-left: 15px;
+    color: gray;
+}
+
+.THIS .detailItem .slds-form-element__static {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.THIS .textWrap {
+    margin-top: 15px;
+    margin-left: 5px;
+    width: 100px;
+    float: right;
+}
+
+.THIS .innerText .slds-form-element__static {
+    padding-top: 10px;
+    display: inline;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.THIS .smallLabel {
+    font-weight: bold;
+    display: inline;
+    font-size: 120%;
+    padding-left: 15px;
+}

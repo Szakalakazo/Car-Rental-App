@@ -1,0 +1,135 @@
+<aura:component        controller="TCR_ProductImage"
+        implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+        access="global">
+
+<!--    <aura:attribute name="recordId" type="Id"/>-->
+    <aura:attribute name="listOfImages" type="Object[]"/>
+    <aura:attribute name="poster" type="Object"/>
+    <aura:attribute name="record" type="Product2"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+    <lightning:card class="card detailHeader" title=" ">
+        <aura:set attribute="title">
+            <ui:outputDate aura:id="oDate" value="{!v.record.Production_Year__c}"
+                           format="yyyy"/>&nbsp; {!v.record.Brand__c}&nbsp;{!v.record.Model__c}
+        </aura:set>
+        <force:recordData aura:id="recordLoader"
+                          recordId="{!v.recordId}"
+                          layoutType="FULL"
+                          targetFields="{!v.record}"/>
+
+        <lightning:layout multipleRows="false" verticalAlign="center">
+            <lightning:layoutItem class="title">
+                <lightning:outputField fieldName="Name" class="headerName" variant="label-hidden"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+        <div class="section-images">
+            <lightning:layout multipleRows="false">
+                <lightning:layoutItem size="7">
+                    <img src="{!v.poster.ContentDownloadUrl}" width="600"/>
+                    <c:TCR_ImageCarousel images="{!v.listOfImages}"/>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="1">
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="4">
+                    <c:TCR_ProductPrice recordId="{!v.recordId}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+
+        <div class="section-details">
+            <lightning:layout multipleRows="false">
+                <lightning:layoutItem size="12" padding="arround-small">
+                    <p class="detailHeader">Product Details</p>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+
+        <div class="slds-col slds-size_6-of-12">
+            <article class="slds-tile">
+                <div class="slds-tile__detail">
+                    <dl class="slds-list_horizontal slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak smallLabel"
+                            title="Brand">
+                            Brand
+                        </dt>
+                        <dd class="slds-item_detail textDisplay"
+                            title="{!v.record.Brand__c}">
+                                {!v.record.Brand__c}
+                        </dd>
+                    </dl>
+
+                    <dl class="slds-list_horizontal slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak smallLabel"
+                            title="Model">
+                            Model
+                        </dt>
+                        <dd class="slds-item_detail textDisplay"
+                            title="{!v.record.Model__c}">
+                                {!v.record.Model__c}
+                        </dd>
+                    </dl>
+
+                    <dl class="slds-list_horizontal slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak smallLabel"
+                            title="Engine">
+                            Engine
+                        </dt>
+                        <dd class="slds-item_detail textDisplay"
+                            title="{!v.record.Engine__c}">
+                                {!v.record.Engine__c}
+                        </dd>
+                    </dl>
+
+                    <dl class="slds-list_horizontal slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak smallLabel"
+                            title="Doors Number">
+                            Doors Number
+                        </dt>
+                        <dd class="slds-item_detail textDisplay"
+                            title="{!v.record.Doors_Number__c}">
+                                {!v.record.Doors_Number__c}
+                        </dd>
+                    </dl>
+
+                    <dl class="slds-list_horizontal slds-wrap">
+                        <dt class="slds-item_label slds-text-color_weak smallLabel"
+                            title="Production Year">
+                            Production Year
+                        </dt>
+                        <dd class="slds-item_detail textDisplay"
+                            title="{!v.record.Production_Year__c}">
+                            <ui:outputDate aura:id="oDate" value="{!v.record.Production_Year__c}" format="yyyy"/>
+                        </dd>
+                    </dl>
+                </div>
+            </article>
+        </div>
+
+        <div class="section-overview">
+            <lightning:layout multipleRows="false">
+                <lightning:layoutItem size="12" padding="arround-small">
+                    <p class="detailHeader">Overview</p>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+
+        <div class="slds-col slds-size_1-of-1">
+            <article class="slds-tile">
+                <div class="slds-tile__detail">
+                    <dl class="slds-list_horizontal slds-wrap">
+                        <dd class="textDisplay">
+                                {!v.record.Description}
+                        </dd>
+                    </dl>
+                </div>
+            </article>
+        </div>
+
+
+    </lightning:card>
+</aura:component>
