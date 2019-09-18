@@ -16,9 +16,7 @@
                       targetError="{!v.recordError}"/>
 
     <div class="slds-page-header" role="banner" onclick="{!c.goToRecordPage}">
-        <p class="slds-text-heading--label">{!v.record.product.Brand__c}</p>
         <h1 class="slds-page-header__title slds-m-right--small  slds-truncate slds-align-left">
-
             <lightning:layout multipleRows="false" horizontalAlign="center">
                 <lightning:layoutItem size="4">
                     <img src="{!v.poster}" class="image"/>
@@ -27,12 +25,7 @@
                 <lightning:layoutItem size="7" class="rightPanel">
                     <div class="productLabel">{!v.record.product.Name}</div>
                     <div style="clear:both"/>
-                    <div class="detailLabel">Model:</div>
-                    <div class="detailItem">{!v.record.product.Model__c}</div>
-                    <div style="clear:both"/>
-                    <div class="detailLabel">Brand:</div>
-                    <div class="detailItem">{!v.record.product.Brand__c}</div>
-                    <div style="clear:both"/>
+                    <br/>
                     <div class="detailLabel">Engine:</div>
                     <div class="detailItem">{!v.record.product.Engine__c}</div>
                     <div style="clear:both"/>
@@ -40,14 +33,24 @@
                     <div class="detailItem">{!v.record.product.Doors_Number__c}</div>
                     <div style="clear:both"/>
                     <div class="detailLabel">Production Year:</div>
-                    <div class="productLabel">{!v.record.product.Production_Year__c}</div>
-                    <div class="productLabel">{!v.record.price[0].UnitPrice}</div>
-
-
+                    <div class="detailItem">
+                        <ui:outputDate aura:id="oDate" value="{!v.record.product.Production_Year__c}" format="yyyy"
+                                       class="productLabel"/>
+                    </div>
+                    <div style="clear:both"/>
+                    <div class="detailLabel">Price:</div>
+                    <div class="price">
+                        <p>
+                            <lightning:formattedNumber value="{!v.record.price[0].UnitPrice}"
+                                                       style="currency"
+                                                       minimumFractionDigits="0"
+                                                       maximumFractionDigits="0"
+                                                       currencyCode="EUR"/>
+                            / 1 day
+                        </p>
+                    </div>
                 </lightning:layoutItem>
             </lightning:layout>
-
-
         </h1>
     </div>
     <!-- Display Lightning Data Service errors, if any -->
