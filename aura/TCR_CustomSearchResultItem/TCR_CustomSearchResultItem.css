@@ -8,11 +8,6 @@
     border: 5px solid #ebedf0;
 }
 
-.THIS.mainPanel:hover {
-    border: 5px solid #d5dae0;
-    background-color: #d5dae0;
-}
-
 .THIS .leftPanel {
     vertical-align: middle;
     height: auto;

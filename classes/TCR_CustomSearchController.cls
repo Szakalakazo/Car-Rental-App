@@ -91,19 +91,21 @@ public with sharing class TCR_CustomSearchController {
         }
     }*/
 
-/*    @AuraEnabled
+   @AuraEnabled
     public static List<String> getBrands() {
+       System.debug('getBrands');
         try {
-            List<String> pickListValuesList = new List<String>();
-            Schema.DescribeFieldResult fieldResult = Product2.Brand__c.getDescribe();
-            List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-            for (Schema.PicklistEntry pickListVal : ple) {
-                pickListValuesList.add(pickListVal.getLabel());
+            List<String> listOfBrands = new List<String>();
+            Schema.DescribeFieldResult describeFieldResult = Product2.Brand__c.getDescribe();
+            List<Schema.PicklistEntry> pickListEntries = describeFieldResult.getPicklistValues();
+
+            for (Schema.PicklistEntry pickListVal : pickListEntries) {
+                listOfBrands.add(pickListVal.getLabel());
             }
-            return pickListValuesList;
+            return listOfBrands;
         } catch (Exception e) {
             System.debug(e.getMessage());
-            throw new AuraHandledException(System.Label.BRC_Server_Error);
+            throw new AuraHandledException('Error');
         }
-    }*/
+    }
 }

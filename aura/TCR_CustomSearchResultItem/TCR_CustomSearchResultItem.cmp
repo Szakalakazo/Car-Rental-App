@@ -14,42 +14,46 @@
                       targetFields="{!v.simpleRecord.product}"
                       targetError="{!v.recordError}"/>
 
-    <lightning:card title="" actions="{!c.goToRecordPage}">
-        <lightning:layout multipleRows="false" horizontalAlign="center">
-            <lightning:layoutItem size="4">
-                <img src="{!v.poster}" class="image"/>
-            </lightning:layoutItem>
-            <lightning:layoutItem size="7" class="rightPanel">
-                <div class="productLabel">{!v.record.product.Name}</div>
-                <div style="clear:both"/>
-                <br/>
-                <div class="detailLabel">Engine:</div>
-                <div class="detailItem">{!v.record.product.Engine__c}</div>
-                <div style="clear:both"/>
-                <div class="detailLabel">Number of doors:</div>
-                <div class="detailItem">{!v.record.product.Doors_Number__c}</div>
-                <div style="clear:both"/>
-                <div class="detailLabel">Production Year:</div>
-                <div class="detailItem">
-                    <ui:outputDate aura:id="oDate" value="{!v.record.product.Production_Year__c}" format="yyyy"
-                                   class="detailItem"/>
-                </div>
-                <div style="clear:both"/>
-                <div class="detailLabel">Price:</div>
-                <div class="price">
-                    <p>
-                        <lightning:formattedNumber value="{!v.record.price[0].UnitPrice}"
-                                                   style="currency"
-                                                   minimumFractionDigits="0"
-                                                   maximumFractionDigits="0"
-                                                   currencyCode="EUR"/>
-                        / 1 day
-                    </p>
-                </div>
-            </lightning:layoutItem>
-        </lightning:layout>
+    <lightning:card title="">
+        <div onclick="{!c.goToRecordPage}">
+            <lightning:layout multipleRows="false" horizontalAlign="center">
+                <lightning:layoutItem size="4">
+                    <img src="{!v.poster}" class="image"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="7" class="rightPanel">
+                    <div class="productLabel">{!v.record.product.Name}</div>
+                    <div style="clear:both"/>
+                    <br/>
+                    <div class="detailLabel">{!$Label.c.TCR_Engine}</div>
+                    <div class="detailItem">{!v.record.product.Engine__c}</div>
+                    <div style="clear:both"/>
+                    <div class="detailLabel">{!$Label.c.TCR_Number_Of_Doors}</div>
+                    <div class="detailItem">{!v.record.product.Doors_Number__c}</div>
+                    <div style="clear:both"/>
+                    <div class="detailLabel"></div>
+                    <div class="detailItem">
+                        <ui:outputDate aura:id="oDate"
+                                       value="{!v.record.product.Production_Year__c}"
+                                       format="yyyy"
+                                       class="detailItem"/>
+                    </div>
+                    <div style="clear:both"/>
+                    <div class="detailLabel">{!$Label.c.TCR_Price}</div>
+                    <div class="price">
+                        <p>
+                            <lightning:formattedNumber value="{!v.record.price[0].UnitPrice}"
+                                                       style="currency"
+                                                       minimumFractionDigits="0"
+                                                       maximumFractionDigits="0"
+                                                       currencyCode="EUR"/>
+                            &nbsp;{!$Label.c.TCR_Per_Day}
+                        </p>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
     </lightning:card>
-    
+
     <aura:if isTrue="{!not(empty(v.recordError))}">
         <div class="recordError">
             <ui:message title="Error" severity="error" closable="true">
@@ -57,6 +61,4 @@
             </ui:message>
         </div>
     </aura:if>
-
-
 </aura:component>

@@ -1,7 +1,7 @@
-<aura:component implements="forceCommunity:searchInterface" controller="TCR_CustomSearchController">
+<aura:component implements="forceCommunity:searchInterface"
+                controller="TCR_CustomSearchController">
 
     <aura:attribute name="searchText" type="String" default=""/>
-
 
     <div class="slds-form-element slds-lookup" data-select="single">
         <div class="slds-form-element__control">
@@ -9,15 +9,14 @@
                 <lightning:buttonIcon iconName="utility:search"
                                       variant="bare"
                                       onclick="{! c.handleClick }"
-                                      alternativeText="Search"
+                                      alternativeText="{!$Label.c.TCR_Search}"
                                       class="slds-input__icon"/>
 
                 <ui:inputText value="{!v.searchText}"
                               class="slds-lookup__search-input slds-input"
-                              placeholder="Search"/>
+                              placeholder="{!$Label.c.TCR_Search}"
+                              keyup="{! c.handleKeyUp }"/>
             </div>
         </div>
     </div>
-
-
 </aura:component>

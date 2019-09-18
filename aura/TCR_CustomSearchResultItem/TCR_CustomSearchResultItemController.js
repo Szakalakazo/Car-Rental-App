@@ -12,5 +12,4 @@
         });
         urlEvent.fire();
     },
-
 })
