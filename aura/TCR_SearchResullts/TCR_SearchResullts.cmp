@@ -49,6 +49,7 @@
                                   onclick="{!c.filterResult}"/>
             </div>
         </lightning:layoutItem>
+
         <lightning:layoutItem size="9" class="rightPanel">
             <lightning:layout horizontalAlign="center" multipleRows="false">
                 <lightning:layoutItem size="11" class="panelLabel">
