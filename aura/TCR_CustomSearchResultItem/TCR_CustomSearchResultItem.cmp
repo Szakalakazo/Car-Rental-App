@@ -1,0 +1,61 @@
+<aura:component implements="force:hasRecordId" access="global" controller="TCR_CustomSearchController">
+
+    <aura:attribute name="record" type="TCR_CustomSearchController.SearchResultWrapper"/>
+    <aura:attribute name="simpleRecord" type="TCR_CustomSearchController.SearchResultWrapper"/>
+    <aura:attribute name="recordError" type="String"/>
+    <aura:attribute name="poster" type="String"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.product.product.Id}"
+                      layoutType="FULL"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord.product}"
+                      targetError="{!v.recordError}"/>
+
+    <div class="slds-page-header" role="banner" onclick="{!c.goToRecordPage}">
+        <p class="slds-text-heading--label">{!v.record.product.Brand__c}</p>
+        <h1 class="slds-page-header__title slds-m-right--small  slds-truncate slds-align-left">
+
+            <lightning:layout multipleRows="false" horizontalAlign="center">
+                <lightning:layoutItem size="4">
+                    <img src="{!v.poster}" class="image"/>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="7" class="rightPanel">
+                    <div class="productLabel">{!v.record.product.Name}</div>
+                    <div style="clear:both"/>
+                    <div class="detailLabel">Model:</div>
+                    <div class="detailItem">{!v.record.product.Model__c}</div>
+                    <div style="clear:both"/>
+                    <div class="detailLabel">Brand:</div>
+                    <div class="detailItem">{!v.record.product.Brand__c}</div>
+                    <div style="clear:both"/>
+                    <div class="detailLabel">Engine:</div>
+                    <div class="detailItem">{!v.record.product.Engine__c}</div>
+                    <div style="clear:both"/>
+                    <div class="detailLabel">Number of doors:</div>
+                    <div class="detailItem">{!v.record.product.Doors_Number__c}</div>
+                    <div style="clear:both"/>
+                    <div class="detailLabel">Production Year:</div>
+                    <div class="productLabel">{!v.record.product.Production_Year__c}</div>
+                    <div class="productLabel">{!v.record.price[0].UnitPrice}</div>
+
+
+                </lightning:layoutItem>
+            </lightning:layout>
+
+
+        </h1>
+    </div>
+    <!-- Display Lightning Data Service errors, if any -->
+    <aura:if isTrue="{!not(empty(v.recordError))}">
+        <div class="recordError">
+            <ui:message title="Error" severity="error" closable="true">
+                    {!v.recordError}
+            </ui:message>
+        </div>
+    </aura:if>
+</aura:component>

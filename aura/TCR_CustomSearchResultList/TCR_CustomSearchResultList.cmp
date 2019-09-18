@@ -1,0 +1,11 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+
+    <aura:attribute type="TCR_CustomSearchController.SearchResultWrapper[]" name="listOfWrappers" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <h1>Search Results</h1>
+    <aura:iteration items="{!v.listOfWrappers}" var="wrapper">
+            <c:TCR_CustomSearchResultItem record="{!wrapper}"/>
+    </aura:iteration>
+</aura:component>
