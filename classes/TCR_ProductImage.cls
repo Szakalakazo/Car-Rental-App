@@ -33,22 +33,28 @@ global with sharing class TCR_ProductImage {
             ];
 
             ProductImageWrapper pictures = new ProductImageWrapper();
-            List<String> images = new List<String>();
+            List<String> listOfPostersIds = new List<String>();
             Set<Id> contentVersionIds = new Set<Id>();
 
             for (ContentVersion version : listOfContentVersions) {
                 if (version.Type__c == POSTER_TYPE) {
-                    List<ContentDistribution> distributions = [
-                            SELECT Id, DistributionPublicUrl, ContentDownloadUrl, ContentDocumentId
-                            FROM ContentDistribution
-                            WHERE ContentVersionId = :version.Id
-                    ];
-
-                    pictures.poster = distributions[0];
+                    listOfPostersIds.add(version.Id);
                 } else {
                     contentVersionIds.add(version.Id);
                 }
             }
+
+            if (!listOfPostersIds.isEmpty()) {
+                List<ContentDistribution> listOfPosters = [
+                        SELECT Id, DistributionPublicUrl, ContentDownloadUrl, ContentDocumentId
+                        FROM ContentDistribution
+                        WHERE ContentVersionId IN :listOfPostersIds
+                ];
+                for (ContentDistribution distribution : listOfPosters) {
+                    pictures.poster = listOfPosters[0];
+                }
+            }
+
             List<ContentDistribution> distributions = [
                     SELECT Id, DistributionPublicUrl, ContentDownloadUrl, ContentDocumentId
                     FROM ContentDistribution
@@ -68,8 +74,6 @@ global with sharing class TCR_ProductImage {
         System.debug('setImageType --- ');
         try {
             if (imageType == POSTER_TYPE) {
-                System.debug('--------------------- POSTER_TYPE ---------------------');
-
                 List<ContentDocumentLink> listOfDocumentLinks = [
                         SELECT ContentDocumentId
                         FROM ContentDocumentLink
@@ -88,8 +92,6 @@ global with sharing class TCR_ProductImage {
                 ];
 
                 if (!listOfContentVersions.isEmpty()) {
-                    System.debug('--------------------- listOfContentVersions.isEmpty ---------------------');
-
                     for (ContentVersion content : listOfContentVersions) {
                         content.Type__c = IMAGE_TYPE;
                     }
@@ -104,7 +106,6 @@ global with sharing class TCR_ProductImage {
             ];
 
             if (imageType == IMAGE_TYPE) {
-                System.debug('--------------------- IMAGE_TYPE ---------------------');
                 ContentDistribution cd = new ContentDistribution();
                 cd.Name = IMAGE_TYPE;
                 cd.ContentVersionId = listOfContentVersions[0].Id;
