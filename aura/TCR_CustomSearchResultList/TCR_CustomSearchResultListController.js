@@ -6,7 +6,6 @@
         if (!$A.util.isUndefinedOrNull(idsJson)) {
             let listOfWrappers = JSON.parse(idsJson);
             component.set('v.allResults', listOfWrappers);
-            sessionStorage.removeItem('customSearch--recordIds');
         }
         let action = component.get('c.getBrands');
         action.setCallback(this, function (response) {
@@ -18,12 +17,6 @@
             }
         });
         $A.enqueueAction(action);
-
-      /*  if (!$A.util.isUndefinedOrNull(searchText)) {
-            let results = JSON.parse(idsJson);
-            component.set('v.searchText', searchText);
-            // sessionStorage.removeItem('productSearch--searchText');
-        }*/
     },
 
     filterResults: function (component, event, helper) {
