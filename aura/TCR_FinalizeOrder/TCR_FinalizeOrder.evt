@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="TCR_FinalizeOrder">
+    <aura:attribute name="amountOfProduct" type="Integer"/>
+</aura:event>

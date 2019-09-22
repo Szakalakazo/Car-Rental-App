@@ -1,0 +1,39 @@
+.THIS .cart-icon{
+    position: absolute;
+
+}
+.THIS .cart-icon {
+    height: 50px;
+    padding-left: 10px;
+    position: relative;
+}
+
+.THIS .auto-icon {
+    height: 50px;
+    padding-right: 10px;
+    position: relative;
+}
+
+.THIS .slds-input{
+    height: 48px;
+}
+
+.THIS .cart-modal{
+   position:relative;
+    top:0;
+    width:350px;
+    height: auto;
+    transform: translateX(-41%);
+}
+
+.THIS .item-amount{
+    position: absolute;
+    top: -10px;
+    left: 40px;
+    background-color:white;
+    font-weight: bold;
+    font-size: 15px;
+    color:  #4D57FF;
+    border-radius: 3px;
+    padding: 1px 6px 1px 6px;
+}

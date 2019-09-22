@@ -1,0 +1,127 @@
+.THIS.header {
+    font-size: 20px;
+    background-color: lightgray;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.THIS .price {
+    float: left;
+    color: red;
+}
+
+.THIS .totalPrice {
+    float: left;
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+.THIS.tableHeader {
+    font-size: 13px;
+    background-color: lightgray;
+    margin-top: 10px;
+    padding: 2px 10px 2px 10px;
+    border-radius: 10px;
+}
+
+.THIS.tableRow {
+    font-size: 15px;
+    margin-top: 5px;
+    padding: 5px;
+    border-bottom: 1px solid lightgray;
+}
+
+.THIS.buttons {
+    border-top: 2px solid lightgray;
+    text-align: right;
+    margin-top: 20px;
+    padding: 5px;
+}
+
+.THIS .customButton {
+    width: 100px;
+    background-color: darkgray;
+    color: white;
+}
+
+.THIS .customButton:hover {
+    background-color: gray;
+}
+
+.THIS .productNameLink {
+    /*padding-left: 28px;*/
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.THIS .productNameLink:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.THIS .itemPrice {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.THIS .unitPrice {
+    font-size: 12px;
+    border-bottom: #4D57FF;
+}
+
+.THIS.separator {
+    border-bottom: #4D57FF;
+}
+
+.THIS .daysInput .slds-form-element__control {
+    width: 50px;
+    text-align: center;
+}
+
+.THIS .daysInput .slds-input {
+    text-align: center;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: white;
+}
+
+.THIS .daysButton {
+    border: 0;
+    background-color: #ebedf0;
+}
+
+.THIS .red svg:hover {
+    fill: darkred;
+}
+
+.THIS .daysInput input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.THIS .daysInput input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.THIS .nothing-to-display {
+    /*top: -10px;*/
+    /*left: 40px;*/
+    /*background-color: white;*/
+    font-weight: bold;
+    font-size: 15px;
+    color: #4D57FF;
+    /*border-radius: 3px;*/
+    padding: 1px 6px 1px 6px;
+}
+
+.THIS .icon-order-list {
+    height: 50px;
+    padding-left: 20px;
+    padding-bottom: 15px;
+    position: relative;
+}

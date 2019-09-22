@@ -1,0 +1,236 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes"
+                controller="TCR_ProductImage"
+                access="global">
+
+    <aura:attribute name="poster" type="String"/>
+    <aura:attribute name="newOrder" type="List"/>
+    <aura:attribute name="itemList" type="Object[]"/>
+    <aura:attribute name="totalAmount" type="Integer"/>
+    <aura:attribute name="totalItemInBasket" type="Integer"/>
+    <aura:attribute name="totalPrice" type="Decimal" default="0"/>
+    <aura:attribute name="showSummary" type="Boolean" default="false"/>
+
+    <aura:attribute name="iconRemoveFromCart" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FExa&amp;d=%2Fa%2F2p0000008uWX%2FiEFYbK7NxxllyKhJr24Ffm0KjzU4J1Sg91Tt7AbM900&amp;asPdf=false"/>
+    <aura:attribute name="iconEdit" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FHOz&amp;d=%2Fa%2F2p0000008uY4%2FRJOpkr9q2A8wRLvVGP8BWX5cD8DD_2XZTMHZWCU66dk&amp;asPdf=false"/>
+    <aura:attribute name="iconTotal" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FHgK&amp;d=%2Fa%2F2p0000008uYO%2FQXW21KjQLPhPwDnSYOfSkZqrQxZKZeIod_eGx6QRCPM&amp;asPdf=false"/>
+    <aura:attribute name="iconEmptyCart" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FHkD&amp;d=%2Fa%2F2p0000008uYT%2FST3462gAj5pI.na0c0LYNn9cNwaDdLf5kykmHixWzUw&amp;asPdf=false"/>
+    <aura:attribute name="iconSuccess" type="String"
+                    default="    https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FI9w&amp;d=%2Fa%2F2p0000008uYs%2Fta_qdR3aUYqeKMZUVG37Hmr8CZhIF7IBqDPLNJRhfN0&amp;asPdf=false"/>
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="c:TCR_FinalizeOrder" action="{!c.displayConfirmation}"/>
+
+    <aura:if isTrue="{!!empty(v.itemList)}">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="8">
+                <lightning:card title="" class="card-no-border">
+
+                    <div class=" slds-grid slds-gutters">
+                        <div class="slds-col slds-size_2-of-12 edit-icon">
+                            <div class="edit-icon">
+                                <img src="{!v.iconEdit}"/>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                            <div class="centered-text">
+                                <h2 class="slds-text-heading_small ">
+                                        {!$Label.c.TCR_Modify_Shopping}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="slds-has-dividers_bottom-space">
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout slds-no-row-hover">
+                            <thead>
+                            <tr class="slds-text-heading_label">
+                                <th class="col2" scope="col">
+                                    <div class="slds-truncate"
+                                         title="">{!$Label.c.TCR_Product}
+                                    </div>
+                                </th>
+                                <th class="col1" scope="col">
+                                    <div class="slds-truncate" title=""> {!$Label.c.TCR_Price}</div>
+                                </th>
+                                <th class="col1" scope="col">
+                                    <div class="slds-truncate" title=""> {!$Label.c.TCR_Days_Number}</div>
+                                </th>
+                                <th class="col1" scope="col">
+                                    <div class="slds-truncate" title="Total Price"> {!$Label.c.TCR_Price}</div>
+                                </th>
+                                <th class="col1" scope="col">
+                                    <div class="slds-truncate" title="Delete"></div>
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <aura:iteration items="{!v.itemList}"
+                                            var="record"
+                                            indexVar="itemIndex">
+                                <tr class="slds-hint-parent">
+                                    <td class="centerColumn" style="cursor: pointer">
+                                        <div class=" slds-grid slds-gutters"
+                                             onclick="{!c.handleGoToRecordPage}"
+                                             data-record="{!record.product.Id}">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <img src="{!record.posterURL}"/>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3">
+                                                <p class="custom-name link">{!record.product.Name} </p></div>
+                                        </div>
+                                    </td>
+                                    <td class="centerColumn">
+                                        <div class="slds-truncate">
+                                            <p class="slds-truncate" title="Total Price">
+                                                <lightning:formattedNumber value="{!record.price}"
+                                                                           style="currency"
+                                                                           minimumFractionDigits="0"
+                                                                           maximumFractionDigits="0"/>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="centerColumn">
+                                        <lightning:layout multipleRows="true">
+                                            <lightning:layoutItem size="4">
+                                                <div data-index="{!itemIndex}"
+                                                     onclick="{!c.subtractDay}"
+                                                     style="cursor: pointer">
+                                                    <lightning:button class="buttonDown" onclick="" value="">-
+                                                    </lightning:button>
+                                                </div>
+                                            </lightning:layoutItem>
+                                            <lightning:layoutItem size="4">
+                                                <div style="padding-top: 6px;">
+                                                        {!record.quantity}</div>
+                                            </lightning:layoutItem>
+                                            <lightning:layoutItem size="4">
+                                                <div data-index="{!itemIndex}"
+                                                     onclick="{!c.addDay}"
+                                                     style="cursor: pointer">
+                                                    <lightning:button class="buttonUp" onclick="" value="">+
+                                                    </lightning:button>
+                                                </div>
+                                            </lightning:layoutItem>
+                                        </lightning:layout>
+                                    </td>
+                                    <td class="centerColumn">
+                                        <div class="slds-truncate">
+                                            <p class="slds-truncate" title="">
+                                                <lightning:formattedNumber value="{!record.totalPriceForItem}"
+                                                                           style="currency"
+                                                                           minimumFractionDigits="0"
+                                                                           maximumFractionDigits="0"/>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="centerColumn">
+                                        <div data-index="{!itemIndex}"
+                                             onclick="{!c.deleteItemFromItemList}" style="cursor: pointer">
+                                            <img src="{!v.iconRemoveFromCart}" style="width: 50px"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                            </tbody>
+                        </table>
+                    </ul>
+
+                    <br/>
+                    <div class=" slds-grid slds-gutters">
+                        <div class="slds-col slds-size_2-of-12 edit-icon">
+                            <div class="edit-total">
+                                <img src="{!v.iconTotal}"/>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_2-of-12 edit-icon">
+                            <div class="centered-text">
+                                <h3 class="slds-text-heading_small ">
+                                        {!$Label.c.TCR_Total}
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_8-of-12">
+                            <div class="price slds-text-heading_small centered-text">
+                                <lightning:formattedNumber value="{!v.totalPrice}" style="currency"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </lightning:card>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="1">
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3">
+                <c:TCR_OrderCreator itemList="{!v.itemList}"/>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+
+    <aura:if isTrue="{!and((empty(v.itemList)), !v.showSummary)}">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="3">
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="6">
+                <lightning:card title="" class="card-no-border">
+                    <div class="info">
+                        <h1 class="slds-text-heading_medium">
+                                {!$Label.c.TCR_Empty_Cart}
+                        </h1>
+                        <h1 class="slds-text-heading_small">
+                                {!$Label.c.TCR_Return_to_home}
+                            <br/>
+                            <br/>
+                        </h1>
+                        <div style="cursor: pointer" onclick="{!c.goToHomePage}">
+                            <img src="{!v.iconEmptyCart}"/>
+                        </div>
+                    </div>
+                </lightning:card>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="3">
+            </lightning:layoutItem>
+        </lightning:layout>
+    </aura:if>
+    <aura:if isTrue="{!v.showSummary}">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="3">
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="6">
+                <lightning:card title="" class="card-no-border">
+                    <div class="info">
+                        <h1 class="slds-text-heading_medium">
+                                {!$Label.c.TCR_Order_Completed}
+                        </h1>
+                        <h2 class="slds-text-heading_medium">
+                                {!$Label.c.TCR_Info_Mail}
+                        </h2>
+                        <br/>
+                        <br/>
+                        <div style="cursor: pointer" onclick="{!c.goToHomePage}">
+                            <img src="{!v.iconSuccess}"/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <h1 class="slds-text-heading_small">
+                                {!$Label.c.TCR_Home_or_Order_History}
+                        </h1>
+                    </div>
+                </lightning:card>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="3">
+            </lightning:layoutItem>
+        </lightning:layout>
+
+    </aura:if>
+</aura:component>

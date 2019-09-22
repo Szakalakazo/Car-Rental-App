@@ -1,0 +1,120 @@
+<aura:component controller="TCR_ProductSearchController"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+
+    <aura:attribute name="productEntryList" type="List"/>
+    <aura:attribute name="standardPrice" type="Integer"/>
+    <aura:attribute name="discountPrice" type="Integer"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="amountProduct" type="Integer" default="1"/>
+    <aura:attribute name="priceList" type="PricebookEntry[]"/>
+    <aura:attribute name="productItem" type="Product2"/>
+    <aura:attribute name="posterURL" type="Object"/>
+    <aura:attribute name="iconDiscount" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FIEC&amp;d=%2Fa%2F2p0000008uYx%2FYMA3pKCypJAGw7eZtvqTUijoJa1B3Cva7P72TlHEHhk&amp;asPdf=false"/>
+    <aura:attribute name="iconAddToCart" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FIFP&amp;d=%2Fa%2F2p0000008uZ2%2Fnjigm1kY7s9Xw1HLEkj4eWRlRHD6tbnt4rPgGS71t7I&amp;asPdf=false"/>
+
+
+    <aura:registerEvent name="TCR_AddProductToBasket" type="c:TCR_AddProductToBasket"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <c:TCR_Toast aura:id="toastCmp"/>
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      targetFields="{!v.productItem}"
+                      targetError="{!v.recordError}"
+                      layoutType="FULL"/>
+
+    <div class="rightColumnWrap">
+        <aura:if isTrue="{!v.discountPrice lt v.standardPrice}">
+            <div class=" slds-grid slds-gutters">
+                <div class="slds-col slds-size_4-of-12 edit-icon">
+                    <div class="icon-discount">
+                        <img src="{!v.iconDiscount}"/>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_8-of-12 edit-icon">
+                    <div class="centered-text">
+                        <h3 class="slds-text-heading_small centered-text">
+                            Special Offer
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        {!$Label.c.TCR_Price}
+        <div>
+            <aura:if isTrue="{!v.discountPrice == v.standardPrice}">
+                <div>
+                    <p class="standardPriceWithOut">
+                        <lightning:formattedNumber value="{!v.standardPrice}"
+                                                   style="currency"
+                                                   minimumFractionDigits="2"
+                                                   maximumFractionDigits="2"/>
+                    </p>
+                </div>
+            </aura:if>
+
+            <aura:if isTrue="{!v.discountPrice lt v.standardPrice}">
+                <div>
+                    <s class="standardPrice">
+                        <lightning:formattedNumber value="{!v.standardPrice}"
+                                                   style="currency"
+                                                   minimumFractionDigits="2"
+                                                   maximumFractionDigits="2"/>
+                    </s>
+                </div>
+            </aura:if>
+
+            <aura:if isTrue="{!v.discountPrice lt v.standardPrice}">
+                <div class="standardPriceWithOut">
+                    <lightning:formattedNumber value="{!v.discountPrice}"
+                                               style="currency"
+                                               minimumFractionDigits="2"
+                                               maximumFractionDigits="2"/>
+                </div>
+            </aura:if>
+        </div>
+
+
+        <div class="priceWrap">
+            <span class="priceLabel">
+               <lightning:formattedNumber value="{!v.discountPrice  * v.amountProduct}"
+                                          style="currency"
+                                          minimumFractionDigits="2"
+                                          maximumFractionDigits="2"/>
+            </span>
+        </div>
+        <div class="slds-m-bottom&#45;&#45;medium" style="text-align: center;">
+            <lightning:button class="buttonDown" onclick="{!c.clickButtonDown}">
+                -
+            </lightning:button>
+            <div class="buttonNumber slds-m-top&#45;&#45;medium ">
+                <lightning:input label="" variant="label-hidden"
+                                 type="number" min="0" max="100"
+                                 aura:id="searchForm"
+                                 class="buttonNumber1"
+                                 name="expenseName"
+                                 value="{!v.amountProduct}"
+                />
+            </div>
+            <lightning:button class="buttonUp" onclick="{!c.clickButtonUp}">
+                +
+            </lightning:button>
+        </div>
+        <div class=" slds-grid slds-gutters">
+            <div class="slds-col slds-size_2-of-12 edit-icon">
+            </div>
+            <div class="slds-col slds-size_8-of-12 edit-icon">
+                <img src="{!v.iconAddToCart}"
+                     class="icon-add-to-cart"
+                     id="add"
+                     onclick="{!c.clickAddToBasket}"/>
+            </div>
+            <div class="slds-col slds-size_2-of-12 edit-icon">
+            </div>
+        </div>
+    </div>
+</aura:component>

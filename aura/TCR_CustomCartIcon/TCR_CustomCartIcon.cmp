@@ -1,0 +1,10 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes"
+                access="global">
+
+    <aura:attribute name="cartIcon" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FGDv&amp;d=%2Fa%2F2p0000008uXQ%2FO4YqrrzamxDbIlGRDS_0C52H5DU3MPDXpQn4E3S88vk&amp;asPdf=false"/>
+
+    <div style="z-index: 150;">
+        <img src="{!v.cartIcon}"/>
+    </div>
+</aura:component>

@@ -1,0 +1,83 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes"
+                access="global">
+
+    <aura:attribute name="listOfProducts" type="Object[]"/>
+    <aura:attribute name="totalPrice" type="Currency" default="0"/>
+    <aura:attribute name="iconOrderList" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FGPS&amp;d=%2Fa%2F2p0000008uXV%2FrRmKOfBSMnc2BJP58KNJMoCJqwbdD483tS8U09IquLg&amp;asPdf=false"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler name="TCR_FinalizeOrder" event="c:TCR_FinalizeOrder" action="{!c.doInit}"/>
+
+    <lightning:card title="">
+        <lightning:tile label="">
+            <lightning:layout multipleRows="false" horizontalAlign="center" class="">
+                <lightning:layoutItem size="7">
+                    <img src="{!v.iconOrderList}" class="icon-order-list"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="5">
+                    <div class="slds-text-heading_label">
+                            {!$Label.c.TCR_Total}
+                    </div>
+                    <div class="price">
+                        <lightning:formattedNumber value="{!v.totalPrice}" style="currency"/>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout multipleRows="false" class="tableHeader">
+                <lightning:layoutItem size="1"/>
+                <lightning:layoutItem size="6">
+                    <div class="slds-text-heading_label">
+                            {!$Label.c.TCR_Name}
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="2">
+                    <div class="slds-text-heading_label">
+                            {!$Label.c.TCR_Days_Number}
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="3">
+                {!$Label.c.TCR_Total_Price}
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:tile>
+        <aura:iteration items="{!v.listOfProducts}"
+                        var="cartItem"
+                        indexVar="item">
+            <lightning:tile label="">
+                <lightning:layout multipleRows="true"
+                                  class="tableRow"
+                                  verticalAlign="center">
+                    <lightning:layoutItem size="1">
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="6">
+                        <div class="productNameLink" data-index="{!cartItem.product.Id}"
+                             onclick="{!c.navigateToProduct}">
+                                {!cartItem.product.Name}
+                        </div>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="2">
+                        <lightning:layout multipleRows="false" verticalAlign="center">
+                                {!cartItem.quantity}
+                        </lightning:layout>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem size="2">
+                        <div class="itemPrice">
+                            <lightning:formattedNumber value="{!cartItem.price * cartItem.quantity}" style="currency"/>
+                        </div>
+                        <div class="unitPrice ">
+                            <lightning:formattedNumber value="{!cartItem.price}" style="currency"/>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:tile>
+        </aura:iteration>
+
+        <lightning:layout multipleRows="true" class="buttons" horizontalAlign="end">
+        </lightning:layout>
+    </lightning:card>
+
+</aura:component>

@@ -1,0 +1,56 @@
+<aura:component implements="forceCommunity:searchInterface"
+                controller="TCR_CustomSearchController">
+
+    <aura:attribute name="searchText" type="String" default=""/>
+    <aura:attribute name="cartItemAmount" type="Integer" default="0"/>
+    <aura:attribute name="isCartEmpty" type="Boolean" default="false"/>
+    <aura:attribute name="isCartModalOpen" type="Boolean" default="false"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler event="c:TCR_AddProductToBasket" action="{!c.refreshItemsAmount}"/>
+    <aura:handler event="c:TCR_FinalizeOrder" action="{!c.refreshItemsAmount}"/>
+
+    <div class="slds-form-element slds-lookup" data-select="single">
+        <div class="slds-form-element__control">
+            <lightning:layout>
+                <lightning:layoutItem size="1">
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1">
+                    <div class="auto-icon">
+                        <c:TCR_CustomAutoIcon/>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="8">
+                    <div class="slds-input-has-icon slds-input-has-icon--right left">
+                        <lightning:buttonIcon iconName="utility:search"
+                                              variant="bare"
+                                              onclick="{! c.handleClick }"
+                                              alternativeText="{!$Label.c.TCR_Search}"
+                                              class="slds-input__icon"/>
+                        <ui:inputText value="{!v.searchText}"
+                                      class="slds-lookup__search-input slds-input"
+                                      placeholder="{!$Label.c.TCR_Search}"
+                                      keyup="{! c.handleKeyUp }"/>
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1">
+
+                    <div class="cart-icon"
+                         style="cursor: pointer;"
+                         onmouseenter="{!c.handleOpenCartModal}"
+                         onmouseleave="{!c.handleCloseModal}">
+                        <div onclick="{!c.goToBasket}">
+                            <c:TCR_CustomCartIcon/>
+                        </div>
+                        <div class="item-amount">{!v.cartItemAmount}</div>
+                        <aura:if isTrue="{!v.isCartModalOpen}">
+                            <div class="cart-modal">
+                                <c:TCR_CustomCartModal/>
+                            </div>
+                        </aura:if>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </div>
+</aura:component>

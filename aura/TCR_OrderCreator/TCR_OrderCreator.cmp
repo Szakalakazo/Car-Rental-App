@@ -1,0 +1,75 @@
+<aura:component description="BRCCartPage"
+                implements="forceCommunity:availableForAllPageTypes"
+                controller="TCR_Basket"
+                access="global">
+
+    <aura:attribute name="itemList" type="Object[]"/>
+    <aura:attribute name="isShoppingListEmpty" type="Boolean" default="false"/>
+    <aura:attribute name="totalPrice" type="Currency" default="0"/>
+    <aura:attribute name="userId" type="String" default=""/>
+    <aura:attribute name="isAddressSectionVisible" type="Boolean" default="true"/>
+    <aura:attribute name="order" type="Order"
+                    default="{ShippingStreet:'Bystra Podhanańska',ShippingPostalCode:'34-235',ShippingCity:'Bystra Podhanańska',ShippingState:'Malopolska',ShippingCountry:'Poland'}"/>
+    <aura:attribute name="iconAddress" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FHbq&amp;d=%2Fa%2F2p0000008uY9%2F.AY53mgPS9ReYex6WLlEZofJLcVqLTY3bDJzzAlCVvc&amp;asPdf=false"/>
+    <aura:attribute name="iconPayment" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FHc0&amp;d=%2Fa%2F2p0000008uYE%2FIq7i41mCLxPxFanMEwN19SRVKZVUrUjAvyrkuM.ynCU&amp;asPdf=false"/>
+
+    <aura:registerEvent name="TCR_FinalizeOrder" type="c:TCR_FinalizeOrder"/>
+
+    <lightning:card title="" class="card-no-border">
+        <div class="slds-grid slds-gutters" onclick="{!c.showAddressSection}" style="cursor: pointer">
+            <div class="slds-col slds-size_4-of-12 edit-icon">
+                <div class="edit-icon">
+                    <img src="{!v.iconAddress}"/>
+                </div>
+            </div>
+            <div class="slds-col slds-size_8-of-12">
+                <div class="centered-text">
+                    <h2 class="slds-text-heading_small link">
+                            {!$Label.c.TCR_Modify_Address}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <aura:if isTrue="{!v.isAddressSectionVisible}">
+            <lightning:recordEditForm objectApiName="Order">
+                <lightning:messages/>
+                <lightning:layout multipleRows="true" horizontalAlign="center">
+                    <lightning:layoutItem size="12">
+                        <lightning:inputField fieldName="ShippingStreet" value="{!v.order.ShippingStreet}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12">
+                        <lightning:inputField fieldName="ShippingPostalCode" value="{!v.order.ShippingPostalCode}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12">
+                        <lightning:inputField fieldName="ShippingCity" value="{!v.order.ShippingCity}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12">
+                        <lightning:inputField fieldName="ShippingState" value="{!v.order.ShippingState}"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12">
+                        <lightning:inputField fieldName="ShippingCountry" value="{!v.order.ShippingCountry}"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:recordEditForm>
+        </aura:if>
+        <aura:if isTrue="{!!empty(v.itemList)}">
+            <div class=" slds-grid slds-gutters" style="cursor: pointer" onclick="{!c.handleSubmitOrder}">
+                <div class="slds-col slds-size_4-of-12 edit-icon">
+                    <div class="icon-payment">
+                        <img src="{!v.iconPayment}"/>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_8-of-12">
+                    <div class="centered-text">
+                        <h2 class="slds-text-heading_small link">
+                                {!$Label.c.TCR_Finalize_Order}
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+    </lightning:card>
+</aura:component>
