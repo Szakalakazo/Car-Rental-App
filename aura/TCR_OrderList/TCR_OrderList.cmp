@@ -1,0 +1,6 @@
+<!--
+ - Created by Tomek on 22.09.2019.
+ -->
+
+<aura:component description="TCR_OrderList" implements="forceCommunity:availableForAllPageTypes" access="global" controller="TCR_OrderHistory">
+</aura:component>

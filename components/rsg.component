@@ -1,0 +1,6 @@
+<!--
+ - Created by Tomek on 22.09.2019.
+ -->
+
+<apex:component id="rsg">
+</apex:component>
