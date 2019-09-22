@@ -4,6 +4,12 @@
     <aura:attribute name="simpleRecord" type="TCR_CustomSearchController.SearchResultWrapper"/>
     <aura:attribute name="recordError" type="String"/>
     <aura:attribute name="poster" type="String"/>
+    <aura:attribute name="discount" type="Integer"/>
+    <aura:attribute name="iconDiscount" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FIZe&amp;d=%2Fa%2F2p0000008uZC%2Fm.KRIx2u_c_LVUWPvr9A35of7tQk1dMvAASCDZb6O6Y&amp;asPdf=false"/>
+    <aura:attribute name="iconPriceTag" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FIaS&amp;d=%2Fa%2F2p0000008uZH%2Faz8IfE.UzwuE0l7Ie3SuqRoRKZiJ25vF1klSTwq8t7Q&amp;asPdf=false"/>
+
 
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
 
@@ -13,14 +19,13 @@
                       targetRecord="{!v.record}"
                       targetFields="{!v.simpleRecord.product}"
                       targetError="{!v.recordError}"/>
-
-    <lightning:card title="">
+    <lightning:card title="" class="card-no-border border--bottom">
         <div onclick="{!c.goToRecordPage}" style="cursor: pointer">
             <lightning:layout multipleRows="false" horizontalAlign="center">
                 <lightning:layoutItem size="4">
                     <img src="{!v.poster}" class="image"/>
                 </lightning:layoutItem>
-                <lightning:layoutItem size="7" class="rightPanel">
+                <lightning:layoutItem size="5" class="rightPanel">
                     <div class="productLabel">{!v.record.product.Name}</div>
                     <div style="clear:both"/>
                     <br/>
@@ -38,7 +43,7 @@
                                        class="detailItem"/>
                     </div>
                     <div style="clear:both"/>
-                    <div class="detailLabel">{!$Label.c.TCR_Price}</div>
+                    <!-- <div class="detailLabel">{!$Label.c.TCR_Price}</div>
                     <div class="price">
                         <p>
                             <lightning:formattedNumber value="{!v.record.price[0].UnitPrice}"
@@ -48,7 +53,50 @@
                                                        currencyCode="EUR"/>
                             &nbsp;{!$Label.c.TCR_Per_Day}
                         </p>
-                    </div>
+                    </div>-->
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="3">
+                    <aura:if isTrue="{!v.discount == v.record.price[0].UnitPrice}">
+                        <div class="normal-price">
+                            <div  style="padding-left: 100px">
+                                <img src="{!v.iconPriceTag}" class="icon-priceTag" style="width: 25px"/>
+                            </div>
+                            <p class="">
+                                <lightning:formattedNumber value="{!v.record.price[0].UnitPrice}"
+                                                           style="currency"
+                                                           minimumFractionDigits="0"
+                                                           maximumFractionDigits="0"
+                                                           currencyCode="EUR"/>
+                                &nbsp;{!$Label.c.TCR_Per_Day}
+                            </p>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="image-discount" style="padding-left: 100px">
+                                <img src="{!v.iconDiscount}"/>
+                            </div>
+                            <div class="price">
+                                <s class="standardPrice">
+                                    <lightning:formattedNumber value="{!v.record.price[0].UnitPrice}"
+                                                               style="currency"
+                                                               minimumFractionDigits="0"
+                                                               maximumFractionDigits="0"
+                                                               currencyCode="EUR"/>
+                                    &nbsp;{!$Label.c.TCR_Per_Day}
+                                </s>
+                            </div>
+                            <div class="price">
+                                <p>
+                                    <lightning:formattedNumber value="{!v.discount}"
+                                                               style="currency"
+                                                               minimumFractionDigits="0"
+                                                               maximumFractionDigits="0"
+                                                               currencyCode="EUR"/>
+                                    &nbsp;{!$Label.c.TCR_Per_Day}
+                                </p>
+                            </div>
+                        </aura:set>
+                    </aura:if>
                 </lightning:layoutItem>
             </lightning:layout>
         </div>

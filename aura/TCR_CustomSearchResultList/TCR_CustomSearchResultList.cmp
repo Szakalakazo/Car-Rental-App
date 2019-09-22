@@ -27,7 +27,7 @@
                     <div class="slds-col slds-size_8-of-12">
                         <div class="centered-text">
                             <h2 class="slds-text-heading_small ">
-                                    Filter results
+                                Filter results
                             </h2>
                         </div>
                     </div>
@@ -87,11 +87,9 @@
             </lightning:card>
         </lightning:layoutItem>
 
-
         <lightning:layoutItem size="1"></lightning:layoutItem>
 
         <lightning:layoutItem size="9">
-
             <aura:if isTrue="{!v.allResults.length > 0}">
                 <h1 class="slds-page-header__title slds-truncate">Search Results</h1>
                 <aura:iteration items="{!v.filteredResults}" var="wrapper">

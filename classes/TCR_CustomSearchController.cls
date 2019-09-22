@@ -15,7 +15,6 @@ public with sharing class TCR_CustomSearchController {
             List<SearchResultWrapper> searchResults = new List<SearchResultWrapper>();
             for (List<SObject> sobjs : results) {
                 for (SObject sobj : sobjs) {
-                    System.debug('sobj -----> ' + sobj);
                     listOfIds.add(sobj.Id);
                     SearchResultWrapper item = new SearchResultWrapper();
                     item.product = (Product2) sobj;
@@ -24,8 +23,13 @@ public with sharing class TCR_CustomSearchController {
             }
 
             List<PricebookEntry> priceList = new List<PricebookEntry>();
-            priceList = [SELECT Id, Product2Id, Pricebook2Id, UnitPrice, IsActive FROM PricebookEntry WHERE Product2Id IN :listOfIds];
-
+            priceList = [
+                    SELECT Id, Product2Id, Pricebook2Id, UnitPrice, IsActive
+                    FROM PricebookEntry
+                    WHERE Product2Id IN :listOfIds
+                    AND IsActive = true
+                    ORDER BY UnitPrice DESC
+            ];
             for (PricebookEntry entry : priceList) {
                 for (SearchResultWrapper item : searchResults) {
                     if (entry.Product2Id == item.product.Id) {
@@ -91,9 +95,9 @@ public with sharing class TCR_CustomSearchController {
         }
     }*/
 
-   @AuraEnabled
+    @AuraEnabled
     public static List<String> getBrands() {
-       System.debug('getBrands');
+        System.debug('getBrands');
         try {
             List<String> listOfBrands = new List<String>();
             Schema.DescribeFieldResult describeFieldResult = Product2.Brand__c.getDescribe();

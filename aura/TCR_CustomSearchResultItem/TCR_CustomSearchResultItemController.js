@@ -1,6 +1,7 @@
 ({
-    doInit: function(component, event, helper) {
-        helper.initPoster(component, event,helper);
+    doInit: function (component, event, helper) {
+        helper.initPoster(component, event, helper);
+        $A.enqueueAction(component.get('c.setDiscount'));
     },
 
     goToRecordPage: function (component, event, helper) {
@@ -11,5 +12,11 @@
             "url": sitePrefix + "/product/" + recordId
         });
         urlEvent.fire();
+    },
+
+    setDiscount: function (component, event, helper) {
+        let priceList = component.get("v.record.price");
+        let discount = priceList[priceList.length - 1].UnitPrice;
+        component.set('v.discount', discount);
     },
 })
