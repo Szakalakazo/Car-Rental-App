@@ -18,7 +18,7 @@
 
 .THIS .image {
     height: auto;
-    width : 250px;
+    width: 250px;
     border-radius: 5px;
 }
 
@@ -26,7 +26,7 @@
     text-align: left;
     padding-left: 10px;
     padding-top: 0;
-    border : 0 !important;
+    border: 0 !important;
 }
 
 .THIS .productLabel {
@@ -51,8 +51,8 @@
 }
 
 .THIS .price {
-    padding-left : 20px;
-    color : red;
+    padding-left: 20px;
+    color: red;
     font-size: 20px;
     font-weight: bold;
 }
@@ -79,16 +79,24 @@
 }
 
 .THIS .orderSection {
-    position:absolute;
+    position: absolute;
     bottom: 0;
     right: 0;
     text-align: center;
 }
 
+.THIS .centered-text {
+    padding-top: 8px;
+}
+
 .THIS .overlayPrice {
     text-align: center;
-    color : red;
+    color: red;
     font-size: 15px;
+}
+
+.THIS.card-no-border {
+    border: 0px !important;
 }
 
 .THIS input[type=number]::-webkit-outer-spin-button {
@@ -97,6 +105,7 @@
     appearance: none;
     margin: 0;
 }
+
 .THIS input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;

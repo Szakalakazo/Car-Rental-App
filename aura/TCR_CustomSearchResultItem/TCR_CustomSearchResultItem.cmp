@@ -15,7 +15,7 @@
                       targetError="{!v.recordError}"/>
 
     <lightning:card title="">
-        <div onclick="{!c.goToRecordPage}">
+        <div onclick="{!c.goToRecordPage}" style="cursor: pointer">
             <lightning:layout multipleRows="false" horizontalAlign="center">
                 <lightning:layoutItem size="4">
                     <img src="{!v.poster}" class="image"/>

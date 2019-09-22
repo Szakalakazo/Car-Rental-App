@@ -8,68 +8,86 @@
     <aura:attribute name="minPrice" type="Currency" default=""/>
     <aura:attribute name="maxPrice" type="Currency" default=""/>
     <aura:attribute name="productionYear" type="Date" default=""/>
+    <aura:attribute name="iconSearch" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FIHB&amp;d=%2Fa%2F2p0000008uZ7%2FT3tT43ApH.Z_x9rZyb3YSOPWOKZE8s.p46X0XIHHWDo&amp;asPdf=false"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <aura:handler name="change" value="{!v.minPrice}" action="{!c.filterResults}"/>
     <aura:handler name="change" value="{!v.maxPrice}" action="{!c.filterResults}"/>
 
     <lightning:layout>
-        <lightning:layoutItem size="2" class="leftPanel">
-            <lightning:select aura:id="option"
-                              name="option"
-                              label="Sort By"
-                              onchange="{!c.applySorting}">
-                <option value="1">{!$Label.c.TCR_Sort_By_Name_Asc}</option>
-                <option value="2">{!$Label.c.TCR_Sort_By_Name_Desc}</option>
-                <option value="3">{!$Label.c.TCR_Sort_By_Price_Desc}</option>
-                <option value="4">{!$Label.c.TCR_Sort_By_Price_Asc}</option>
-            </lightning:select>
-
-            <div class="filterItem">
-                <lightning:select aura:id="brandSelect"
-                                  name="select"
-                                  label="Brand"
-                                  onchange="{!c.filterResults}">
-                    <option value="">--none--</option>
-                    <aura:iteration items="{!v.brands}" var="brand">
-                        <option value="{!brand}">{!brand}</option>
-                    </aura:iteration>
-                </lightning:select>
-            </div>
-
-            <div class="filterItem">
-                <lightning:input type="date"
-                                 label="{!$Label.c.TCR_Not_Older_Than}"
-                                 value="{!v.productionYear}"
-                                 onchange="{!c.filterResults}"
-                />
-            </div>
-
-            <div class="filterItem">
-                <lightning:select aura:id="doorsSelect"
-                                  name="doorsSelect"
-                                  label="{!$Label.c.TCR_Number_of_Doors}"
-                                  onchange="{!c.filterResults}">
-                    <option value="">-</option>
-                    <option value="3">3</option>
-                    <option value="5">5</option>
-                </lightning:select>
-            </div>
-
-            <div class="filterItem">
-                <div style="width:49%; float:left" onchange="{!c.filterResults}">
-                    <ui:inputCurrency label="{!$Label.c.TCR_Min_Price}"
-                                      value="{!v.minPrice}"
-                                      updateOn="keyup"/>
+        <lightning:layoutItem size="2">
+            <lightning:card title="" class="card-no-border">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12 edit-icon">
+                        <div class="search-icon">
+                            <img src="{!v.iconSearch}"/>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_8-of-12">
+                        <div class="centered-text">
+                            <h2 class="slds-text-heading_small ">
+                                    Filter results
+                            </h2>
+                        </div>
+                    </div>
                 </div>
-                <div style="width:49%; float:right">
-                  <ui:inputCurrency label="{!$Label.c.TCR_Max_Price}"
-                                      value="{!v.maxPrice}"/>
 
+                <lightning:select aura:id="option"
+                                  name="option"
+                                  label="Sort By"
+                                  onchange="{!c.applySorting}">
+                    <option value="1">{!$Label.c.TCR_Sort_By_Name_Asc}</option>
+                    <option value="2">{!$Label.c.TCR_Sort_By_Name_Desc}</option>
+                    <option value="3">{!$Label.c.TCR_Sort_By_Price_Desc}</option>
+                    <option value="4">{!$Label.c.TCR_Sort_By_Price_Asc}</option>
+                </lightning:select>
 
+                <div class="filterItem">
+                    <lightning:select aura:id="brandSelect"
+                                      name="select"
+                                      label="Brand"
+                                      onchange="{!c.filterResults}">
+                        <option value="">--none--</option>
+                        <aura:iteration items="{!v.brands}" var="brand">
+                            <option value="{!brand}">{!brand}</option>
+                        </aura:iteration>
+                    </lightning:select>
                 </div>
-            </div>
+
+                <div class="filterItem">
+                    <lightning:input type="date"
+                                     label="{!$Label.c.TCR_Not_Older_Than}"
+                                     value="{!v.productionYear}"
+                                     onchange="{!c.filterResults}"/>
+                </div>
+
+                <div class="filterItem">
+                    <lightning:select aura:id="doorsSelect"
+                                      name="doorsSelect"
+                                      label="{!$Label.c.TCR_Number_of_Doors}"
+                                      onchange="{!c.filterResults}">
+                        <option value="">-</option>
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                    </lightning:select>
+                </div>
+
+                <div class="filterItem">
+                    <div style="width:49%; float:left" onchange="{!c.filterResults}">
+                        <ui:inputCurrency label="{!$Label.c.TCR_Min_Price}"
+                                          value="{!v.minPrice}"
+                                          updateOn="keyup"/>
+                    </div>
+                    <div style="width:49%; float:right">
+                        <ui:inputCurrency label="{!$Label.c.TCR_Max_Price}"
+                                          value="{!v.maxPrice}"/>
+                    </div>
+                </div>
+            </lightning:card>
         </lightning:layoutItem>
+
+
         <lightning:layoutItem size="1"></lightning:layoutItem>
 
         <lightning:layoutItem size="9">
