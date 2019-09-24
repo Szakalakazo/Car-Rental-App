@@ -8,8 +8,10 @@
         appEvent.fire();
     },
 
-    handleDeletePriceBook: function(component, event, handler) {
+    deletePriceBook: function(component, event, handler) {
         let recordId = component.get('v.recordId');
-
+        let action = component.get("c.deletePriceBook");
+        action.setParam("priceBookId",recordId);
+        $A.enqueueAction(action);
     },
 })

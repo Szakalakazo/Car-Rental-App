@@ -30,14 +30,10 @@
                 <lightning:layoutItem size="3">
                         {!v.simpleRecord.End_Date__c}
                 </lightning:layoutItem>
-                <lightning:layoutItem >
-                <div onclick="{!}">
-
-                DELETE</div>
-
-                </lightning:layoutItem>
             </lightning:layout>
         </div>
+        <div onclick="{!c.handleDeletePriceBook}" style="cursor: pointer">
+            DELETE</div>
     </lightning:card>
 
 

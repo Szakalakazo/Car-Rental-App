@@ -186,9 +186,10 @@ public with sharing class TCR_PriceBookProducts {
         }
     }
 
+    @AuraEnabled
     public static void deletePriceBook(String priceBookId){
         List<Pricebook2> listOfPricebook = [SELECT Id FROM Pricebook2 WHERE Id =:priceBookId];
-        DELETE 
+        DELETE listOfPricebook;
     }
 
     /*
