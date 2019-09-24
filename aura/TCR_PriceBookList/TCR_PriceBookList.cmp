@@ -2,11 +2,12 @@
         implements="flexipage:availableForAllPageTypes,force:hasRecordId"
         controller="TCR_PriceBookProducts">
 
-
     <aura:attribute name="recordId" type="String"/>
     <aura:attribute name="recordList" type="Pricebook2[]"/>
-    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="c:TCR_DeletePriceBookEvent" action="{!c.init}"/>
+    <aura:handler event="c:TCR_AddNewPriceBookEvent" action="{!c.init}"/>
 
         <aura:iteration items="{!v.recordList}" var="item">
             <div>

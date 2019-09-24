@@ -1,18 +1,15 @@
 ({
-    doInit: function (component, event) {
-        let priceBookId = component.get("v.recordId");
-        let getActualProductsAction = component.get("c.selectActualProducts");
-        getActualProductsAction.setParam("priceBookId", priceBookId);
-        getActualProductsAction.setCallback(this, function (response) {
+    doGetAllProducts: function (component, event) {
+        let action = component.get("c.getAllProducts");
+        action.setCallback(this, function (response) {
             let state = response.getState();
-            if (state === "SUCCESS") {
-                let returnList = response.getReturnValue();
-            } else {
-                console.log("getActualOrderItemAction Failed with state: " + state);
+            if (state === 'SUCCESS') {
+                let allProducts = JSON.parse(response.getReturnValue());
+                component.set("v.productEntryWrapperList", allProducts);
+                console.log('allProducts --- > ' + allProducts);
             }
         });
-        $A.enqueueAction(getActualProductsAction);
-        this.switchSpinner(component, true);
+        $A.enqueueAction(action);
     },
 
     doGetAllCategories: function (component, event) {
@@ -56,17 +53,32 @@
         if (selectedValue && selectedValue === "ProductsByCategory") {
             component.set("v.productCategory", true);
             component.set("v.selectedAllCategory", false);
+            component.set("v.customCategory", false);
         } else if (selectedValue === "AllProducts") {
             component.set("v.productCategory", false);
             component.set("v.selectedAllCategory", true);
+            component.set("v.customCategory", false);
+        } else if (selectedValue === "None") {
+            component.set("v.productCategory", false);
+            component.set("v.selectedAllCategory", false)
+            component.set("v.customCategory", false)
+        } else if (selectedValue === "Custom") {
+            component.set("v.productCategory", false);
+            component.set("v.selectedAllCategory", false)
+            component.set("v.customCategory", true)
+            console.log('else if ' + component.get("v.customCategory"));
         } else {
             console.error("Component selectedTypeDiscount not exist");
         }
     },
 
-    doAddNewDiscountCategory: function (component, event) {
+    doAddNewDiscount: function (component, helper, event) {
         let typeOfDiscount = component.find("selectedTypeDiscount").get("v.value");
-        let category = component.find("selectedCategory").get("v.value");
+        let selectedCategory = component.find("selectedCategory");
+        let category;
+        if (selectedCategory) {
+            category = selectedCategory.get("v.value");
+        }
         let priceBookName = component.get("v.priceBookName");
         let cashValue = component.get("v.cashValue");
         let percentageValue = component.get("v.percentageValue");
@@ -83,52 +95,39 @@
             endDate: endDate,
         };
 
-
-        if (typeOfDiscount === "Cash discount" && Number(cashValue) > 0) {
-            this.doAddNewDiscount(component, newPriceBook);
-        } else if (typeOfDiscount === "Percentage discount" && percentageValue) {
-            this.doAddNewDiscount(component, newPriceBook);
+        if ((typeOfDiscount === "Cash discount" && Number(cashValue) > 0) || ((typeOfDiscount === "Percentage discount" && percentageValue))) {
+            this.doAddNewPriceBook(component, newPriceBook);
         } else {
             this.doShowToast(component, "Fill required fields", "Warning", "Warning");
         }
     },
 
-    doAddNewDiscountAll: function (component, event) {
-        let selectedValue = component.find("selectedTypeProduct").get("v.value");
-        let typeOfDiscount = component.find("selectedTypeDiscount").get("v.value");
-        let cashValue = component.get("v.cashValue");
-        let percentageValue = component.get("v.percentageValue");
-
-        if (typeOfDiscount === "Cash discount" && cashValue) {
-            this.doAddNewDiscount(component, typeOfDiscount, cashValue, '');
-        } else if (typeOfDiscount === "Percentage discount" && percentageValue) {
-            this.doAddNewDiscount(component, typeOfDiscount, percentageValue, '');
-        } else {
-            this.doShowToast(component, "Fill required fields", "Warning", "Warning");
-        }
-    },
-
-    doAddNewDiscount: function (component, newPriceBook) {
-        let doAddNewDiscountAction = component.get("c.addNewPriceBook");
-        doAddNewDiscountAction.setParams({
+    doAddNewPriceBook: function (component, newPriceBook) {
+        let doAddNewPriceBookAction = component.get("c.addNewPriceBook");
+        doAddNewPriceBookAction.setParams({
             newDiscount: JSON.stringify(newPriceBook)
         });
-
-        doAddNewDiscountAction.setCallback(this, function (response) {
+        doAddNewPriceBookAction.setCallback(this, function (response) {
             let state = response.getState();
             if (state === "SUCCESS") {
-                let doAddNewDiscountEvent = $A.get("e.c:TCR_PriceBookRefreshEvent");
-                doAddNewDiscountEvent.fire();
+                let addEvent = $A.get("e.c:TCR_AddNewPriceBookEvent");
+                addEvent.fire();
+                component.set("v.selectedTypeDiscount", 'None');
                 component.set("v.productCategory", false);
                 component.set("v.selectedAllCategory", false);
                 component.set("v.percentageDiscount", false);
                 component.set("v.cashDiscount", false);
+                component.set("v.priceBookName", '');
+                component.set("v.cashValue", 0);
+                component.set("v.percentageValue", 0);
+                component.set("v.startDate", '');
+                component.set("v.endDate", '');
                 this.switchSpinner(component, false);
             } else {
                 this.doShowToast(component, response.getErrors()[0].message, 'Error', 'Error');
             }
         });
-        $A.enqueueAction(doAddNewDiscountAction);
+        $A.enqueueAction(doAddNewPriceBookAction);
         this.switchSpinner(component, true);
     },
 

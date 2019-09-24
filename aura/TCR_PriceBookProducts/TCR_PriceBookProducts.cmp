@@ -185,11 +185,13 @@
                     <h1>Add product</h1>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content">
+
                     <aura:if isTrue="{!empty(v.notRelatedProductList)}">
                         <div style="text-align: center;">
                             Not_available_products
                         </div>
                     </aura:if>
+
                     <aura:if isTrue="{!!empty(v.notRelatedProductList)}">
                         <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
                             <thead>

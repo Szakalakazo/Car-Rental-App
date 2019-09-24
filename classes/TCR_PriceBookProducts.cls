@@ -1,8 +1,35 @@
 public with sharing class TCR_PriceBookProducts {
 
+    public class ProductWrapper {
+        public Product2 product;
+        public Boolean isSelected;
+
+        public ProductWrapper(Product2 product, Boolean isSelected) {
+            this.product = product;
+            this.isSelected = isSelected;
+        }
+    }
+
+    @AuraEnabled
+    public static String getAllProducts() {
+        List<Product2> listOfAllProducts = [
+                SELECT Id, Brand__c, Model__c, Name
+                FROM Product2
+        ];
+        List<ProductWrapper> listOfProductWrappers = new List<TCR_PriceBookProducts.ProductWrapper>();
+        for (Product2 productItem : listOfAllProducts) {
+            ProductWrapper wrapper = new ProductWrapper(productItem, false);
+            listOfProductWrappers.add(wrapper);
+        }
+        return JSON.serialize(listOfProductWrappers);
+    }
+
     @AuraEnabled
     public static List<Pricebook2> getPriceBookList(String priceBookId) {
-        return [SELECT Id, Name, IsActive, IsStandard FROM Pricebook2];
+        return [
+                SELECT Description, Id, IsActive, IsStandard, Name, Start_Date__c, End_Date__c
+                FROM Pricebook2
+        ];
     }
 
     @AuraEnabled
@@ -43,14 +70,6 @@ public with sharing class TCR_PriceBookProducts {
         }
         return resultsEntryProducts;
     }
-
-/*    @AuraEnabled
-    public static List<Product2> getAllProducts() {
-        return [
-                SELECT Id, Brand__c, Model__c, Name
-                FROM Product2
-        ];
-    }*/
 
     @AuraEnabled
     public static List<String> getAllCategoriesApex() {
@@ -129,12 +148,21 @@ public with sharing class TCR_PriceBookProducts {
     @AuraEnabled
     public static void addNewPriceBook(String newDiscount) {
         TCR_PriceBookWrapper priceBookWrapper = TCR_PriceBookWrapper.parse(newDiscount);
+        List<Product2> allProductFromGivenCategory = new List<Product2>();
 
-        List<Product2> allProductFromGivenCategory = [
-                SELECT Id, Name, Brand__c, Model__c
-                FROM Product2
-                WHERE Brand__c = :priceBookWrapper.category
-        ];
+        if (String.isNotBlank(priceBookWrapper.category)) {
+            allProductFromGivenCategory = [
+                    SELECT Id, Name, Brand__c, Model__c
+                    FROM Product2
+                    WHERE Brand__c = :priceBookWrapper.category
+            ];
+        } else {
+            allProductFromGivenCategory = [
+                    SELECT Id, Name, Brand__c, Model__c
+                    FROM Product2
+            ];
+        }
+
         List<Id> listOfProductIds = new List<Id>();
         for (Product2 item : allProductFromGivenCategory) {
             listOfProductIds.add(item.Id);
@@ -187,27 +215,10 @@ public with sharing class TCR_PriceBookProducts {
     }
 
     @AuraEnabled
-    public static void deletePriceBook(String priceBookId){
-        List<Pricebook2> listOfPricebook = [SELECT Id FROM Pricebook2 WHERE Id =:priceBookId];
+    public static void deletePriceBook(String priceBookId) {
+        List<Pricebook2> listOfPricebook = [SELECT Id FROM Pricebook2 WHERE Id = :priceBookId];
         DELETE listOfPricebook;
     }
 
-    /*
-    @AuraEnabled
-    public static List<String> searchForIds(String query, List<String> category) {
-        List<Product2> resultsProducts = new List<Product2>();
-        String newSearchText = '' + query + '%';
-        if (!category.isEmpty()) {
-            resultsProducts = [SELECT Id FROM Product2 WHERE Name LIKE :newSearchText AND Family IN :category AND IsActive = true];
-        } else {
-            String queryDataBase = 'SELECT Id FROM Product2 WHERE Name LIKE \'' + query + '%\' AND IsActive = true ORDER BY Name';
-            resultsProducts = resultsProducts = Database.query(queryDataBase);
-        }
-        List<String> ids = new List<String>();
-        for (Product2 product : resultsProducts) {
-            ids.add(product.Id);
-        }
-        System.debug('ids  ' + ids);
-        return ids;
-    }*/
+
 }

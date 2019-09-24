@@ -1,10 +1,7 @@
 ({
     init: function(component, event, helper) {
         helper.doGetAllCategories(component, event);
-    },
-
-    clickCreateNewDiscount: function(component, event, helper) {
-        helper.doCreateNewDiscount(component, event);
+        helper.doGetAllProducts(component, event);
     },
 
     clickTypeDiscount: function(component, event, helper) {
@@ -15,12 +12,13 @@
         helper.doTypeProduct(component, event);
     },
 
-    clickAddNewDiscountCategory: function(component, event, helper) {
-        helper.doAddNewDiscountCategory(component, event);
+    clickAddNewDiscount: function(component, event, helper) {
+        helper.doAddNewDiscount(component, event);
     },
 
-    clickAddNewDiscountAll: function(component, event, helper) {
-        helper.doAddNewDiscountAll(component, event);
+    toggleSearchModal: function(component, event, helper) {
+        let isSearchModalOpen = component.get("v.isSearchModalOpen");
+        component.set('v.isSearchModalOpen', !isSearchModalOpen);
+        helper.switchSpinner(component, !isSearchModalOpen)
     },
-
 })

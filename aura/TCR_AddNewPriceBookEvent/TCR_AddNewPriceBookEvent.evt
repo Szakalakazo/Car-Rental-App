@@ -1,0 +1,6 @@
+<!--
+ - Created by Tomek on 24.09.2019.
+ -->
+
+<aura:event type="APPLICATION" description="TCR_AddNewPriceBookEvent">
+</aura:event>
