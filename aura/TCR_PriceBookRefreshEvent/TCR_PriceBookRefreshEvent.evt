@@ -1,0 +1,2 @@
+<aura:event type="APPLICATION" description="TCR_PriceBookRefreshEvent">
+</aura:event>
