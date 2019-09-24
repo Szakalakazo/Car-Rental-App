@@ -7,13 +7,11 @@
             let state = response.getState();
             if (state === "SUCCESS") {
                 let returnList = response.getReturnValue();
-                // this.switchSpinner(component, false);
             } else {
                 console.log("getActualOrderItemAction Failed with state: " + state);
             }
         });
         $A.enqueueAction(getActualProductsAction);
-        // this.doGetAllCategories(component, event);
         this.switchSpinner(component, true);
     },
 
@@ -31,16 +29,11 @@
         this.switchSpinner(component, true);
     },
 
-    doCreateNewDiscount: function (component, event) {
-        let priceBookId = component.get("v.recordId");
-    },
-
     doTypeDiscount: function (component, event) {
         let selectedValue = component.find("selectedTypeDiscount").get("v.value");
-        console.log("selectedValue" + selectedValue);
         if (selectedValue && selectedValue === "Cash discount") {
-            component.set("v.cashDiscount", true);
             component.set("v.percentageDiscount", false);
+            component.set("v.cashDiscount", true);
             component.set("v.percentageValue", 0);
         } else if (selectedValue === "Percentage discount") {
             component.set("v.percentageDiscount", true);
@@ -72,16 +65,29 @@
     },
 
     doAddNewDiscountCategory: function (component, event) {
-        let selectedValue = component.find("selectedTypeProduct").get("v.value");
         let typeOfDiscount = component.find("selectedTypeDiscount").get("v.value");
         let category = component.find("selectedCategory").get("v.value");
+        let priceBookName = component.get("v.priceBookName");
         let cashValue = component.get("v.cashValue");
         let percentageValue = component.get("v.percentageValue");
+        let startDate = component.get("v.startDate");
+        let endDate = component.get("v.endDate");
+
+        let newPriceBook = {
+            typeOfDiscount: typeOfDiscount,
+            category: category,
+            priceBookName: priceBookName,
+            cashValue: cashValue,
+            percentageValue: percentageValue,
+            startDate: startDate,
+            endDate: endDate,
+        };
+
 
         if (typeOfDiscount === "Cash discount" && Number(cashValue) > 0) {
-            this.doAddNewDiscount(component, typeOfDiscount, cashValue, category);
+            this.doAddNewDiscount(component, newPriceBook);
         } else if (typeOfDiscount === "Percentage discount" && percentageValue) {
-            this.doAddNewDiscount(component, typeOfDiscount, percentageValue, category);
+            this.doAddNewDiscount(component, newPriceBook);
         } else {
             this.doShowToast(component, "Fill required fields", "Warning", "Warning");
         }
@@ -102,14 +108,12 @@
         }
     },
 
-    doAddNewDiscount: function (component, typeDiscount, discount, category) {
-        let priceBookId = component.get("v.recordId");
-        let doAddNewDiscountAction = component.get("c.addNewPriceBook"); //todo zmiana metody
+    doAddNewDiscount: function (component, newPriceBook) {
+        let doAddNewDiscountAction = component.get("c.addNewPriceBook");
+        doAddNewDiscountAction.setParams({
+            newDiscount: JSON.stringify(newPriceBook)
+        });
 
-        doAddNewDiscountAction.setParam("typeDiscount", typeDiscount);
-        doAddNewDiscountAction.setParam("discount", discount);
-        doAddNewDiscountAction.setParam("category", category);
-        doAddNewDiscountAction.setParam("priceBookName", 'SampleName');
         doAddNewDiscountAction.setCallback(this, function (response) {
             let state = response.getState();
             if (state === "SUCCESS") {

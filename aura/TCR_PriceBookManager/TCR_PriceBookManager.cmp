@@ -2,8 +2,8 @@
                 controller="TCR_PriceBookProducts">
 
     <aura:attribute name="recordId" type="String" default="01s2p000001DtMNAA0"/>
-    <aura:attribute name="record" type="Object"/>
-    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="record" type="Pricebook2"/>
+    <aura:attribute name="simpleRecord" type="Pricebook2"/>
     <aura:attribute name="productEntryList" type="List"/>
     <aura:attribute name="cashValue" type="Integer" default="0"/>
     <aura:attribute name="percentageValue" type="Integer" default="0"/>
@@ -12,6 +12,9 @@
     <aura:attribute name="productCategory" type="Boolean" default="false"/>
     <aura:attribute name="selectedAllCategory" type="Boolean" default="false"/>
     <aura:attribute name="allCategories" type="String[]"/>
+    <aura:attribute name="startDate" type="Date"/>
+    <aura:attribute name="endDate" type="Date"/>
+    <aura:attribute name="priceBookName" type="String"/>
 
     <aura:registerEvent name="TCR_PriceBookRefreshEvent" type="c:TCR_PriceBookRefreshEvent"/>
 
@@ -43,6 +46,26 @@
                 </div>
             </div>
             <div class="slds-grid slds-m-top--small">
+                <aura:if isTrue="{!v.cashDiscount || v.percentageDiscount}">
+                    <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
+                    <lightning:input type="date"
+                                     name="startDate"
+                                     label="Start Date"
+                                     value="{!v.startDate}"/>
+                </div>
+                    <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
+                        <lightning:input type="date"
+                                         name="endDate"
+                                         label="End Date"
+                                         value="{!v.endDate}"/>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
+                        <lightning:input type="text"
+                                         name="priceBookName"
+                                         label="Name"
+                                         value="{!v.priceBookName}"/>
+                    </div>
+                </aura:if>
                 <aura:if isTrue="{!v.cashDiscount}">
                     <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
                         <lightning:input label="Amount"
@@ -112,9 +135,9 @@
     </lightning:card>
     <c:TCR_PriceBookToast aura:id="toast"/>
     <c:TCR_ProductManagerSpinner aura:id="spinner"/>
-    <c:TCR_PriceBookList />
+    <c:TCR_PriceBookList/>
 
-<!--    po najechaniu na pricebook-->
-    <c:TCR_PriceBookProducts />
+    <!--    po najechaniu na pricebook-->
+    <c:TCR_PriceBookProducts/>
 
 </aura:component>

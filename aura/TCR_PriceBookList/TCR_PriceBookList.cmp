@@ -8,11 +8,12 @@
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
 
-    <aura:iteration items="{!v.recordList}" var="item">
-        <div>
-            <c:TCR_PriceBookItem recordId="{!item.Id}"/>
-        </div>
-    </aura:iteration>
+        <aura:iteration items="{!v.recordList}" var="item">
+            <div>
+                <c:TCR_PriceBookItem recordId="{!item.Id}"/>
+            </div>
+        </aura:iteration>
+
 
     <c:TCR_PriceBookToast aura:id="toast"/>
     <c:TCR_ProductManagerSpinner aura:id="spinner"/>
