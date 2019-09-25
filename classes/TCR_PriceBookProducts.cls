@@ -11,11 +11,30 @@ public with sharing class TCR_PriceBookProducts {
     }
 
     @AuraEnabled
+    public static String findByName(String searchKey) {
+        String name = '%' + searchKey + '%';
+        List<ProductWrapper> listOfProductWrappers = new List<TCR_PriceBookProducts.ProductWrapper>();
+
+        List<Product2> listOfAllProducts = [
+                SELECT Id, Brand__c, Model__c, Name
+                FROM Product2
+                WHERE Name LIKE :name
+        ] ;
+        for (Product2 productItem : listOfAllProducts) {
+            ProductWrapper wrapper = new ProductWrapper(productItem, false);
+            listOfProductWrappers.add(wrapper);
+        }
+        return JSON.serialize(listOfProductWrappers);
+
+    }
+
+    @AuraEnabled
     public static String getAllProducts() {
         List<Product2> listOfAllProducts = [
                 SELECT Id, Brand__c, Model__c, Name
                 FROM Product2
         ];
+
         List<ProductWrapper> listOfProductWrappers = new List<TCR_PriceBookProducts.ProductWrapper>();
         for (Product2 productItem : listOfAllProducts) {
             ProductWrapper wrapper = new ProductWrapper(productItem, false);
@@ -38,7 +57,7 @@ public with sharing class TCR_PriceBookProducts {
     }
 
     @AuraEnabled
-    public static List<PricebookEntry> selectEntryProducts(List<String> allProducts, String priceBookId) { // todo
+    public static List<PricebookEntry> selectEntryProducts(List<String> allProducts, String priceBookId) {
         List<PricebookEntry> resultsEntryProducts = new List<PricebookEntry>();
         if (allProducts.isEmpty()) {
             resultsEntryProducts = [
@@ -117,7 +136,6 @@ public with sharing class TCR_PriceBookProducts {
                 SELECT Product2Id, Pricebook2Id, UnitPrice, Product2.Name, Product2.Family
                 FROM PricebookEntry
                 WHERE Product2Id NOT IN :productsEntryIds
-//                AND Pricebook2Id = :standardPriceBookId AND Product2.IsActive = true
         ];
         return availableProductEntry;
     }
@@ -140,14 +158,13 @@ public with sharing class TCR_PriceBookProducts {
         try {
             UPSERT pricebookEntriesToInsert;
         } catch (Exception ex) {
-            System.debug('Failed with add new Product Entry message: ' + ex.getMessage());
             System.debug('Failed with add new Product Entry message: ' + ex.getCause());
         }
     }
 
     @AuraEnabled
-    public static void addNewPriceBook(String newDiscount) {
-        TCR_PriceBookWrapper priceBookWrapper = TCR_PriceBookWrapper.parse(newDiscount);
+    public static Pricebook2 addNewPriceBook(String newPriceBook) {
+        TCR_PriceBookWrapper priceBookWrapper = TCR_PriceBookWrapper.parse(newPriceBook);
         List<Product2> allProductFromGivenCategory = new List<Product2>();
 
         if (String.isNotBlank(priceBookWrapper.category)) {
@@ -162,31 +179,57 @@ public with sharing class TCR_PriceBookProducts {
                     FROM Product2
             ];
         }
+        return insertPriceBookEntriesToDB(allProductFromGivenCategory, newPriceBook);
+    }
 
-        List<Id> listOfProductIds = new List<Id>();
-        for (Product2 item : allProductFromGivenCategory) {
-            listOfProductIds.add(item.Id);
-        }
-        List<PricebookEntry> pricebookEntries = selectEntryProducts(listOfProductIds, '');
+    @AuraEnabled
+    public static void addNewPriceBookWithListOfProducts(String newPriceBook, List<String> selectedProductIds) {
+        TCR_PriceBookWrapper priceBookWrapper = TCR_PriceBookWrapper.parse(newPriceBook);
+        List<Product2> allSelectedProducts = [
+                SELECT Id
+                FROM Product2
+                WHERE Id IN :selectedProductIds
+        ];
+        insertPriceBookEntriesToDB(allSelectedProducts, newPriceBook);
+    }
+
+    @AuraEnabled
+    public static void deletePriceBook(String priceBookId) {
+        List<Pricebook2> listOfPricebook = [SELECT Id FROM Pricebook2 WHERE Id = :priceBookId];
+        DELETE listOfPricebook;
+    }
+
+    private static Pricebook2 createAndInsertNewPricebook(String newPriceBook) {
+        TCR_PriceBookWrapper priceBookWrapper = TCR_PriceBookWrapper.parse(newPriceBook);
         Pricebook2 newPricebook2 = new Pricebook2();
         newPricebook2.Name = priceBookWrapper.priceBookName;
         newPricebook2.IsActive = true;
         newPricebook2.Start_Date__c = priceBookWrapper.startDate;
         newPricebook2.End_Date__c = priceBookWrapper.endDate;
-
         try {
             INSERT newPricebook2;
         } catch (Exception e) {
             System.debug('Wyjebalo sie ' + e.getCause());
         }
-
-        Pricebook2 priceBook = [
+        return [
                 SELECT Id, Name
                 FROM Pricebook2
                 WHERE Name LIKE :priceBookWrapper.priceBookName
         ][0];
+    }
 
+    private static Pricebook2 insertPriceBookEntriesToDB(List<Product2> listOfProduct, String newPriceBook) {
+        TCR_PriceBookWrapper priceBookWrapper = TCR_PriceBookWrapper.parse(newPriceBook);
+
+        List<Id> listOfProductIds = new List<Id>();
+        for (Product2 item : listOfProduct) {
+            listOfProductIds.add(item.Id);
+        }
+
+        List<PricebookEntry> pricebookEntries = selectEntryProducts(listOfProductIds, '');
+        Pricebook2 priceBook = createAndInsertNewPricebook(newPriceBook);
         List<PricebookEntry> pricebookEntriesToInsert = new List<PricebookEntry>();
+
         if (priceBookWrapper.typeOfDiscount.equalsIgnoreCase('Cash discount')) {
             for (PricebookEntry oneProductEntry : pricebookEntries) {
                 oneProductEntry.Id = null;
@@ -209,16 +252,10 @@ public with sharing class TCR_PriceBookProducts {
         try {
             INSERT pricebookEntriesToInsert;
         } catch (Exception e) {
-            System.debug('Wyjebalo sie 1 ' + e.getCause());
             System.debug(e.getMessage());
         }
-    }
+        return priceBook;
 
-    @AuraEnabled
-    public static void deletePriceBook(String priceBookId) {
-        List<Pricebook2> listOfPricebook = [SELECT Id FROM Pricebook2 WHERE Id = :priceBookId];
-        DELETE listOfPricebook;
     }
-
 
 }

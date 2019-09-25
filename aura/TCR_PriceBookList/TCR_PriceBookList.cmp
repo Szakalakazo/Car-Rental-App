@@ -4,18 +4,74 @@
 
     <aura:attribute name="recordId" type="String"/>
     <aura:attribute name="recordList" type="Pricebook2[]"/>
+    <aura:attribute name="currentOrderItem" type="String"/>
+
+    <aura:registerEvent name="TCR_ShowPriceBookDetails" type="c:TCR_ShowPriceBookDetails"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <aura:handler event="c:TCR_DeletePriceBookEvent" action="{!c.init}"/>
     <aura:handler event="c:TCR_AddNewPriceBookEvent" action="{!c.init}"/>
 
-        <aura:iteration items="{!v.recordList}" var="item">
-            <div>
-                <c:TCR_PriceBookItem recordId="{!item.Id}"/>
-            </div>
-        </aura:iteration>
-
-
+    <lightning:card title="Available Price Books">
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
+            <thead>
+            <tr class="slds-text-heading_label">
+                <th class="col1" style="width: 25%;" scope="col">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th class="col1" scope="col">
+                    <div class="slds-truncate"
+                         title="Is active">Is active
+                    </div>
+                </th>
+                <th class="col1" scope="col">
+                    <div class="slds-truncate"
+                         title="Start Date">Start Date
+                    </div>
+                </th>
+                <th class="col1" scope="col">
+                    <div class="slds-truncate"
+                         title="End Date">End Date
+                    </div>
+                </th>
+                <th class="col1" scope="col">
+                    <div class="slds-truncate" title=""></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <aura:iteration items="{!v.recordList}"
+                            var="item"
+                            indexVar="ind">
+                <tr class="slds-hint-parent"
+                    onclick="{!c.handleOpenModal}"
+                    data-id="{!item.Id}"
+                    id="{!item.Id}"
+                    onmouseover="{!c.setCurrentPriceBookItemId}"
+                style="cursor: pointer">
+                    <td class="centerColumn">
+                            {!item.Name}
+                    </td>
+                    <td class="centerColumn">
+                            {!item.IsActive}
+                    </td>
+                    <td class="centerColumn">
+                            {!item.Start_Date__c}
+                    </td>
+                    <td class="centerColumn">
+                            {!item.Start_Date__c}
+                    </td>
+                    <td class="centerColumn">
+                        <lightning:buttonIcon iconName="utility:delete"
+                                              alternativeText="delete"
+                                              onclick="{!c.clickDeleteProduct}"
+                                              size="medium"/>
+                    </td>
+                </tr>
+            </aura:iteration>
+            </tbody>
+        </table>
+    </lightning:card>
     <c:TCR_PriceBookToast aura:id="toast"/>
     <c:TCR_ProductManagerSpinner aura:id="spinner"/>
 </aura:component>

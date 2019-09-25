@@ -17,15 +17,15 @@
 
     <aura:handler event="c:TCR_ShowPriceBookDetails" action="{!c.create}"/>
 
-    <lightning:card>
+    <lightning:card title="List of products">
         <aura:if isTrue="{!empty(v.productList)}">
             <div class="titleLabel" style="text-align: center;">
-                Products Not available1
+                Pricebook is empty
             </div>
         </aura:if>
 
         <aura:if isTrue="{!!empty(v.productList)}">
-            <div class="titleLabel">List of products</div>
+            <div class="titleLabel"></div>
             <div style="text-align: center;">
                 <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
                     <thead>
@@ -220,8 +220,10 @@
                                             {!oneProduct.UnitPrice}
                                     </td>
                                     <td class="centerColumn">
-                                        <lightning:input label="" aura:id="categoryCheckbox"
-                                                         value="{!oneProduct.Product2Id}" type="checkbox"
+                                        <lightning:input label=""
+                                                         aura:id="categoryCheckbox"
+                                                         value="{!oneProduct.Product2Id}"
+                                                         type="checkbox"
                                                          onchange="{!c.clickProductCheckbox}"/>
                                     </td>
                                 </tr>
@@ -236,7 +238,8 @@
                                       title="Cancel"
                                       onclick="{!c.clickCloseAddModal}"/>
                     <aura:if isTrue="{!!empty(v.notRelatedProductList)}">
-                        <lightning:button variant="neutral" label="Add"
+                        <lightning:button variant="neutral"
+                                          label="Add"
                                           onclick="{!c.clickAddSelectedProducts}"/>
                     </aura:if>
                 </footer>
@@ -244,6 +247,7 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </aura:if>
+
     <c:TCR_ProductManagerSpinner aura:id="spinner"/>
     <c:TCR_PriceBookToast aura:id="toast"/>
 </aura:component>

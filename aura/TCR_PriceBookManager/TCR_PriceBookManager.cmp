@@ -4,24 +4,32 @@
     <aura:attribute name="recordId" type="String" default="01s2p000001DtMNAA0"/>
     <aura:attribute name="record" type="Pricebook2"/>
     <aura:attribute name="simpleRecord" type="Pricebook2"/>
-    <aura:attribute name="productEntryWrapperList" type="Object[]"/>
+    <aura:attribute name="productEntryWrapperList" type="List"/>
+    <aura:attribute name="productEntryWrapperListToDisplayInSearch" type="List"/>
     <aura:attribute name="cashValue" type="Integer" default="0"/>
     <aura:attribute name="percentageValue" type="Integer" default="0"/>
     <aura:attribute name="cashDiscount" type="Boolean" default="false"/>
     <aura:attribute name="percentageDiscount" type="Boolean" default="false"/>
-    <aura:attribute name="productCategory" type="Boolean" default="false"/>
     <aura:attribute name="customCategory" type="Boolean" default="false"/>
+    <aura:attribute name="productCategory" type="Boolean" default="false"/>
     <aura:attribute name="selectedAllCategory" type="Boolean" default="false"/>
     <aura:attribute name="allCategories" type="String[]"/>
     <aura:attribute name="startDate" type="Date"/>
     <aura:attribute name="endDate" type="Date"/>
     <aura:attribute name="priceBookName" type="String"/>
+    <aura:attribute name="searchedText" type="String"/>
     <aura:attribute name="isSearchModalOpen" type="Boolean" default="false"/>
+    <aura:attribute name="isPriceBookDetailsOpen" type="Boolean" default="false"/>
+    <aura:attribute type="List" name="selectedCheckBoxes" default="[]"/>
 
     <aura:registerEvent name="TCR_PriceBookRefreshEvent" type="c:TCR_PriceBookRefreshEvent"/>
     <aura:registerEvent name="TCR_AddNewPriceBookEvent" type="c:TCR_AddNewPriceBookEvent"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler name="change" value="{!v.searchedText}" action="{!c.handleSearchProduct}"/>
+
+    <aura:handler event="c:TCR_ShowPriceBookDetails" action="{!c.doShowPriceBookDetails}"/>
+    <aura:handler event="c:TCR_DeletePriceBookEvent" action="{!c.doHidePriceBookDetails}"/>
 
     <force:recordData aura:id="recordLoader"
                       recordId="{!v.recordId}"
@@ -29,178 +37,218 @@
                       targetRecord="{!v.record}"
                       targetFields="{!v.simpleRecord}"/>
 
-    <lightning:card>
-        <div class="slds-m-around--large">
-            <div class="titleLabel">
-                Manage
-            </div>
-            <div class="slds-grid">
-                <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
-                    <lightning:select label="Select type of discount: "
-                                      aura:id="selectedTypeDiscount"
-                                      onchange="{!c.clickTypeDiscount}"
-                                      name="selectedTypeDiscount">
-                        <option value="None">None</option>
-                        <option value="Cash discount">Cash discount</option>
-                        <option value="Percentage discount">Percentage discount</option>
-                    </lightning:select>
-                </div>
-                <div class="slds-col slds-size_3-of-12 slds-m-around--medium">
-                </div>
-            </div>
-            <div class="slds-grid slds-m-top--small">
-                <aura:if isTrue="{!v.cashDiscount || v.percentageDiscount}">
-                    <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
-                        <lightning:input type="date"
-                                         name="startDate"
-                                         label="Start Date"
-                                         value="{!v.startDate}"/>
+    <lightning:layout>
+        <lightning:layoutItem size="4">
+            <lightning:card title="Manage">
+                <div class="slds-m-around--large">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_5-of-12 slds-m-left--medium">
+                            <lightning:select label="Select type of discount: "
+                                              aura:id="selectedTypeDiscount"
+                                              onchange="{!c.clickTypeDiscount}"
+                                              name="selectedTypeDiscount">
+                                <option value="None">None</option>
+                                <option value="Cash discount">Cash discount</option>
+                                <option value="Percentage discount">Percentage discount</option>
+                            </lightning:select>
+                        </div>
                     </div>
-                    <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
-                        <lightning:input type="date"
-                                         name="endDate"
-                                         label="End Date"
-                                         value="{!v.endDate}"/>
-                    </div>
-                    <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
-                        <lightning:input type="text"
-                                         name="priceBookName"
-                                         label="Name"
-                                         value="{!v.priceBookName}"/>
-                    </div>
-                </aura:if>
-                <aura:if isTrue="{!v.cashDiscount}">
-                    <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
-                        <lightning:input label="Amount"
-                                         placeholder="Type amount"
-                                         required="true"
-                                         type="number" min="0" max="1000000000"
-                                         aura:id="cashDiscount"
-                                         name="expenseName"
-                                         value="{!v.cashValue}"
-                        />
-                    </div>
-                </aura:if>
-                <aura:if isTrue="{!v.percentageDiscount}">
-                    <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
-                        <lightning:input label="Percentage"
-                                         placeholder="Type discount"
-                                         required="true"
-                                         type="number" min="0" max="100"
-                                         aura:id="percentageDiscount"
-                                         name="expenseName"
-                                         value="{!v.percentageValue}"/>
-                    </div>
-                </aura:if>
-            </div>
-            <div class="slds-grid slds-m-top--small">
-                <aura:if isTrue="{!v.cashDiscount || v.percentageDiscount}">
-                    <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
-                        <lightning:select label="Select product: "
-                                          aura:id="selectedTypeProduct"
-                                          onchange="{!c.clickTypeProduct}"
-                                          name="selectedTypeProduct">
-                            <option value="None">None</option>
-                            <option value="Custom">Custom</option>
-                            <option value="AllProducts">All Products</option>
-                            <option value="ProductsByCategory">Products By Category</option>
-                        </lightning:select>
-                    </div>
-                </aura:if>
 
+                    <aura:renderIf isTrue="{!v.cashDiscount || v.percentageDiscount}">
+                        <div class="slds-grid slds-m-top--small">
 
-                <div class="slds-col slds-size_3-of-12 slds-m-left--medium">
-                    <aura:if isTrue="{!v.productCategory}">
-                        <lightning:select label="Select Product Category: "
-                                          aura:id="selectedCategory"
-                                          onchange="{!c.clickProductCategory}"
-                                          name="selectedCategory">
-                            <aura:iteration items="{!v.allCategories}" var="oneCategory">
-                                <option value="{!oneCategory}">{!oneCategory}</option>
-                            </aura:iteration>
-                        </lightning:select>
+                            <div class="slds-col slds-size_5-of-12 slds-m-left--medium">
+                                <lightning:input type="date"
+                                                 name="startDate"
+                                                 label="Start Date"
+                                                 value="{!v.startDate}"/>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-m-left--medium">
+                            </div>
+
+                            <div class="slds-col slds-size_5-of-12 slds-m-left--medium">
+                                <lightning:input type="date"
+                                                 name="endDate"
+                                                 label="End Date"
+                                                 value="{!v.endDate}"/>
+                            </div>
+
+                        </div>
+                    </aura:renderIf>
+
+                    <aura:renderIf isTrue="{!v.cashDiscount}">
+                        <div class="slds-grid slds-m-top--small">
+
+                            <div class="slds-col slds-size_5-of-12 slds-m-left--medium">
+                                <lightning:input type="text"
+                                                 name="priceBookName"
+                                                 label="Name"
+                                                 value="{!v.priceBookName}"
+                                                 required="true"/>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-m-left--medium">
+                            </div>
+
+                            <div class="slds-col slds-size_5-of-12 slds-m-left--medium">
+                                <lightning:input label="Amount"
+                                                 placeholder="Type amount"
+                                                 required="true"
+                                                 type="number" min="0" max="1000000000"
+                                                 aura:id="cashDiscount"
+                                                 name="expenseName"
+                                                 value="{!v.cashValue}"/>
+                            </div>
+                        </div>
+                    </aura:renderIf>
+
+                    <aura:renderIf isTrue="{!v.percentageDiscount}">
+                        <div class="slds-grid slds-m-top--small">
+                            <div class="slds-col slds-size_5-of-12 slds-m-left--medium">
+                                <lightning:input type="text"
+                                                 name="priceBookName"
+                                                 label="Name"
+                                                 value="{!v.priceBookName}"/>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-12 slds-m-left--medium">
+                            </div>
+
+                            <div class="slds-col slds-size_5-of-12 slds-m-left--medium">
+                                <lightning:input label="Percentage"
+                                                 placeholder="Type discount"
+                                                 required="true"
+                                                 type="number" min="0" max="100"
+                                                 aura:id="percentageDiscount"
+                                                 name="expenseName"
+                                                 value="{!v.percentageValue}"/>
+                            </div>
+                        </div>
+                    </aura:renderIf>
+
+                    <div class="slds-grid slds-m-top--small">
+                        <aura:if isTrue="{!v.cashDiscount || v.percentageDiscount}">
+                            <div class="slds-col slds-size_5-of-12 slds-m-left--medium">
+                                <lightning:select label="Select product: "
+                                                  aura:id="selectedTypeProduct"
+                                                  onchange="{!c.clickTypeProduct}"
+                                                  name="selectedTypeProduct">
+                                    <option value="None">None</option>
+                                    <option value="Custom">Custom</option>
+                                    <option value="AllProducts">All Products</option>
+                                    <option value="ProductsByCategory">Products By Category</option>
+                                </lightning:select>
+                            </div>
+                        </aura:if>
+
+                        <div class="slds-col slds-size_5-of-12 slds-m-left--medium">
+                            <aura:if isTrue="{!v.productCategory}">
+                                <lightning:select label="Select Product Category: "
+                                                  aura:id="selectedCategory"
+                                                  onchange="{!c.clickProductCategory}"
+                                                  name="selectedCategory">
+                                    <aura:iteration items="{!v.allCategories}"
+                                                    var="oneCategory">
+                                        <option value="{!oneCategory}">{!oneCategory}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </aura:if>
+                        </div>
+                    </div>
+
+                    <aura:if isTrue="{!or(v.productCategory, v.selectedAllCategory)}">
+                        <div class="slds-m-top--small" style="text-align: center;">
+                            <lightning:button variant="brand"
+                                              class="slds-m-top--medium"
+                                              label="Add new discount" onclick="{!c.clickAddNewDiscount}"/>
+                        </div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.customCategory}">
+                        <div class="slds-m-top--small" style="text-align: center;">
+                            <lightning:button variant="brand"
+                                              class="slds-m-top--medium"
+                                              label="Add products"
+                                              onclick="{!c.toggleSearchModal}"/>
+                        </div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.isSearchModalOpen}">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                                 aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header mainLabel">
+                                    <h1>SEARCH FOR PRODUCT</h1>
+                                </header>
+                                <div>
+                                    <lightning:input label=""
+                                                     value="{!v.searchedText}"
+                                                     type="text"/>
+                                </div>
+                                <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout"
+                                       id="myTable">
+                                    <thead>
+                                    <tr class="slds-text-heading_label">
+                                        <th class="col1" style="width: 50%;" scope="col">
+                                            <div class="slds-truncate" title="Name">Name</div>
+                                        </th>
+                                        <th class="col1" scope="col">
+                                            <div class="slds-truncate" title="Check"></div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <aura:iteration items="{!v.productEntryWrapperListToDisplayInSearch}"
+                                                    var="oneProduct"
+                                                    indexVar="ind">
+                                        <tr class="slds-hint-parent"
+                                            onmouseover="{!c.setCurrentOrderItemId}"
+                                            data-id="{!oneProduct.product.Id}"
+                                            id="{!oneProduct.product.Id}">
+                                            <td class="centerColumn">
+                                                    {!oneProduct.product.Name}
+                                            </td>
+                                            <td class="centerColumn">
+                                                <lightning:input label=""
+                                                                 aura:id="categoryCheckbox"
+                                                                 value="{!oneProduct.product.Id}"
+                                                                 type="checkbox"
+                                                                 onchange="{!c.clickProductCheckbox}"/>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                                    </tbody>
+                                </table>
+                                <footer class="slds-modal__footer">
+                                    <aura:if isTrue="{!!empty(v.selectedCheckBoxes)}">
+                                        <lightning:button variant="neutral"
+                                                          label="Add and Close"
+                                                          onclick="{!c.clickAddSelectedProducts}"/>
+                                    </aura:if>
+                                    <lightning:button variant="neutral"
+                                                      label="Cancel"
+                                                      title="Cancel"
+                                                      onclick="{!c.toggleSearchModal}"/>
+                                </footer>
+                            </div>
+                        </section>
                     </aura:if>
                 </div>
-            </div>
-            <aura:if isTrue="{!or(or(v.productCategory, v.selectedAllCategory), v.customCategory)}">
-                <div class="slds-m-top--small" style="text-align: center;">
-                    <lightning:button variant="brand"
-                                      class="slds-m-top--medium"
-                                      label="Add new discount" onclick="{!c.clickAddNewDiscount}"/>
-                </div>
-            </aura:if>
+            </lightning:card>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="1">
+        </lightning:layoutItem>
+        <lightning:layoutItem size="7">
+            <c:TCR_PriceBookList/>
+        </lightning:layoutItem>
+    </lightning:layout>
 
-            <aura:if isTrue="{!v.customCategory}">
-                <div class="slds-m-top--small" style="text-align: center;">
-                    <lightning:button variant="brand"
-                                      class="slds-m-top--medium"
-                                      label="Add products"
-                                      onclick="{!c.toggleSearchModal}"/>
-                </div>
-            </aura:if>
-
-            <aura:if isTrue="{!v.isSearchModalOpen}">
-                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                         aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
-                    <div class="slds-modal__container">
-                        <header class="slds-modal__header mainLabel">
-                            <h1>SEARCH FOR PRODUCT</h1>
-                        </header>
-
-
-
-
-
-
-
-                        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
-                            <thead>
-                            <tr class="slds-text-heading_label">
-                                <th class="col1" style="width: 50%;" scope="col">
-                                    <div class="slds-truncate" title="Name">Name</div>
-                                </th>
-                                <th class="col1" scope="col">
-                                    <div class="slds-truncate" title="Check"></div>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <aura:iteration items="{!v.productEntryWrapperList}"
-                                            var="oneProduct"
-                                            indexVar="ind">
-
-                                <tr class="slds-hint-parent" onmouseover="{!c.setCurrentOrderItemId}"
-                                    data-id="{!oneProduct.Product2.Id}" id="{!oneProduct.Product2.Id}">
-                                    <td class="centerColumn">
-                                            {!oneProduct.Product2.Name}
-                                    </td>
-                                    <td class="centerColumn">
-                                        <lightning:input label="" aura:id="categoryCheckbox"
-                                                         value="{!oneProduct.isSelected}" type="checkbox"
-                                                         onchange="{!c.clickProductCheckbox}"/>
-                                    </td>
-                                </tr>
-                            </aura:iteration>
-                            </tbody>
-                        </table>
-
-                        <footer class="slds-modal__footer">
-                            <lightning:button variant="neutral"
-                                              label="Cancel"
-                                              title="Cancel"
-                                              onclick="{!c.toggleSearchModal}"/>
-                        </footer>
-                    </div>
-                </section>
-            </aura:if>
-        </div>
-    </lightning:card>
+    <!--    <c:TCR_PriceBookList/>-->
+    <aura:renderIf isTrue="{!v.isPriceBookDetailsOpen}">
+        <br/>
+        <c:TCR_PriceBookProducts/>
+    </aura:renderIf>
     <c:TCR_PriceBookToast aura:id="toast"/>
     <c:TCR_ProductManagerSpinner aura:id="spinner"/>
-    <c:TCR_PriceBookList/>
-
-    <!--    po najechaniu na pricebook-->
-    <c:TCR_PriceBookProducts/>
-
 </aura:component>
