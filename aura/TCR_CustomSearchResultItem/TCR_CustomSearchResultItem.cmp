@@ -43,17 +43,6 @@
                                        class="detailItem"/>
                     </div>
                     <div style="clear:both"/>
-                    <!-- <div class="detailLabel">{!$Label.c.TCR_Price}</div>
-                    <div class="price">
-                        <p>
-                            <lightning:formattedNumber value="{!v.record.price[0].UnitPrice}"
-                                                       style="currency"
-                                                       minimumFractionDigits="0"
-                                                       maximumFractionDigits="0"
-                                                       currencyCode="EUR"/>
-                            &nbsp;{!$Label.c.TCR_Per_Day}
-                        </p>
-                    </div>-->
                 </lightning:layoutItem>
 
                 <lightning:layoutItem size="3">

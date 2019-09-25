@@ -16,7 +16,7 @@
 
     setDiscount: function (component, event, helper) {
         let priceList = component.get("v.record.price");
-        let discount = priceList[priceList.length - 1].UnitPrice;
+        let discount = priceList[priceList.length - 1].Discount_Price__c;
         component.set('v.discount', discount);
     },
 })

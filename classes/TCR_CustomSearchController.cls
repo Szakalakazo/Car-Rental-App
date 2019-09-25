@@ -24,21 +24,19 @@ public with sharing class TCR_CustomSearchController {
 
             List<PricebookEntry> priceList = new List<PricebookEntry>();
             priceList = [
-                    SELECT Id, Product2Id, Pricebook2Id, UnitPrice, IsActive
+                    SELECT Id, Product2Id, Pricebook2Id, UnitPrice, IsActive, Discount_Price__c
                     FROM PricebookEntry
                     WHERE Product2Id IN :listOfIds
                     AND IsActive = true
-                    ORDER BY UnitPrice DESC
+                    ORDER BY Discount_Price__c DESC
             ];
             for (PricebookEntry entry : priceList) {
                 for (SearchResultWrapper item : searchResults) {
                     if (entry.Product2Id == item.product.Id) {
-                        System.debug('entry -----> ' + entry);
                         item.price.add(entry);
                     }
                 }
             }
-            System.debug(searchResults);
             return searchResults;
         } catch (Exception e) {
             System.debug(e.getMessage());
@@ -82,18 +80,6 @@ public with sharing class TCR_CustomSearchController {
             throw new AuraHandledException('ERROR');
         }
     }
-
-/*    @AuraEnabled
-    public static List<PricebookEntry> getPrice(String recordId) {
-        try {
-            List<PricebookEntry> priceList = new List<PricebookEntry>();
-            priceList = [SELECT Id, Product2Id, Pricebook2Id, UnitPrice, IsActive FROM PricebookEntry WHERE Product2Id = :recordId];
-            return priceList;
-        } catch (Exception e) {
-            System.debug(e.getMessage());
-            throw new AuraHandledException(System.Label.BRC_Server_Error);
-        }
-    }*/
 
     @AuraEnabled
     public static List<String> getBrands() {
