@@ -2,7 +2,7 @@ public with sharing class TCR_Basket {
 
     private static String userId;
     private static String userLoginName;
-    private static final String accountId = '0012p00002SfHxeAAF';
+    private static final String ACCOUNT_ID = '0012p00002SfHxeAAF';
     private static List<User> users;
     private static Account account;
 
@@ -18,7 +18,7 @@ public with sharing class TCR_Basket {
         String standardPriceBookId = standardPricebook.get(0).Id;
         Contract contract = createNewContract();
         Order order = new Order();
-        order.AccountId = accountId;
+        order.AccountId = ACCOUNT_ID;
         order.ContractId = contract.Id;
         order.Pricebook2Id = TCR_ProductSearchController.getProductPrice('01t2p00000AH49VAAT').get(0).Pricebook2Id;
         order.EffectiveDate = Date.today();
@@ -60,7 +60,7 @@ public with sharing class TCR_Basket {
 
     public static Contract createNewContract() {
         Contract contract = new Contract();
-        contract.AccountId = accountId;
+        contract.AccountId = ACCOUNT_ID;
         contract.Status = 'Draft';
         contract.StartDate = Date.today();
         contract.ContractTerm = 12;

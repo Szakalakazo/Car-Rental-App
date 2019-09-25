@@ -1,6 +1,6 @@
-<aura:component        controller="TCR_ProductImage"
-        implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes"
-        access="global">
+<aura:component controller="TCR_ProductImage"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+                access="global">
 
     <aura:attribute name="listOfImages" type="Object[]"/>
     <aura:attribute name="poster" type="Object"/>

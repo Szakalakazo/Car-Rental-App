@@ -144,13 +144,12 @@
     cursor: pointer;
 }
 
-.THIS .icon-add-to-cart:hover {
+/*.THIS .icon-add-to-cart:hover {
     height: 100px;
-    /*padding-left: 5px;*/
+    !*padding-left: 5px;*!
     cursor: pointer;
     padding:5px;
-
-}
+}*/
 
 .THIS .icon-add-to-cart1{
     height: 150px;
