@@ -4,11 +4,10 @@ public with sharing class TCR_ProductSearchController {
     public static List<PricebookEntry> getProductPrice(String productId) {
         try {
             List<PricebookEntry> productPriceList = [
-                    SELECT Id, Pricebook2Id, Product2Id, UnitPrice, IsActive
+                    SELECT Id, Name, Pricebook2Id, Product2Id, UnitPrice, IsActive, Discount_Price__c
                     FROM PricebookEntry
-                    WHERE IsActive = true
-                    AND Product2Id = :productId
-                    ORDER BY UnitPrice DESC
+                    WHERE Product2Id = :productId
+                    ORDER BY Discount_Price__c DESC
             ];
             return productPriceList;
         } catch (Exception e) {
