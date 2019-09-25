@@ -12,7 +12,6 @@
         let orderShippingDetails = component.get('v.order');
         let sessionUserCartJSON = JSON.stringify(component.get("v.itemList"));
         let action = component.get("c.createOrder");
-        console.log(JSON.stringify(orderShippingDetails));
         action.setParams({
             'jsonString': sessionUserCartJSON,
             "orderDetails": orderShippingDetails
@@ -34,6 +33,5 @@
         let compEvent = $A.get("e.c:TCR_FinalizeOrder");
         compEvent.setParam('amountOfProduct', 0);
         compEvent.fire();
-        console.log('fired');
     },
 })

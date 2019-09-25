@@ -43,7 +43,7 @@
         <div class="section-details">
             <lightning:layout multipleRows="false">
                 <lightning:layoutItem size="12" padding="arround-small">
-                    <p class="detailHeader">Product Details</p>
+                    <p class="detailHeader">{!$Label.c.TCR_Product_Details}</p>
                 </lightning:layoutItem>
             </lightning:layout>
         </div>
@@ -112,7 +112,7 @@
         <div class="section-overview">
             <lightning:layout multipleRows="false">
                 <lightning:layoutItem size="12" padding="arround-small">
-                    <p class="detailHeader">Overview</p>
+                    <p class="detailHeader">{!$Label.c.TCR_Overview}</p>
                 </lightning:layoutItem>
             </lightning:layout>
         </div>

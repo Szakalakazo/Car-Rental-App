@@ -7,11 +7,9 @@
         action.setCallback(this, function (response) {
             if (response.getState() === "SUCCESS") {
                 let result = response.getReturnValue()
-                console.log('results ---->  '  + JSON.stringify(result));
                 component.set("v.productEntryList", result);
                 component.set("v.standardPrice", result[0].UnitPrice);
                 component.set("v.discountPrice", result[result.length - 1].Discount_Price__c);
-                console.log('lalalalal ' + component.get("v.discountPrice"));
             } else {
                 component.find("toastCmp").showToastModel(response.getError()[0].message, "error");
             }

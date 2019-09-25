@@ -37,7 +37,6 @@
                     </div>
                 </lightning:layoutItem>
                 <lightning:layoutItem size="3">
-                {!$Label.c.TCR_Total_Price}
                 </lightning:layoutItem>
             </lightning:layout>
         </lightning:tile>
