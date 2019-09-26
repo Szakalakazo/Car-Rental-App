@@ -1,0 +1,191 @@
+.THIS .startShopping {
+    background: #65ba00;
+    border: 1px solid #65ba00;
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 0.9em;
+    padding: 7px 10px;
+    font-weight: 700;
+    width: 200px;
+    margin: auto;
+    cursor: pointer;
+    overflow: visible;
+    text-align: center;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.THIS .col1 {
+    background: #f3f3f3 !important;
+    text-align: center;
+}
+
+.THIS .col2 {
+    background: #f3f3f3 !important;
+    text-align: center;
+    width: 200px;
+}
+
+.THIS .custom-name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(60%, -50%);
+}
+
+.THIS .emptyBasket {
+    font-size: 200%;
+    font-weight: bold;
+}
+
+.THIS.bigLabel {
+    font-size: 200%;
+    font-weight: bold;
+    text-align: center;
+}
+
+.THIS .slds-button__icon {
+    fill: red;
+}
+
+.THIS .centerColumn {
+    text-align: center;
+}
+
+.THIS.basketSummary {
+    margin-top: 40px;
+    clear: both;
+    overflow: hidden;
+    padding: 15px;
+    text-align: right;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0);
+    background: #f1f1f1;
+    color: #333333;
+    border: 0;
+}
+
+.THIS .basketSummaryFont {
+    font-size: 200%;
+    font-weight: bold;
+}
+
+.THIS .slds-input {
+    background-color: white;
+}
+
+.THIS.basketSummaryButton {
+    background: #f1f1f1;
+    color: #333333;
+    border: 0;
+    margin-bottom: 20px;
+    border-top: 1px solid #fff;
+    padding: 5px;
+    text-align: right;
+}
+
+.THIS .basketButton {
+    transition: all 0.3s;
+    background: #65ba00;
+    border: 1px solid #65ba00;
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 1.2em;
+    padding: 10px 14px;
+    font-weight: 700;
+    display: inline-block;
+    cursor: pointer;
+    overflow: visible;
+    text-align: center;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.THIS .buttonDown {
+    display: inline-block;
+    text-align: center;
+    border: none;
+    vertical-align: middle;
+    color: #333;
+    line-height: normal;
+    background: #fff;
+    height: 34px;
+    width: 15%;
+    cursor: pointer;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px 0 0 5px;
+}
+
+.THIS .buttonUp {
+    display: inline-block;
+    text-align: center;
+    border: none;
+    vertical-align: middle;
+    color: #333;
+    line-height: normal;
+    background: #fff;
+    height: 34px;
+    width: 15%;
+    cursor: pointer;
+    border: 1px solid #dbdbdb;
+    border-radius: 0 5px 5px 0;
+}
+
+.THIS .link:hover {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.THIS .link {
+    font-size: 14px;
+}
+
+.THIS .field-label {
+    font-size: 14px;
+}
+
+.THIS .buttonNumber {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+    border: 0;
+    vertical-align: middle;
+    height: 34px !important;
+    border-right: none;
+    border-left: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0 !important;
+}
+
+.THIS .buttonNumber1 input {
+    text-align: center;
+    border-radius: 0 !important;
+    height: 34px;
+}
+
+.THIS .edit-icon {
+    height: 65px;
+    padding-left: 10px;
+    position: relative;
+}
+
+.THIS .card-no-border {
+    border: 0 !important;
+}
+
+.THIS .centered-text {
+    padding-top: 20px;
+}
+
+.THIS .price {
+    float: right;
+    color: red;
+}
+
+.THIS .info {
+    text-align: center;
+}
+
+.THIS .link:hover {
+    font-weight: bold;
+}

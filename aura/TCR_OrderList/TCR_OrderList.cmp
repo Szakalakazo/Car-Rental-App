@@ -9,7 +9,7 @@
     <lightning:layout multipleRows="true" class="mainPanel">
         <aura:if isTrue="{!empty(v.ordersList)}">
             <div class="listHeader" style="text-align: center">
-                Your Order List is Empty.
+               {!$Label.c.TCR_Empty_Order_List}
             </div>
             <aura:set attribute="else">
                 <aura:iteration items="{!v.ordersList}" var="order">

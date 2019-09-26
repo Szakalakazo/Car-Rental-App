@@ -1,5 +1,5 @@
 ({
-    navigateToProduct: function(component, event, helper) {
+    navigateToProduct: function (component, event, helper) {
         let selectedItem = event.currentTarget;
         let index = selectedItem.dataset.index;
         let order = component.get("v.order");
@@ -7,7 +7,7 @@
         let prefixSite = $A.get("$Site.siteUrlPrefix");
         let urlEvent = $A.get("e.force:navigateToURL");
         urlEvent.setParams({
-            "url": prefixSite + "/detail/" + recordId
+            "url": prefixSite + "/product/" + recordId
         });
         urlEvent.fire();
     },
