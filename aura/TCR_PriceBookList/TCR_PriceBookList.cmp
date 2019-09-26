@@ -12,26 +12,26 @@
     <aura:handler event="c:TCR_DeletePriceBookEvent" action="{!c.init}"/>
     <aura:handler event="c:TCR_AddNewPriceBookEvent" action="{!c.init}"/>
 
-    <lightning:card title="Available Price Books">
+    <lightning:card title="{!$Label.c.TCR_Available_Price_Books}">
         <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
             <thead>
             <tr class="slds-text-heading_label">
                 <th class="col1"  scope="col">
-                    <div class="slds-truncate" title="Name">Name</div>
+                    <div class="slds-truncate" title="{!$Label.c.TCR_Name}">{!$Label.c.TCR_Name}</div>
                 </th>
                 <th class="col1" scope="col">
                     <div class="slds-truncate"
-                         title="Is active">Is active
+                         title="{!$Label.c.TCR_Is_Active}">{!$Label.c.TCR_Is_Active}
                     </div>
                 </th>
                 <th class="col1" scope="col">
                     <div class="slds-truncate"
-                         title="Start Date">Start Date
+                         title="{!$Label.c.TCR_Start_Day}">{!$Label.c.TCR_Start_Day}
                     </div>
                 </th>
                 <th class="col1" scope="col">
                     <div class="slds-truncate"
-                         title="End Date">End Date
+                         title="{!$Label.c.TCR_End_Date}">{!$Label.c.TCR_End_Date}
                     </div>
                 </th>
                 <th class="col1" scope="col">

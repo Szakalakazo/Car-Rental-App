@@ -33,8 +33,7 @@
                 </lightning:layoutItem>
             </lightning:layout>
         </div>
-        <div onclick="{!c.handleDeletePriceBook}" style="cursor: pointer">
-            DELETE</div>
+        <div onclick="{!c.handleDeletePriceBook}" style="cursor: pointer"/>
     </lightning:card>
     <c:TCR_PriceBookToast aura:id="toast"/>
     <c:TCR_ProductManagerSpinner aura:id="spinner"/>

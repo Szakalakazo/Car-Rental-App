@@ -1,7 +1,7 @@
 ({
-    doGetAllProducts: function (component, event) {
+    doGetAllProducts: function(component, event) {
         let action = component.get("c.getAllProducts");
-        action.setCallback(this, function (response) {
+        action.setCallback(this, function(response) {
             let state = response.getState();
             if (state === 'SUCCESS') {
                 let allProducts = JSON.parse(response.getReturnValue());
@@ -11,9 +11,9 @@
         $A.enqueueAction(action);
     },
 
-    doGetAllCategories: function (component, event) {
+    doGetAllCategories: function(component, event) {
         let action = component.get("c.getAllCategoriesApex");
-        action.setCallback(this, function (response) {
+        action.setCallback(this, function(response) {
             let state = response.getState();
             if (state === 'SUCCESS') {
                 let allCategories = response.getReturnValue();
@@ -25,7 +25,7 @@
         this.switchSpinner(component, true);
     },
 
-    doSelectDiscountType: function (component, event) {
+    doSelectDiscountType: function(component, event) {
         let selectedValue = component.find("selectedTypeDiscount").get("v.value");
         if (selectedValue && selectedValue === "Cash discount") {
             component.set("v.percentageDiscount", false);
@@ -48,13 +48,13 @@
         }
     },
 
-    doSelectProductType: function (component, event) {
+    doSelectProductType: function(component, event) {
         let selectedValue = component.find("selectedTypeProduct").get("v.value");
-        if (selectedValue && selectedValue === "ProductsByCategory") {
+        if (selectedValue && selectedValue === "Products By Category") {
             component.set("v.productCategory", true);
             component.set("v.selectedAllCategory", false);
             component.set("v.customCategory", false);
-        } else if (selectedValue === "AllProducts") {
+        } else if (selectedValue === "All Products") {
             component.set("v.productCategory", false);
             component.set("v.selectedAllCategory", true);
             component.set("v.customCategory", false);
@@ -72,14 +72,10 @@
         }
     },
 
-    doValidateFields: function (component, helper, event) {
-        console.log('doValidateFields');
+    doValidateFields: function(component, helper, event) {
         let startDate = component.get("v.startDate");
-        console.log('1');
         let endDate = component.get("v.endDate");
-        console.log('2');
         let name = component.get("v.priceBookName");
-        console.log('3');
         let typeOfDiscount = component.find("selectedTypeDiscount").get("v.value");
         let cashValue = component.get("v.cashValue");
         let percentageValue = component.get("v.percentageValue");
@@ -94,19 +90,17 @@
             this.doShowToast(component, "Incorrect date. Please Try again", "Warning", "Warning");
             return false;
         }
-        console.log('true');
-
         return true;
     },
 
-    doAddNewDiscount: function (component, helper, event) {
+    doAddNewDiscount: function(component, helper, event) {
         if (this.doValidateFields(component, helper, event) === true) {
             let newPriceBook = this.doCreateNewProductWrapper(component, event);
             this.doAddNewPriceBook(component, newPriceBook);
         }
     },
 
-    doCreateNewProductWrapper: function (component, event) {
+    doCreateNewProductWrapper: function(component, event) {
         let typeOfDiscount = component.find("selectedTypeDiscount").get("v.value");
         let selectedCategory = component.find("selectedCategory");
         let category;
@@ -129,14 +123,14 @@
             endDate: endDate,
         };
         return JSON.stringify(newPriceBook);
-    }    ,
+    },
 
-    doAddNewPriceBook: function (component, newPriceBook) {
+    doAddNewPriceBook: function(component, newPriceBook) {
         let doAddNewPriceBookAction = component.get("c.addNewPriceBook");
         doAddNewPriceBookAction.setParams({
             newPriceBook: newPriceBook
         });
-        doAddNewPriceBookAction.setCallback(this, function (response) {
+        doAddNewPriceBookAction.setCallback(this, function(response) {
             let state = response.getState();
             if (state === "SUCCESS") {
                 this.doCleanFieldsAfterSuccessfulInsert(component);
@@ -148,9 +142,9 @@
         });
         $A.enqueueAction(doAddNewPriceBookAction);
         this.switchSpinner(component, true);
-    }    ,
+    },
 
-    doCleanFieldsAfterSuccessfulInsert: function (component) {
+    doCleanFieldsAfterSuccessfulInsert: function(component) {
         let addEvent = $A.get("e.c:TCR_AddNewPriceBookEvent");
         addEvent.fire();
         component.set("v.selectedTypeDiscount", 'None');
@@ -168,7 +162,7 @@
         component.set("v.searchedText", '');
     },
 
-    doSelectProductCheckbox: function (component, event) {
+    doSelectProductCheckbox: function(component, event) {
         let selectedCheckBoxes = component.get("v.selectedCheckBoxes");
         let selectedValue = event.getSource().get("v.value");
         let selectedValueChecked = event.getSource().get("v.checked");
@@ -182,11 +176,9 @@
             }
         }
         component.set("v.selectedCheckBoxes", selectedCheckBoxes);
-        console.log('selectedCheckBoxes ' + component.get("v.selectedCheckBoxes"));
-    }
-    ,
+    },
 
-    doAddSelectedProductsToNewPriceBook: function (component) {
+    doAddSelectedProductsToNewPriceBook: function(component) {
         let newPriceBook = this.doCreateNewProductWrapper(component);
         let selectedProductIds = component.get("v.selectedCheckBoxes");
         let action = component.get("c.addNewPriceBookWithListOfProducts");
@@ -194,7 +186,7 @@
             "newPriceBook": newPriceBook,
             "selectedProductIds": selectedProductIds
         });
-        action.setCallback(this, function (response) {
+        action.setCallback(this, function(response) {
             let state = response.getState();
             if (state === "SUCCESS") {
                 this.doCleanFieldsAfterSuccessfulInsert(component);
@@ -206,42 +198,34 @@
         });
         $A.enqueueAction(action);
         this.switchSpinner(component, true);
-    }
-    ,
+    },
 
-    doSearchProduct: function (component) {
-        let data = component.get("v.productEntryWrapperListToDisplayInSearch");
-        let allData = component.get("v.productEntryWrapperList");
+    doSearchProduct: function(component) {
         let searchKey = component.get('v.searchedText');
-
         let action = component.get("c.findByName");
         action.setParams({
             "searchKey": searchKey
         });
-
-        action.setCallback(this, function (a) {
+        action.setCallback(this, function(a) {
             component.set("v.productEntryWrapperListToDisplayInSearch", JSON.parse(action.getReturnValue()));
         });
         $A.enqueueAction(action)
-    }
-    ,
+    },
 
-    switchSpinner: function (component, status) {
+    switchSpinner: function(component, status) {
         const spinnerComponent = component.find('spinner');
         if (spinnerComponent) {
             spinnerComponent.switchSpinner(status);
         } else {
             console.error("'spinner' does not exist");
         }
-    }
-    ,
-    doShowToast: function (component, message, title, typeToast) {
+    },
+    doShowToast: function(component, message, title, typeToast) {
         const toastComponent = component.find('toast');
         if (toastComponent) {
             toastComponent.showToast(message, title, typeToast);
         } else {
             console.error("'Toast Component' does not exist");
         }
-    }
-    ,
+    },
 })

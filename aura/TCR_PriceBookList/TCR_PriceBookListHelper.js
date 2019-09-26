@@ -8,7 +8,6 @@
                 this.switchSpinner(component, false);
             } else {
                 this.doShowToast(component, response.getErrors()[0].message, 'Error', 'Error');
-                console.log("Price Book Products Do Init Failed with state: " + state);
             }
         });
         $A.enqueueAction(action);

@@ -134,7 +134,7 @@
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" style="text-align: center;"
                      id="modal-content">
-                    <h1>Confirm?</h1>
+                    <h1>{!$Label.c.TCR_Are_you_sure}</h1>
                 </div>
                 <footer class="slds-modal__footer">
                     <lightning:button variant="neutral"
@@ -201,7 +201,6 @@
                                 {!$Label.c.TCR_Nothing_to_Display}
                         </div>
                     </aura:if>
-
 
                     <aura:if isTrue="{!!empty(v.notRelatedProductList)}">
                         <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
