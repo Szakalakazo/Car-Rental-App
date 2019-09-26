@@ -10,7 +10,6 @@
                 this.switchSpinner(component, false);
             } else {
                 this.doShowToast(component, response.getErrors()[0].message, 'Error', 'Error');
-                console.log("Price Book Products Do Init Failed with state: " + state);
             }
         });
         $A.enqueueAction(getActualProductAction);
@@ -29,7 +28,6 @@
                 this.switchSpinner(component, false);
             } else {
                 this.doShowToast(component, response.getErrors()[0].message, 'Error', 'Error');
-                console.log("Price Book Products Do Init Failed with state: " + state);
             }
         });
         $A.enqueueAction(getActualProductAction);
@@ -55,7 +53,6 @@
                     component.set("v.isOpenEditModal", false);
                 } else {
                     this.doShowToast(component, response.getErrors()[0].message, 'Error', 'Error');
-                    console.log("Price Book Products doEditProduct Failed with state: " + state);
                 }
             });
             $A.enqueueAction(editOrderProductAction);
@@ -77,7 +74,6 @@
                 component.set("v.isOpenDeleteModal", false);
             } else {
                 this.doShowToast(component, response.getErrors()[0].message, 'Error', 'Error');
-                console.log("Price Book Products doRemoveProduct Failed with state: " + state);
             }
         });
         $A.enqueueAction(deleteOrderProductAction);
@@ -117,7 +113,6 @@
                 component.set("v.notRelatedProductList", response.getReturnValue());
             } else {
                 this.doShowToast(component, response.getErrors()[0].message, 'Error', 'Error');
-                console.log("Price Book Products doOpenAddModal Failed with state: " + state);
             }
         });
         $A.enqueueAction(getNotRelatedProductAction);
@@ -139,7 +134,6 @@
                 component.set("v.selectedCheckBoxes", []);
             } else {
                 this.doShowToast(component, response.getErrors()[0].message, 'Error', 'Error');
-                console.log("Price Book Products doAddSelectedProducts Failed with state: " + state);
             }
         });
         $A.enqueueAction(addNewProductAction);

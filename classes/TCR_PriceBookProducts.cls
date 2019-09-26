@@ -1,5 +1,8 @@
 public with sharing class TCR_PriceBookProducts {
 
+    public static final String  CASH_DISCOUNT_TYPE = 'Cash discount';
+    public static final String  PERCENTAGE_DISCOUNT_TYPE = 'Percentage discount';
+
     public class ProductWrapper {
         public Product2 product;
         public Boolean isSelected;
@@ -153,12 +156,13 @@ public with sharing class TCR_PriceBookProducts {
         for (PricebookEntry oneProductEntry : pricebookEntries) {
             oneProductEntry.Id = null;
             oneProductEntry.Pricebook2Id = priceBookId;
+            oneProductEntry.IsActive = true;
             pricebookEntriesToInsert.add(oneProductEntry);
         }
         try {
             UPSERT pricebookEntriesToInsert;
         } catch (Exception ex) {
-            System.debug('Failed with add new Product Entry message: ' + ex.getCause());
+            System.debug(ex.getCause());
         }
     }
 
@@ -209,7 +213,7 @@ public with sharing class TCR_PriceBookProducts {
         try {
             INSERT newPricebook2;
         } catch (Exception e) {
-            System.debug('Wyjebalo sie ' + e.getCause());
+            System.debug(e.getCause());
         }
         return [
                 SELECT Id, Name
@@ -230,10 +234,11 @@ public with sharing class TCR_PriceBookProducts {
         Pricebook2 priceBook = createAndInsertNewPricebook(newPriceBook);
         List<PricebookEntry> pricebookEntriesToInsert = new List<PricebookEntry>();
 
-        if (priceBookWrapper.typeOfDiscount.equalsIgnoreCase('Cash discount')) {
+        if (priceBookWrapper.typeOfDiscount.equalsIgnoreCase(CASH_DISCOUNT_TYPE)) {
             for (PricebookEntry oneProductEntry : pricebookEntries) {
                 oneProductEntry.Id = null;
                 oneProductEntry.Pricebook2Id = priceBook.Id;
+                oneProductEntry.IsActive = true;
                 if (oneProductEntry.UnitPrice <= priceBookWrapper.cashValue) {
                     oneProductEntry.Discount_by_cash__c = oneProductEntry.UnitPrice - 1;
                 } else {
@@ -241,10 +246,11 @@ public with sharing class TCR_PriceBookProducts {
                 }
                 pricebookEntriesToInsert.add(oneProductEntry);
             }
-        } else if (priceBookWrapper.typeOfDiscount.equalsIgnoreCase('Percentage discount')) {
+        } else if (priceBookWrapper.typeOfDiscount.equalsIgnoreCase(PERCENTAGE_DISCOUNT_TYPE)) {
             for (PricebookEntry oneProductEntry : pricebookEntries) {
                 oneProductEntry.Id = null;
                 oneProductEntry.Pricebook2Id = priceBook.Id;
+                oneProductEntry.IsActive = true;
                 oneProductEntry.Discount_by_percent__c = priceBookWrapper.percentageValue;
                 pricebookEntriesToInsert.add(oneProductEntry);
             }
@@ -255,7 +261,5 @@ public with sharing class TCR_PriceBookProducts {
             System.debug(e.getMessage());
         }
         return priceBook;
-
     }
-
 }

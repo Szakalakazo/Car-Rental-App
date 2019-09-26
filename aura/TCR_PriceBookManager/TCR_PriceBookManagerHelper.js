@@ -5,7 +5,6 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 let allProducts = JSON.parse(response.getReturnValue());
-                component.set("v.productEntryWrapperList", allProducts);
                 component.set("v.productEntryWrapperListToDisplayInSearch", allProducts);
             }
         });
@@ -73,24 +72,37 @@
         }
     },
 
-    doAddNewDiscount: function (component, helper, event) {
+    doValidateFields: function (component, helper, event) {
+        console.log('doValidateFields');
         let startDate = component.get("v.startDate");
+        console.log('1');
         let endDate = component.get("v.endDate");
+        console.log('2');
         let name = component.get("v.priceBookName");
-        if (name === undefined && name === '') {
-            console.log('doShowToast ');
-            this.doShowToast(component, "Fill required fields", "Warning", "Warning");
-        }
-
-        let newPriceBook = this.doCreateNewProductWrapper(component, event);
+        console.log('3');
         let typeOfDiscount = component.find("selectedTypeDiscount").get("v.value");
         let cashValue = component.get("v.cashValue");
         let percentageValue = component.get("v.percentageValue");
 
-        if ((typeOfDiscount === "Cash discount" && Number(cashValue) > 0) || ((typeOfDiscount === "Percentage discount" && percentageValue))) {
+        if (name === undefined && name === '') {
+            this.doShowToast(component, "2222 Name is required", "Warning", "Warning");
+            return false;
+        } else if ((typeOfDiscount === "Cash discount" && Number(cashValue) <= 0) || ((typeOfDiscount === "Percentage discount" && percentageValue <= 0))) {
+            this.doShowToast(component, "Incorrect Discount  ", "Warning", "Warning");
+            return false;
+        } else if (startDate > endDate) {
+            this.doShowToast(component, "Incorrect date. Please Try again", "Warning", "Warning");
+            return false;
+        }
+        console.log('true');
+
+        return true;
+    },
+
+    doAddNewDiscount: function (component, helper, event) {
+        if (this.doValidateFields(component, helper, event) === true) {
+            let newPriceBook = this.doCreateNewProductWrapper(component, event);
             this.doAddNewPriceBook(component, newPriceBook);
-        } else {
-            this.doShowToast(component, "Fill required fields", "Warning", "Warning");
         }
     },
 
@@ -117,11 +129,10 @@
             endDate: endDate,
         };
         return JSON.stringify(newPriceBook);
-    },
+    }    ,
 
     doAddNewPriceBook: function (component, newPriceBook) {
         let doAddNewPriceBookAction = component.get("c.addNewPriceBook");
-        let newlyInsertedPriceBook;
         doAddNewPriceBookAction.setParams({
             newPriceBook: newPriceBook
         });
@@ -137,7 +148,7 @@
         });
         $A.enqueueAction(doAddNewPriceBookAction);
         this.switchSpinner(component, true);
-    },
+    }    ,
 
     doCleanFieldsAfterSuccessfulInsert: function (component) {
         let addEvent = $A.get("e.c:TCR_AddNewPriceBookEvent");
@@ -172,7 +183,8 @@
         }
         component.set("v.selectedCheckBoxes", selectedCheckBoxes);
         console.log('selectedCheckBoxes ' + component.get("v.selectedCheckBoxes"));
-    },
+    }
+    ,
 
     doAddSelectedProductsToNewPriceBook: function (component) {
         let newPriceBook = this.doCreateNewProductWrapper(component);
@@ -194,7 +206,8 @@
         });
         $A.enqueueAction(action);
         this.switchSpinner(component, true);
-    },
+    }
+    ,
 
     doSearchProduct: function (component) {
         let data = component.get("v.productEntryWrapperListToDisplayInSearch");
@@ -210,7 +223,8 @@
             component.set("v.productEntryWrapperListToDisplayInSearch", JSON.parse(action.getReturnValue()));
         });
         $A.enqueueAction(action)
-    },
+    }
+    ,
 
     switchSpinner: function (component, status) {
         const spinnerComponent = component.find('spinner');
@@ -219,14 +233,15 @@
         } else {
             console.error("'spinner' does not exist");
         }
-    },
-    doShowToast: function(component, message, title, typeToast) {
+    }
+    ,
+    doShowToast: function (component, message, title, typeToast) {
         const toastComponent = component.find('toast');
         if (toastComponent) {
             toastComponent.showToast(message, title, typeToast);
-        }
-        else {
+        } else {
             console.error("'Toast Component' does not exist");
         }
-    },
+    }
+    ,
 })

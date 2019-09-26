@@ -50,7 +50,6 @@
         component.set("v.isPriceBookDetailsOpen", true);
     },
     doHidePriceBookDetails:function (component, event, helper) {
-        console.log('handling delete');
         component.set("v.isPriceBookDetailsOpen", false);
     },
 

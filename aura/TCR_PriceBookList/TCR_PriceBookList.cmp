@@ -16,7 +16,7 @@
         <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
             <thead>
             <tr class="slds-text-heading_label">
-                <th class="col1" style="width: 25%;" scope="col">
+                <th class="col1"  scope="col">
                     <div class="slds-truncate" title="Name">Name</div>
                 </th>
                 <th class="col1" scope="col">

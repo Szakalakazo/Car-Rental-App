@@ -53,7 +53,6 @@
     setCurrentOrderItemId: function(component, event, helper) {
         let selectedSection = event.currentTarget;
         let orderItemId = selectedSection.dataset.id;
-        console.log('===> orderItemId  ' + orderItemId);
         component.set("v.orderItemId", orderItemId);
         let allOrder = component.get("v.productList");
         allOrder.forEach(function (acc) {

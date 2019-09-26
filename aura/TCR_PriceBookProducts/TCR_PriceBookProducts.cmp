@@ -2,7 +2,6 @@
                 implements="flexipage:availableForAllPageTypes,force:hasRecordId"
                 controller="TCR_PriceBookProducts">
 
-<!--    <aura:attribute name="recordId" type="String" default="01s2p000001DtMNAA0"/>-->
     <aura:attribute name="recordId" type="String"/>
     <aura:attribute name="orderItemId" type="String"/>
     <aura:attribute name="currentOrderItem" type="String"/>
@@ -14,13 +13,12 @@
     <aura:attribute type="List" name="selectedCheckBoxes" default="[]"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-
     <aura:handler event="c:TCR_ShowPriceBookDetails" action="{!c.create}"/>
 
-    <lightning:card title="List of products">
+    <lightning:card title="{!$Label.c.TCR_List_of_products}">
         <aura:if isTrue="{!empty(v.productList)}">
             <div class="titleLabel" style="text-align: center;">
-                Pricebook is empty
+                {!$Label.c.TCR_Nothing_to_display}
             </div>
         </aura:if>
 
@@ -31,31 +29,31 @@
                     <thead>
                     <tr class="slds-text-heading_label">
                         <th class="col1" style="width: 25%;" scope="col">
-                            <div class="slds-truncate" title="Name">Name</div>
+                            <div class="slds-truncate" title="{!$Label.c.TCR_Name}">{!$Label.c.TCR_Name}</div>
                         </th>
                         <th class="col1" scope="col">
                             <div class="slds-truncate"
-                                 title="Standard Price">Standard Price
+                                 title="{!$Label.c.TCR_Standard_Price}">{!$Label.c.TCR_Standard_Price}
                             </div>
                         </th>
                         <th class="col1" scope="col">
                             <div class="slds-truncate"
-                                 title="Discount Price">Discount Price
+                                 title="{!$Label.c.TCR_Discount_Price}">{!$Label.c.TCR_Discount_Price}
                             </div>
                         </th>
                         <th class="col1" scope="col">
                             <div class="slds-truncate"
-                                 title="Category">Category
+                                 title="{!$Label.c.TCR_Category}">{!$Label.c.TCR_Category}
                             </div>
                         </th>
                         <th class="col1" scope="col">
                             <div class="slds-truncate"
-                                 title="Discount By Percent">Discount By Percent
+                                 title="{!$Label.c.TCR_Discount_By_Percent}">{!$Label.c.TCR_Discount_By_Percent}
                             </div>
                         </th>
                         <th class="col1" scope="col">
                             <div class="slds-truncate"
-                                 title="Discount By Cash">Discount By Cash
+                                 title="{!$Label.c.TCR_Discount_By_Cash}">{!$Label.c.TCR_Discount_By_Cash}
                             </div>
                         </th>
                         <th class="col1" scope="col">
@@ -67,8 +65,11 @@
                     <aura:iteration items="{!v.productList}"
                                     var="oneProduct"
                                     indexVar="ind">
-                        <tr class="slds-hint-parent" onmouseover="{!c.setCurrentOrderItemId}"
-                            data-id="{!oneProduct.Id}" id="{!oneProduct.Id}">
+                        <tr class="slds-hint-parent"
+                            onmouseover="{!c.setCurrentOrderItemId}"
+                            data-id="{!oneProduct.Id}"
+                            id="{!oneProduct.Id}">
+
                             <td class="centerColumn">
                                     {!oneProduct.Product2.Name}
                             </td>
@@ -87,9 +88,11 @@
                             <td class="centerColumn">
                                     {!oneProduct.Product2.Family}
                             </td>
+
                             <td class="centerColumn">
                             {!oneProduct.Discount_by_percent__c} %
                             </td>
+
                             <td class="centerColumn">
                                 <lightning:formattedNumber value="{!oneProduct.Discount_by_cash__c}"
                                                            style="currency"
@@ -115,7 +118,7 @@
         <aura:set attribute="actions">
             <lightning:button variant="brand"
                               class="slds-m-top--medium"
-                              label="Add product to pricebook"
+                              label="{!$Label.c.TCR_Add_product_to_pricebook}"
                               onclick="{!c.clickOpenAddModal}"/>
         </aura:set>
     </lightning:card>
@@ -124,9 +127,10 @@
     <aura:if isTrue="{!v.isOpenDeleteModal}">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
                  aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
+
             <div class="slds-modal__container">
                 <header class="slds-modal__header mainLabel">
-                    <h1>Delete &nbsp;{!v.currentOrderItem.Product2.Name}</h1>
+                    <h1>{!$Label.c.TCR_Delete} &nbsp;{!v.currentOrderItem.Product2.Name}</h1>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" style="text-align: center;"
                      id="modal-content">
@@ -134,10 +138,12 @@
                 </div>
                 <footer class="slds-modal__footer">
                     <lightning:button variant="neutral"
-                                      label="Cancel"
-                                      title="Cancel"
+                                      label="{!$Label.c.TCR_Cancel}"
+                                      title="{!$Label.c.TCR_Cancel}"
                                       onclick="{!c.clickCloseDeleteModal}"/>
-                    <lightning:button variant="neutral" label="Delete" onclick="{!c.clickRemoveProduct}"/>
+                    <lightning:button variant="neutral"
+                                      label="{!$Label.c.TCR_Delete}"
+                                      onclick="{!c.clickRemoveProduct}"/>
                 </footer>
             </div>
         </section>
@@ -149,16 +155,18 @@
                  aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header mainLabel">
-                    <h1>Edit Product&nbsp;{!v.currentOrderItem.Product2.Name}</h1>
+                    <h1>{!$Label.c.TCR_Edit_Product}&nbsp;{!v.currentOrderItem.Product2.Name}</h1>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content">
-                    <lightning:input label="Percentage" placeholder="Type discount" required="true"
+                    <lightning:input label="{!$Label.c.TCR_Percentage}"
+                                     placeholder="{!$Label.c.TCR_Enter_Discount}" required="true"
                                      type="number" min="0" max="99"
                                      aura:id="percentageDiscount"
                                      name="expenseName"
                                      value="{!v.currentOrderItem.Discount_by_percent__c}"
                     />
-                    <lightning:input label="Amount" placeholder="Type amount" required="true"
+                    <lightning:input label="{!$Label.c.TCR_Amount}"
+                                     placeholder="{!$Label.c.TCR_Enter_Amount}" required="true"
                                      type="number" min="0" max="{!v.currentOrderItem.UnitPrice -1}"
                                      aura:id="cashDiscount"
                                      name="expenseName"
@@ -167,10 +175,12 @@
                 </div>
                 <footer class="slds-modal__footer">
                     <lightning:button variant="neutral"
-                                      label="Cancel"
-                                      title="Cancel"
+                                      label="{!$Label.c.TCR_Cancel}"
+                                      title="{!$Label.c.TCR_Cancel}"
                                       onclick="{!c.clickCloseEditModal}"/>
-                    <lightning:button variant="neutral" label="Save" onclick="{!c.clickEditProduct}"/>
+                    <lightning:button variant="neutral"
+                                      label="{!$Label.c.TCR_Save}"
+                                      onclick="{!c.clickEditProduct}"/>
                 </footer>
             </div>
         </section>
@@ -182,15 +192,16 @@
                  aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container" style="width: 1800px;">
                 <header class="slds-modal__header mainLabel">
-                    <h1>Add product</h1>
+                    <h1>{!$Label.c.TCR_Add_product}</h1>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content">
 
                     <aura:if isTrue="{!empty(v.notRelatedProductList)}">
                         <div style="text-align: center;">
-                            Not_available_products
+                                {!$Label.c.TCR_Nothing_to_Display}
                         </div>
                     </aura:if>
+
 
                     <aura:if isTrue="{!!empty(v.notRelatedProductList)}">
                         <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
@@ -201,18 +212,22 @@
                                 </th>
                                 <th class="col1" scope="col">
                                     <div class="slds-truncate"
-                                         title="Standard_Price">Standard_Price
+                                         title="{!$Label.c.TCR_Standard_Price}">{!$Label.c.TCR_Standard_Price}
                                     </div>
                                 </th>
                                 <th class="col1" scope="col">
-                                    <div class="slds-truncate" title="Check"></div>
+                                    <div class="slds-truncate" title=""></div>
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
-                            <aura:iteration items="{!v.notRelatedProductList}" var="oneProduct" indexVar="ind">
-                                <tr class="slds-hint-parent" onmouseover="{!c.setCurrentOrderItemId}"
-                                    data-id="{!oneProduct.Id}" id="{!oneProduct.Id}">
+                            <aura:iteration items="{!v.notRelatedProductList}"
+                                            var="oneProduct"
+                                            indexVar="ind">
+                                <tr class="slds-hint-parent"
+                                    onmouseover="{!c.setCurrentOrderItemId}"
+                                    data-id="{!oneProduct.Id}"
+                                    id="{!oneProduct.Id}">
                                     <td class="centerColumn">
                                             {!oneProduct.Product2.Name}
                                     </td>
@@ -234,12 +249,12 @@
                 </div>
                 <footer class="slds-modal__footer">
                     <lightning:button variant="neutral"
-                                      label="Cancel"
-                                      title="Cancel"
+                                      label="{!$Label.c.TCR_Cancel}"
+                                      title="{!$Label.c.TCR_Cancel}"
                                       onclick="{!c.clickCloseAddModal}"/>
                     <aura:if isTrue="{!!empty(v.notRelatedProductList)}">
                         <lightning:button variant="neutral"
-                                          label="Add"
+                                          label="{!$Label.c.TCR_Add_product}"
                                           onclick="{!c.clickAddSelectedProducts}"/>
                     </aura:if>
                 </footer>
