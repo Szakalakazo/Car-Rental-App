@@ -1,6 +1,51 @@
-<!--
- - Created by Tomek on 22.09.2019.
- -->
+<aura:component
+        implements="forceCommunity:availableForAllPageTypes"
+        access="global">
 
-<aura:component description="TCR_OrderListItem">
+    <aura:attribute name="order" type="Order"/>
+    <aura:attribute name="posterPath" type="String"/>
+
+    <lightning:layout multipleRows="true" class="mainPanel" verticalAlign="center">
+        <lightning:layoutItem size="10" class="orderLabels">
+            Order Date: <span class="orderValue">  {!v.order.EffectiveDate}</span>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="2" class="orderLabels">
+            Total Amount: <span class="orderValue" style="color:red"> <lightning:formattedNumber
+                value="{!v.order.TotalAmount}" style="currency"/></span>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" class="orderLabels">
+            Status:<span class="orderValue" style="color:green">  {!v.order.Status}</span>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="12" class="orderLabels productsHeader">
+            Ordered Products:
+        </lightning:layoutItem>
+
+        <aura:iteration items="{!v.order.OrderItems}" var="item" indexVar="index">
+            <lightning:layout verticalAlign="center" class="productItem">
+                <lightning:layoutItem size="1">
+                </lightning:layoutItem>
+                <lightning:layoutItem size="6">
+                    <div class="productName"
+                         data-index="{!index}"
+                         onclick="{!c.navigateToProduct}">
+                            {!item.Product2.Name}
+                    </div>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1">
+                    Days: <span class="orderValue"> {!item.Quantity}</span>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="2">
+                    Price:
+                    <span class="orderValue"> <lightning:formattedNumber value="{!item.UnitPrice}"
+                                                                         style="currency"/></span>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="2">
+                    Total Price:
+                    <span class="orderValue"> <lightning:formattedNumber value="{!item.TotalPrice}"
+                                                                         style="currency"/></span>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </aura:iteration>
+    </lightning:layout>
+
 </aura:component>

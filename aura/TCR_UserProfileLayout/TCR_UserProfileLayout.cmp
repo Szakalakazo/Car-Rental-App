@@ -1,0 +1,14 @@
+<aura:component description="TCR_UserProfileLayout" implements="forceCommunity:layout"  access="global">
+
+    <aura:attribute name="column1" type="Aura.Component[]" required="false"></aura:attribute>
+    <aura:attribute name="column2" type="Aura.Component[]" required="false"></aura:attribute>
+
+    <lightning:tabset variant="scoped" class="container">
+        <lightning:tab label="Details">
+                {!v.column1}
+        </lightning:tab>
+        <lightning:tab label="Orders">
+                {!v.column2}
+        </lightning:tab>
+    </lightning:tabset>
+</aura:component>
