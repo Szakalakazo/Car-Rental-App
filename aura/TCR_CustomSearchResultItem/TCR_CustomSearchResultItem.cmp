@@ -55,8 +55,7 @@
                                 <lightning:formattedNumber value="{!v.record.price[0].UnitPrice}"
                                                            style="currency"
                                                            minimumFractionDigits="0"
-                                                           maximumFractionDigits="0"
-                                                           currencyCode="EUR"/>
+                                                           maximumFractionDigits="0"/>
                                 &nbsp;{!$Label.c.TCR_Per_Day}
                             </p>
                         </div>
@@ -69,8 +68,7 @@
                                     <lightning:formattedNumber value="{!v.record.price[0].UnitPrice}"
                                                                style="currency"
                                                                minimumFractionDigits="0"
-                                                               maximumFractionDigits="0"
-                                                               currencyCode="EUR"/>
+                                                               maximumFractionDigits="0"/>
                                     &nbsp;{!$Label.c.TCR_Per_Day}
                                 </s>
                             </div>
@@ -79,8 +77,7 @@
                                     <lightning:formattedNumber value="{!v.discount}"
                                                                style="currency"
                                                                minimumFractionDigits="0"
-                                                               maximumFractionDigits="0"
-                                                               currencyCode="EUR"/>
+                                                               maximumFractionDigits="0"/>
                                     &nbsp;{!$Label.c.TCR_Per_Day}
                                 </p>
                             </div>

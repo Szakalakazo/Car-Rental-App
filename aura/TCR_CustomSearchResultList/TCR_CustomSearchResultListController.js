@@ -1,8 +1,6 @@
 ({
     init: function (component, event, helper) {
         let idsJson = sessionStorage.getItem('customSearch--recordIds');
-        let searchText = sessionStorage.getItem('customSearch--searchText');
-
         if (!$A.util.isUndefinedOrNull(idsJson)) {
             let listOfWrappers = JSON.parse(idsJson);
             component.set('v.allResults', listOfWrappers);
@@ -15,6 +13,9 @@
                 let resultsToDisplay = component.get('v.allResults');
                 component.set('v.filteredResults', resultsToDisplay);
             }
+            else {
+                component.find("toast").showToast(response.getError()[0].message, "error");
+            }
         });
         $A.enqueueAction(action);
     },
@@ -23,9 +24,9 @@
         let allResults = component.get("v.allResults");
         let minPrice = component.get("v.minPrice");
         let maxPrice = component.get("v.maxPrice");
-        let productionYear = component.get("v.productionYear");
-        let brand = component.find('brandSelect').get('v.value');
         let doors = component.find('doorsSelect').get('v.value');
+        let brand = component.find('brandSelect').get('v.value');
+        let productionYear = component.get("v.productionYear");
 
         let filterResults = allResults.filter(x => {
             if (minPrice !== '' && minPrice !== null) {

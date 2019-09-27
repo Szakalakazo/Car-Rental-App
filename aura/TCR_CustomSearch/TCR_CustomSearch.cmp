@@ -19,4 +19,6 @@
             </div>
         </div>
     </div>
+    <c:TCR_PriceBookToast aura:id="toast"/>
+    <c:TCR_ProductManagerSpinner aura:id="spinner"/>
 </aura:component>

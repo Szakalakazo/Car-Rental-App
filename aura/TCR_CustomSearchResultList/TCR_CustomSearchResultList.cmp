@@ -46,9 +46,9 @@
                 <div class="filterItem">
                     <lightning:select aura:id="brandSelect"
                                       name="select"
-                                      label="Brand"
+                                      label="{!$Label.c.TCR_Brand}"
                                       onchange="{!c.filterResults}">
-                        <option value="">--none--</option>
+                        <option value="">{!$Label.c.TCR_None}</option>
                         <aura:iteration items="{!v.brands}" var="brand">
                             <option value="{!brand}">{!brand}</option>
                         </aura:iteration>
@@ -97,11 +97,14 @@
                 </aura:iteration>
                 <aura:set attribute="else">
                     <span class="slds-page-header__title slds-truncate">
-                        Sorry, we didn't find anything...
+                        {!$Label.c.TCR_No_Results}
                     </span><br/><br/><br/>
                     <img src="{!$Resource.Image_404}" alt="" width="500"/>
                 </aura:set>
             </aura:if>
         </lightning:layoutItem>
     </lightning:layout>
+
+    <c:TCR_PriceBookToast aura:id="toast"/>
+    <c:TCR_ProductManagerSpinner aura:id="spinner"/>
 </aura:component>

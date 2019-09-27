@@ -9,7 +9,7 @@
             if (response.getState() === "SUCCESS") {
                 component.set("v.poster", response.getReturnValue());
             } else {
-                component.find("toastCmp").showToastModel(response.getError()[0].message, "error");
+                component.find("toast").showToast(response.getError()[0].message, "error");
             }
         });
         $A.enqueueAction(action);
