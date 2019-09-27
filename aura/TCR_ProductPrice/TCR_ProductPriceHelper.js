@@ -25,7 +25,19 @@
 
     doAddToBasket: function (component, count) {
         let currentProduct = component.get("v.productItem");
-        let productPrice = component.get("v.standardPrice");
+        let standardPrice = component.get("v.standardPrice");
+        let discountPrice = component.get("v.discountPrice");
+        console.log(' standardPrice ' + standardPrice);
+        console.log(' discountPrice ' + discountPrice);
+
+        let productPrice;
+        if (discountPrice < standardPrice) {
+            console.log(' productPrice = discountPrice  ');
+            productPrice = discountPrice;
+        } else {
+            console.log(' else  ');
+            productPrice = standardPrice;
+        }
         let quantity = component.get("v.amountProduct");
         let totalPriceForItem = quantity * productPrice;
         let posterURL = component.get('v.posterURL.ContentDownloadUrl');

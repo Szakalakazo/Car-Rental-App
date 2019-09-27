@@ -3,6 +3,9 @@ public with sharing class TCR_Basket {
     private static String userId;
     private static String userLoginName;
     private static final String ACCOUNT_ID = '0012p00002SfHxeAAF';
+    private static final String ORDER_STATUS_DRAFT = 'Draft';
+    private static final String ORDER_STATUS_ACTIVATED = 'Activated';
+    private static final String STANDARD_PRICEBOOK_ID = '01t2p00000AH49VAAT';
     private static List<User> users;
     private static Account account;
 
@@ -20,9 +23,9 @@ public with sharing class TCR_Basket {
         Order order = new Order();
         order.AccountId = ACCOUNT_ID;
         order.ContractId = contract.Id;
-        order.Pricebook2Id = TCR_ProductSearchController.getProductPrice('01t2p00000AH49VAAT').get(0).Pricebook2Id;
+        order.Pricebook2Id = TCR_ProductSearchController.getProductPrice(STANDARD_PRICEBOOK_ID).get(0).Pricebook2Id;
         order.EffectiveDate = Date.today();
-        order.Status = 'Draft';
+        order.Status = ORDER_STATUS_DRAFT;
         order.ShippingStreet = orderDetails.ShippingStreet;
         order.ShippingPostalCode = orderDetails.ShippingPostalCode;
         order.ShippingCity = orderDetails.ShippingCity;
@@ -44,16 +47,15 @@ public with sharing class TCR_Basket {
             newItem.Product2Id = wrapper.product.Id;
             newItem.Quantity = wrapper.quantity;
             newItem.PricebookEntryId = TCR_ProductSearchController.getProductPrice(wrapper.product.Id).get(0).Id;
-            newItem.UnitPrice = TCR_ProductSearchController.getProductPrice(wrapper.product.Id).get(0).UnitPrice;
+            newItem.UnitPrice = wrapper.price;
             listOfOrderItems.add(newItem);
         }
         try {
             updateContract(contract);
             INSERT listOfOrderItems;
-            order.Status = 'Activated';
+            order.Status = ORDER_STATUS_ACTIVATED;
         } catch (Exception ex) {
-            System.debug('40 Failed with create order message: ' + ex.getMessage());
-            System.debug('41 Failed with create order cause: ' + ex.getCause());
+            System.debug('Failed with create order message: ' + ex.getMessage());
         }
         return order;
     }
@@ -61,7 +63,7 @@ public with sharing class TCR_Basket {
     public static Contract createNewContract() {
         Contract contract = new Contract();
         contract.AccountId = ACCOUNT_ID;
-        contract.Status = 'Draft';
+        contract.Status = ORDER_STATUS_DRAFT;
         contract.StartDate = Date.today();
         contract.ContractTerm = 12;
         try {
@@ -74,7 +76,7 @@ public with sharing class TCR_Basket {
     }
 
     private static Contract updateContract(Contract contract) {
-        contract.Status = 'Activated';
+        contract.Status = ORDER_STATUS_ACTIVATED;
         try {
             UPSERT contract;
         } catch (Exception ex) {

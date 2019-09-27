@@ -11,6 +11,8 @@
     createAnOrder: function (component, event, helper) {
         let orderShippingDetails = component.get('v.order');
         let sessionUserCartJSON = JSON.stringify(component.get("v.itemList"));
+        console.log('----------> orderShippingDetails ' + JSON.stringify(orderShippingDetails));
+        console.log('----------> sessionUserCartJSON ' + sessionUserCartJSON);
         let action = component.get("c.createOrder");
         action.setParams({
             'jsonString': sessionUserCartJSON,
@@ -34,4 +36,13 @@
         compEvent.setParam('amountOfProduct', 0);
         compEvent.fire();
     },
+
+    doShowToast: function (component, message, title, typeToast) {
+        const toastComponent = component.find('toast');
+        if (toastComponent) {
+            toastComponent.showToast(message, title, typeToast);
+        } else {
+            console.error("'Toast Component' does not exist");
+        }
+    }
 })

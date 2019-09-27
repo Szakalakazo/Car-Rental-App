@@ -32,13 +32,13 @@ public class TCR_ProductWrapper {
     }
 
     @AuraEnabled
-    public Integer price;
+    public Double price;
     @AuraEnabled
     public Product product;
     @AuraEnabled
-    public Integer quantity;
+    public Double quantity;
     @AuraEnabled
-    public Integer totalPriceForItem;
+    public Double totalPriceForItem;
     @AuraEnabled
     public String posterURL;
 

@@ -90,8 +90,8 @@
                                             <p class="slds-truncate" title="Total Price">
                                                 <lightning:formattedNumber value="{!record.price}"
                                                                            style="currency"
-                                                                           minimumFractionDigits="0"
-                                                                           maximumFractionDigits="0"/>
+                                                                           minimumFractionDigits="2"
+                                                                           maximumFractionDigits="2"/>
                                             </p>
                                         </div>
                                     </td>
@@ -124,8 +124,8 @@
                                             <p class="slds-truncate" title="">
                                                 <lightning:formattedNumber value="{!record.totalPriceForItem}"
                                                                            style="currency"
-                                                                           minimumFractionDigits="0"
-                                                                           maximumFractionDigits="0"/>
+                                                                           minimumFractionDigits="2"
+                                                                           maximumFractionDigits="2"/>
                                             </p>
                                         </div>
                                     </td>
