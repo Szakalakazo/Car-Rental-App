@@ -1,0 +1,2 @@
+<aura:event type="APPLICATION" description="TCR_ProductReviewAddedEvent">
+</aura:event>
