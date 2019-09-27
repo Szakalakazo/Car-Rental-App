@@ -1,5 +1,4 @@
-<aura:component description="BRCCartPage"
-                implements="forceCommunity:availableForAllPageTypes"
+<aura:component implements="forceCommunity:availableForAllPageTypes"
                 controller="TCR_Basket"
                 access="global">
 
@@ -8,14 +7,15 @@
     <aura:attribute name="totalPrice" type="Currency" default="0"/>
     <aura:attribute name="userId" type="String" default=""/>
     <aura:attribute name="isAddressSectionVisible" type="Boolean" default="true"/>
-    <aura:attribute name="order" type="Order"
-                    default="{ShippingStreet:'Bystra Podhanańska',ShippingPostalCode:'34-235',ShippingCity:'Bystra Podhanańska',ShippingState:'Malopolska',ShippingCountry:'Poland'}"/>
+    <aura:attribute name="order" type="Order" default="{}"/>
     <aura:attribute name="iconAddress" type="String"
                     default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FHbq&amp;d=%2Fa%2F2p0000008uY9%2F.AY53mgPS9ReYex6WLlEZofJLcVqLTY3bDJzzAlCVvc&amp;asPdf=false"/>
     <aura:attribute name="iconPayment" type="String"
                     default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FHc0&amp;d=%2Fa%2F2p0000008uYE%2FIq7i41mCLxPxFanMEwN19SRVKZVUrUjAvyrkuM.ynCU&amp;asPdf=false"/>
 
     <aura:registerEvent name="TCR_FinalizeOrder" type="c:TCR_FinalizeOrder"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
 
     <lightning:card title="" class="card-no-border">
         <div class="slds-grid slds-gutters" onclick="{!c.showAddressSection}" style="cursor: pointer">
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <aura:if isTrue="{!v.isAddressSectionVisible}">
+        <aura:renderIf isTrue="{!v.isAddressSectionVisible}">
             <lightning:recordEditForm objectApiName="Order">
                 <lightning:messages/>
                 <lightning:layout multipleRows="true" horizontalAlign="center">
@@ -54,7 +54,7 @@
                     </lightning:layoutItem>
                 </lightning:layout>
             </lightning:recordEditForm>
-        </aura:if>
+        </aura:renderIf>
         <aura:if isTrue="{!!empty(v.itemList)}">
             <div class=" slds-grid slds-gutters" style="cursor: pointer" onclick="{!c.handleSubmitOrder}">
                 <div class="slds-col slds-size_4-of-12 edit-icon">

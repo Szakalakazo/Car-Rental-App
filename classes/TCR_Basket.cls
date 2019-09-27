@@ -16,6 +16,16 @@ public with sharing class TCR_Basket {
     }
 
     @AuraEnabled
+    public static User getCommunityUserAddress() {
+        try {
+            User user = [SELECT Id, Address FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+            return user;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+        } return null;
+    }
+
+    @AuraEnabled
     public static Order createOrder(String jsonString, Order orderDetails) {
         List<Pricebook2> standardPricebook = [SELECT Id, IsStandard FROM Pricebook2 WHERE IsStandard = true];
         String standardPriceBookId = standardPricebook.get(0).Id;

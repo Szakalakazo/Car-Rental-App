@@ -35,11 +35,13 @@
         let sessionUserCart = JSON.parse(sessionStorage.getItem('user-cart' + userId));
         let index = event.currentTarget.dataset.index;
         let singleItemOnList = sessionUserCart[index];
-        singleItemOnList.quantity = singleItemOnList.quantity - 1;
-        singleItemOnList.totalPriceForItem = singleItemOnList.quantity * singleItemOnList.price;
-        sessionUserCart[index] = singleItemOnList;
-        sessionStorage.setItem('user-cart' + userId, JSON.stringify(sessionUserCart));
-        helper.doInit(component);
-        helper.initTotalPrice(component);
+        if(singleItemOnList.quantity > 1){
+            singleItemOnList.quantity = singleItemOnList.quantity - 1;
+            singleItemOnList.totalPriceForItem = singleItemOnList.quantity * singleItemOnList.price;
+            sessionUserCart[index] = singleItemOnList;
+            sessionStorage.setItem('user-cart' + userId, JSON.stringify(sessionUserCart));
+            helper.doInit(component);
+            helper.initTotalPrice(component);
+        }
     }
 })

@@ -8,11 +8,31 @@
         }
     },
 
+    doInitAddress: function (component) {
+        console.log('init start');
+
+        let action = component.get("c.getCommunityUserAddress");
+        console.log('init start 1');
+
+        action.setCallback(this, function(response) {
+            if (response.getState() === "SUCCESS") {
+                let user = response.getReturnValue();
+                component.set("v.order.ShippingStreet", user.Address.street);
+                component.set("v.order.ShippingPostalCode", user.Address.postalCode);
+                component.set("v.order.ShippingCity", user.Address.city);
+                component.set("v.order.ShippingState", user.Address.state);
+                component.set("v.order.ShippingCountry", user.Address.country);
+            } else {
+                component.find("toastCmp").doShowToast(response.getError()[0].message, "error");
+            }
+        });
+        $A.enqueueAction(action);
+
+    },
+
     createAnOrder: function (component, event, helper) {
         let orderShippingDetails = component.get('v.order');
         let sessionUserCartJSON = JSON.stringify(component.get("v.itemList"));
-        console.log('----------> orderShippingDetails ' + JSON.stringify(orderShippingDetails));
-        console.log('----------> sessionUserCartJSON ' + sessionUserCartJSON);
         let action = component.get("c.createOrder");
         action.setParams({
             'jsonString': sessionUserCartJSON,
