@@ -27,15 +27,10 @@
         let currentProduct = component.get("v.productItem");
         let standardPrice = component.get("v.standardPrice");
         let discountPrice = component.get("v.discountPrice");
-        console.log(' standardPrice ' + standardPrice);
-        console.log(' discountPrice ' + discountPrice);
-
         let productPrice;
         if (discountPrice < standardPrice) {
-            console.log(' productPrice = discountPrice  ');
             productPrice = discountPrice;
         } else {
-            console.log(' else  ');
             productPrice = standardPrice;
         }
         let quantity = component.get("v.amountProduct");

@@ -9,11 +9,7 @@
     },
 
     doInitAddress: function (component) {
-        console.log('init start');
-
         let action = component.get("c.getCommunityUserAddress");
-        console.log('init start 1');
-
         action.setCallback(this, function(response) {
             if (response.getState() === "SUCCESS") {
                 let user = response.getReturnValue();
@@ -27,7 +23,6 @@
             }
         });
         $A.enqueueAction(action);
-
     },
 
     createAnOrder: function (component, event, helper) {
@@ -40,9 +35,9 @@
         });
         action.setCallback(this, function (response) {
             if (response.getState() === "SUCCESS") {
-                component.find("toastCmp").showToastModel('SUCCESS', "info");
+                component.find("toastCmp").showToastModel('Order Created', "info");
             } else {
-                component.find("toastCmp").showToastModel('response.getError()[0].message', "error");
+                component.find("toastCmp").doShowToast(response.getError()[0].message, "error");
             }
         });
         $A.enqueueAction(action);

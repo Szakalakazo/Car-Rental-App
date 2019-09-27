@@ -1,14 +1,5 @@
-<aura:component  implements="forceCommunity:availableForAllPageTypes"
-                 access="global">
-
-
-    <aura:attribute name="totalItemInBasket" type="Integer" default="0"/>
-    <aura:attribute name="totalAmount" type="Integer" default="0"/>
-    <aura:attribute name="order" type="Order"/>
-    <aura:attribute name="showBasket" type="Boolean" default="false"/>
-    <aura:attribute name="displaySmallBasket" type="Boolean" default="true"/>
-    <aura:attribute name="showModal" type="Boolean" default="true"/>
-    <aura:attribute name="orderItemList" type="List"/>
+<aura:component implements="forceCommunity:availableForAllPageTypes"
+                access="global">
 
     <aura:attribute name="autoicon" type="String"
                     default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FDWy&amp;d=%2Fa%2F2p0000008uVZ%2FrQq1ROqaq7P48.Hp7upx0T.g_atGgZ1hVQ5JyZIB9Ug&amp;asPdf=false"/>

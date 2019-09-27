@@ -21,6 +21,8 @@
                 let navEvt = $A.get('e.force:navigateToURL');
                 navEvt.setParams({url: '/search-results'});
                 navEvt.fire();
+            } else {
+                component.find("toast").showToast(response.getError()[0].message, "error");
             }
         });
         $A.enqueueAction(action);

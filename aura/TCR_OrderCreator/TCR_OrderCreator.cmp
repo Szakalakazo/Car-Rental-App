@@ -72,4 +72,5 @@
             </div>
         </aura:if>
     </lightning:card>
+    <c:TCR_PriceBookToast aura:id="toast"/>
 </aura:component>

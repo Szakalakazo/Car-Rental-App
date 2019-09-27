@@ -14,7 +14,6 @@
     <aura:attribute name="iconAddToCart" type="String"
                     default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FIFP&amp;d=%2Fa%2F2p0000008uZ2%2Fnjigm1kY7s9Xw1HLEkj4eWRlRHD6tbnt4rPgGS71t7I&amp;asPdf=false"/>
 
-
     <aura:registerEvent name="TCR_AddProductToBasket" type="c:TCR_AddProductToBasket"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
@@ -38,7 +37,7 @@
                 <div class="slds-col slds-size_8-of-12 edit-icon">
                     <div class="centered-text">
                         <h3 class="slds-text-heading_small centered-text">
-                            Special Offer
+                         {!$Label.c.TCR_Special_Offer}
                         </h3>
                     </div>
                 </div>
@@ -89,7 +88,7 @@
         </div>
         <div class="slds-m-bottom&#45;&#45;medium" style="text-align: center;">
             <lightning:button class="buttonDown" onclick="{!c.clickButtonDown}">
-                -
+                    {!$Label.c.TCR_Minus}
             </lightning:button>
             <div class="buttonNumber slds-m-top&#45;&#45;medium ">
                 <lightning:input label="" variant="label-hidden"
@@ -101,7 +100,7 @@
                 />
             </div>
             <lightning:button class="buttonUp" onclick="{!c.clickButtonUp}">
-                +
+                {!$Label.c.TCR_Plus}
             </lightning:button>
         </div>
         <div class=" slds-grid slds-gutters">

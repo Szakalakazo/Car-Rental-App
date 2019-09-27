@@ -61,10 +61,10 @@
                                     <div class="slds-truncate" title=""> {!$Label.c.TCR_Days_Number}</div>
                                 </th>
                                 <th class="col1" scope="col">
-                                    <div class="slds-truncate" title="Total Price"> {!$Label.c.TCR_Price}</div>
+                                    <div class="slds-truncate" title="{!$Label.c.TCR_Price}"> {!$Label.c.TCR_Price}</div>
                                 </th>
                                 <th class="col1" scope="col">
-                                    <div class="slds-truncate" title="Delete"></div>
+                                    <div class="slds-truncate" title="{!$Label.c.TCR_Delete}"></div>
                                 </th>
                             </tr>
                             </thead>

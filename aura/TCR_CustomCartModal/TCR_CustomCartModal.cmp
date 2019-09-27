@@ -78,5 +78,4 @@
         <lightning:layout multipleRows="true" class="buttons" horizontalAlign="end">
         </lightning:layout>
     </lightning:card>
-
 </aura:component>

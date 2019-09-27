@@ -1,5 +1,4 @@
-<aura:component implements="forceCommunity:searchInterface"
-                controller="TCR_CustomSearchController">
+<aura:component implements="forceCommunity:searchInterface" controller="TCR_CustomSearchController">
 
     <aura:attribute name="searchText" type="String" default=""/>
     <aura:attribute name="cartItemAmount" type="Integer" default="0"/>
@@ -53,4 +52,5 @@
             </lightning:layout>
         </div>
     </div>
+    <c:TCR_PriceBookToast aura:id="toast"/>
 </aura:component>

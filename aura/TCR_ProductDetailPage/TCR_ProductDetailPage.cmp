@@ -53,8 +53,8 @@
                 <div class="slds-tile__detail">
                     <dl class="slds-list_horizontal slds-wrap">
                         <dt class="slds-item_label slds-text-color_weak smallLabel"
-                            title="Brand">
-                            Brand
+                            title="{!$Label.c.TCR_Brand}">
+                                {!$Label.c.TCR_Brand}
                         </dt>
                         <dd class="slds-item_detail textDisplay"
                             title="{!v.record.Brand__c}">
@@ -64,8 +64,8 @@
 
                     <dl class="slds-list_horizontal slds-wrap">
                         <dt class="slds-item_label slds-text-color_weak smallLabel"
-                            title="Model">
-                            Model
+                            title="{!$Label.c.TCR_Model}">
+                                {!$Label.c.TCR_Model}
                         </dt>
                         <dd class="slds-item_detail textDisplay"
                             title="{!v.record.Model__c}">
@@ -75,8 +75,8 @@
 
                     <dl class="slds-list_horizontal slds-wrap">
                         <dt class="slds-item_label slds-text-color_weak smallLabel"
-                            title="Engine">
-                            Engine
+                            title="{!$Label.c.TCR_Engine}">
+                                {!$Label.c.TCR_Engine}
                         </dt>
                         <dd class="slds-item_detail textDisplay"
                             title="{!v.record.Engine__c}">
@@ -86,8 +86,8 @@
 
                     <dl class="slds-list_horizontal slds-wrap">
                         <dt class="slds-item_label slds-text-color_weak smallLabel"
-                            title="Doors Number">
-                            Doors Number
+                            title="{!$Label.c.TCR_Doors_Number}">
+                                {!$Label.c.TCR_Doors_Number}
                         </dt>
                         <dd class="slds-item_detail textDisplay"
                             title="{!v.record.Doors_Number__c}">
@@ -97,8 +97,8 @@
 
                     <dl class="slds-list_horizontal slds-wrap">
                         <dt class="slds-item_label slds-text-color_weak smallLabel"
-                            title="Production Year">
-                            Production Year
+                            title="{!$Label.c.TCR_Production_Year}">
+                                {!$Label.c.TCR_Production_Year}
                         </dt>
                         <dd class="slds-item_detail textDisplay"
                             title="{!v.record.Production_Year__c}">
