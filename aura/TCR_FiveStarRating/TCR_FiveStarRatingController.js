@@ -3,7 +3,7 @@
         let domEl = component.find("ratingArea").getElement();
         let currentRating = component.get('v.value');
         let readOnly = component.get('v.readOnly');
-        let maxRating = 10;
+        let maxRating = 5;
         let callback = function (rating) {
             component.set('v.value', rating);
         }

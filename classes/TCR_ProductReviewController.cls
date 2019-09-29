@@ -1,25 +1,22 @@
-/**
- * Created by Tomek on 27.09.2019.
- */
-
 public with sharing class TCR_ProductReviewController {
 
     @AuraEnabled
     public static List<Product_Review__c> getProductReviews(String productId) {
-        System.debug('getReviews');
         List<Product_Review__c> productReviews = new List<Product_Review__c>();
         try {
             productReviews = [
                     SELECT Id, CreatedBy.Name, CreatedDate, Name, CreatedById, Rating__c, Comment__c, Product_Id__c
                     FROM Product_Review__c
                     WHERE Product_Id__c = :productId
+                    ORDER BY CreatedDate DESC
             ];
         } catch (Exception ex) {
-            System.debug('Message after getEmployess' + ex.getMessage());
+            throw new AuraHandledException(ex.getMessage());
         }
         return productReviews;
     }
 
+/*
     @AuraEnabled
     public static void insertProductVote(String idProduct, Decimal oneVote) {
         List<Product_Vote__c> listOfProductVotes = [
@@ -39,6 +36,7 @@ public with sharing class TCR_ProductReviewController {
             insert newProductVote;
         }
     }
+*/
 
 
 }

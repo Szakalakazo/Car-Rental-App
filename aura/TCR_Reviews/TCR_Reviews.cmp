@@ -15,10 +15,11 @@
     <aura:attribute name="errorMessage" type="String"/>
     <aura:attribute name="recordUpdate" type="String"/>
     <aura:attribute name="recordError" type="String" access="private"/>
+    <aura:attribute name="rating" type="Decimal" default="0"/>
+
 
     <aura:registerEvent name="TCR_ProductReviewAddedEvent" type="c:TCR_ProductReviewAddedEvent"/>
 
-    <aura:handler event="force:showToast" action="{!c.handleRefreshAfterToastInfo}"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="change" value="{!v.product}" action="{!c.doInit}"/>
 
@@ -35,74 +36,86 @@
                       targetError="{!v.recordError}"
                       recordUpdated="{!c.onRecordUpdated}"/>
 
-    <lightning:card title="">
-        <aura:set attribute="actions">
-            <lightning:button variant="brand"
-                              class="slds-m-top--medium"
-                              label="Write new review"
-                              onclick="{!c.clickOpenModal}"/>
-        </aura:set>
+    <div class="section-overview slds-p-left_x-large slds-p-right_x-large">
+        <lightning:layout multipleRows="false">
+            <lightning:layoutItem size="12" padding="arround-small">
+                <p class="detailHeader">{!$Label.c.TCR_Customer_Reviews}</p>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
 
-        <ui:scrollerWrapper class="scrollerSize">
-            <aura:if isTrue="{!v.reviews.length==0}">
-                <lightning:layoutItem class="slds-align_absolute-center"
-                                      flexibility="auto"
-                                      padding="around-small">
-                    <ui:outputText value="No Reviews Available"/>
-                </lightning:layoutItem>
-            </aura:if>
+    <div class="section-overview slds-p-left_x-large slds-p-right_x-large">
+        <lightning:layout multipleRows="true">
 
-            <div class="slds-feed">
-                <ul class="slds-feed__list">
-                    <aura:iteration items="{!v.reviews}" var="oneReview">
-                        <div class="slds-box">
-                            <div class="slds-p-around_medium">
-                                <div class="slds-media__body">
-                                    <c:TCR_FiveStarRating value="{!oneReview.Rating__c}" readOnly="true"/>
-                                    <ui:outputText class="label" value="{!oneReview.Name}"/>
-                                    <div class="slds-grid slds-has-flexi-truncate">
-                                        <a href="javascript:void(0)" onclick="{!c.onUserInfoClick}">
-                                                {!oneReview.CreatedBy.Name}
-                                        </a>
-                                        &nbsp; &mdash; &nbsp;
-                                        <p>
-                                            <lightning:formattedDateTime value="{!oneReview.CreatedDate}"
-                                                                         year="numeric"
-                                                                         month="short"
-                                                                         day="numeric"
-                                                                         hour="2-digit"
-                                                                         minute="2-digit"
-                                                                         hour12="true"/>
-                                        </p>
+            <lightning:layoutItem size="12">
+                <lightning:button variant="brand"
+                                  class="slds-m-top--medium"
+                                  label="{!$Label.c.TCR_Add_Your_Review}"
+                                  onclick="{!c.clickOpenModal}"/>
+
+                <lightning:layoutItem size="12">
+                    <aura:if isTrue="{!v.reviews.length==0}">
+                        <lightning:layout multipleRows="true">
+                            <lightning:layoutItem size="4">
+                            </lightning:layoutItem>
+
+                            <lightning:layoutItem size="4">
+                                <lightning:card title="" class="no-border">
+                                    <div class="info">
+                                        <h1 class="slds-text-heading_small">
+                                        {!$Label.c.TCR_No_Reviews_Yet}
+                                            <br/>
+                                            <br/>
+                                        </h1>
+                                        <div style="cursor: pointer" onclick="{!c.goToHomePage}">
+                                            <img src="{!v.iconEmptyCart}"/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="slds-m-top_medium">
-                                    <ui:outputRichText class="slds-text-longform" value="{!oneReview.Comment__c}"/>
-                                </div>
-                            </div>
-                            <aura:if isTrue="{!v.isAdminOptionsVisible}">
-                                <lightning:button variant="destructive"
-                                                  label="{!$Label.c.TCR_Edit}"
-                                                  value="{!oneReview.Id}"
-                                                  onclick="{!c.clickEditReview}"/>
-                                <lightning:button variant="destructive"
-                                                  label="{!$Label.c.TCR_Delete}"
-                                                  value="{!oneReview.Id}"
-                                                  onclick="{!c.clickDeleteReview}"/>
-                            </aura:if>
-                        </div>
+                                </lightning:card>
+                            </lightning:layoutItem>
+
+                            <lightning:layoutItem size="4">
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </aura:if>
+
+
+                    <aura:iteration items="{!v.reviews}" var="oneReview">
+                        <lightning:card title="" class="no-border">
+                            <lightning:tile label="{!oneReview.Name}">
+                                <lightning:layout>
+                                    <lightning:layoutItem size="4">
+                                        <c:TCR_FiveStarRating value="{!oneReview.Rating__c}" readOnly="true"/>
+                                        <div class="slds-grid slds-has-flexi-truncate">
+                                        {!oneReview.CreatedBy.Name}
+                                            &nbsp; &mdash; &nbsp;
+                                            <p>
+                                                <lightning:formattedDateTime value="{!oneReview.CreatedDate}"
+                                                                             year="numeric"
+                                                                             month="short"
+                                                                             day="numeric"
+                                                                             hour="2-digit"
+                                                                             minute="2-digit"
+                                                                             hour12="true"/>
+                                            </p>
+                                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="8">
+                                        <div aria-label="" class=" no-padding">
+                                            <ui:outputRichText value="{!oneReview.Comment__c}"/>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </lightning:tile>
+                        </lightning:card>
                     </aura:iteration>
-                </ul>
-            </div>
-        </ui:scrollerWrapper>
 
-        <!--        <c:Movie_DeleteReview myRecordId="{!v.recordId}"
-                                      isOpenDeleteModal="{!v.isOpenDeleteModal}"/>
-                <c:Movie_EditReview myRecordId="{!v.recordId}"
-                                    IsOpenEditReviewModal="{!v.IsOpenEditReviewModal}"
-                                    movieReview="{!v.movieReview}"/>-->
-    </lightning:card>
-
+                </lightning:layoutItem>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <br/>
+        <br/>
+    </div>
     <aura:if isTrue="{!v.IsOpenAddReviewModal}">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
                  aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
@@ -110,7 +123,7 @@
                 <header class="slds-modal__header">
                     <h1>
                         <aura:unescapedHtml value="{!$Label.c.TCR_Add_new_review}"/>
-                        {!v.product.title}
+                            {!v.product.title}
                     </h1>
                 </header>
                 <div class="slds-form slds-form_stacked">
@@ -124,7 +137,7 @@
                             <lightning:inputRichText value="{!v.productReview.Comment__c}"
                                                      disabledCategories="FORMAT_FONT"/>
                         </div>
-                        {!$Label.c.TCR_Your_rating}
+                            {!$Label.c.TCR_Your_rating}
                         <c:TCR_FiveStarRating value="{!v.productReview.Rating__c}" readOnly="false"/>
                         <div class="slds-form-element">
                             <div class="slds-align_absolute-center">
@@ -145,6 +158,4 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </aura:if>
-
-    <!--    <c:Movie_Spinner aura:id="spinner"/>-->
 </aura:component>
