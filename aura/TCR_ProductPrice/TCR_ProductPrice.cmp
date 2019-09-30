@@ -1,4 +1,4 @@
-<aura:component controller="TCR_ProductSearchController"
+<aura:component controller="TCR_CustomSearchController"
                 implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
 
     <aura:attribute name="productEntryList" type="List"/>
@@ -34,11 +34,9 @@
                 <div class=" slds-grid slds-gutters">
                     <div class="slds-col slds-size_5-of-12 edit-icon">
                     </div>
-
                     <div class="slds-col slds-size_8-of-12 edit-icon " style="pointer-events:none">
                         <c:TCR_FiveStarRating value="{!v.rating}"/>
                     </div>
-
                 </div>
             </aura:if>
         </div>
