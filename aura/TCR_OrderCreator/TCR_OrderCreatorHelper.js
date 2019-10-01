@@ -35,9 +35,9 @@
         });
         action.setCallback(this, function (response) {
             if (response.getState() === "SUCCESS") {
-                component.find("toastCmp").showToastModel('Order Created', "info");
+                component.find("toastCmp").showToastModel('SUCCESS', "info");
             } else {
-                component.find("toastCmp").doShowToast(response.getError()[0].message, "error");
+                component.find("toastCmp").showToastModel('response.getError()[0].message', "error");
             }
         });
         $A.enqueueAction(action);

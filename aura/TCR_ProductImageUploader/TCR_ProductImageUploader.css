@@ -1,0 +1,20 @@
+.THIS .buttonPanel {
+    text-align: right;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 17px;
+}
+
+.THIS .imagesPanel {
+    text-align: right;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 17px;
+    padding-top: 17px;
+}
+
+.THIS .posterCheckbox {
+    float: right;
+}
+
+.THIS .profile-image {
+    border: 1px solid lightgray;
+}

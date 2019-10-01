@@ -1,0 +1,42 @@
+<aura:component description="TCR_PriceBookItem"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                controller="TCR_PriceBookProducts">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="record" type="Pricebook2"/>
+    <aura:attribute name="simpleRecord" type="Pricebook2"/>
+    <aura:attribute name="productEntryList" type="List"/>
+
+    <aura:registerEvent name="TCR_ShowPriceBookDetails" type="c:TCR_ShowPriceBookDetails"/>
+    <aura:registerEvent name="TCR_DeletePriceBookEvent" type="c:TCR_DeletePriceBookEvent"/>
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"/>
+
+    <lightning:card title="">
+        <div onclick="{!c.handleOpenModal}" style="cursor: pointer">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="3">
+                        {!v.simpleRecord.Name}
+                </lightning:layoutItem>
+                <lightning:layoutItem size="3">
+                        {!v.simpleRecord.IsActive}
+                </lightning:layoutItem>
+                <lightning:layoutItem size="3">
+                        {!v.simpleRecord.Start_Date__c}
+                </lightning:layoutItem>
+                <lightning:layoutItem size="3">
+                        {!v.simpleRecord.End_Date__c}
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+        <div onclick="{!c.handleDeletePriceBook}" style="cursor: pointer">
+            DELETE</div>
+    </lightning:card>
+    <c:TCR_PriceBookToast aura:id="toast"/>
+    <c:TCR_ProductManagerSpinner aura:id="spinner"/>
+
+</aura:component>

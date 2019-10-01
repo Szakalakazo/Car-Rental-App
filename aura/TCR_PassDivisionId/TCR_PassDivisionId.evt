@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="TCR_PassDivisionId">
+    <aura:attribute name="divisionID" type="String"/>
+    <aura:attribute name="divisionObject" type="Account"/>
+</aura:event>

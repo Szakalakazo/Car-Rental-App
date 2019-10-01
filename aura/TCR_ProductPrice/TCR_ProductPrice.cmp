@@ -1,4 +1,4 @@
-<aura:component controller="TCR_ProductSearchController"
+<aura:component controller="TCR_CustomSearchController"
                 implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes">
 
     <aura:attribute name="productEntryList" type="List"/>
@@ -9,6 +9,7 @@
     <aura:attribute name="priceList" type="PricebookEntry[]"/>
     <aura:attribute name="productItem" type="Product2"/>
     <aura:attribute name="posterURL" type="Object"/>
+    <aura:attribute name="rating" type="Decimal" default="0"/>
     <aura:attribute name="iconDiscount" type="String"
                     default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FIEC&amp;d=%2Fa%2F2p0000008uYx%2FYMA3pKCypJAGw7eZtvqTUijoJa1B3Cva7P72TlHEHhk&amp;asPdf=false"/>
     <aura:attribute name="iconAddToCart" type="String"
@@ -17,6 +18,7 @@
     <aura:registerEvent name="TCR_AddProductToBasket" type="c:TCR_AddProductToBasket"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="c:TCR_ProductReviewAddedEvent" action="{!c.getRating}"/>
 
     <c:TCR_Toast aura:id="toastCmp"/>
 
@@ -27,6 +29,19 @@
                       layoutType="FULL"/>
 
     <div class="rightColumnWrap">
+        <div class="slds-media__figure slds-m-right--large">
+            <aura:if isTrue="{!v.rating != 0 }">
+                <div class=" slds-grid slds-gutters">
+                    <div class="slds-col slds-size_5-of-12 edit-icon">
+                    </div>
+
+                    <div class="slds-col slds-size_8-of-12 edit-icon " style="pointer-events:none">
+                        <c:TCR_FiveStarRating value="{!v.rating}"/>
+                    </div>
+
+                </div>
+            </aura:if>
+        </div>
         <aura:if isTrue="{!v.discountPrice lt v.standardPrice}">
             <div class=" slds-grid slds-gutters">
                 <div class="slds-col slds-size_4-of-12 edit-icon">
@@ -37,13 +52,13 @@
                 <div class="slds-col slds-size_8-of-12 edit-icon">
                     <div class="centered-text">
                         <h3 class="slds-text-heading_small centered-text">
-                         {!$Label.c.TCR_Special_Offer}
+                                {!$Label.c.TCR_Special_Offer}
                         </h3>
                     </div>
                 </div>
             </div>
         </aura:if>
-        {!$Label.c.TCR_Price}
+            {!$Label.c.TCR_Price}
         <div>
             <aura:if isTrue="{!v.discountPrice == v.standardPrice}">
                 <div>
@@ -88,7 +103,7 @@
         </div>
         <div class="slds-m-bottom&#45;&#45;medium" style="text-align: center;">
             <lightning:button class="buttonDown" onclick="{!c.clickButtonDown}">
-                    {!$Label.c.TCR_Minus}
+                -
             </lightning:button>
             <div class="buttonNumber slds-m-top&#45;&#45;medium ">
                 <lightning:input label="" variant="label-hidden"
@@ -100,7 +115,7 @@
                 />
             </div>
             <lightning:button class="buttonUp" onclick="{!c.clickButtonUp}">
-                {!$Label.c.TCR_Plus}
+                +
             </lightning:button>
         </div>
         <div class=" slds-grid slds-gutters">

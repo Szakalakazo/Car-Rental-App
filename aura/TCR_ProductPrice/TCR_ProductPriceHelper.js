@@ -74,6 +74,22 @@
         }
     },
 
+    initAverageRating: function (component, event, helper) {
+        let getAverageRating = component.get("c.getAverageRating");
+        getAverageRating.setParam("productId", component.get("v.recordId"));
+        getAverageRating.setCallback(this, function (response) {
+            let state = response.getState();
+            if (state === "SUCCESS") {
+                component.set("v.rating", response.getReturnValue());
+            } else {
+                component.find("toast").showToast(response.getError()[0].message, "error");
+                console.log('ERRROR');
+            }
+        });
+        $A.enqueueAction(getAverageRating);
+    },
+
+
     doShowToast: function (component, message, title, typeToast) {
         const toastComponent = component.find('toast');
         if (toastComponent) {

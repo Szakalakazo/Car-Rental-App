@@ -15,4 +15,18 @@ public with sharing class TCR_ProductSearchController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled
+    public static Double getAverageRating(String productId) {
+        Double sum = 0;
+        List<Product_Review__c> productReviews = TCR_ProductReviewController.getProductReviews(productId);
+        if (!productReviews.isEmpty()) {
+            for (Product_Review__c review : productReviews) {
+                sum += review.Rating__c;
+            }
+            return sum / productReviews.size();
+        } else {
+            return 0;
+        }
+    }
 }

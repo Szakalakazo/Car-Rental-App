@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="TCR_SendDivisionLocation">
+    <aura:attribute name="divisionLocations" type="Account[]"/>
+    <aura:attribute name="isSearchCompleted" type="Boolean"/>
+</aura:event>

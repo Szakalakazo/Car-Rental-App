@@ -1,0 +1,100 @@
+<aura:component controller="TCR_CustomSearchController"
+                implements="forceCommunity:availableForAllPageTypes"
+                access="global">
+
+    <aura:attribute name="order" type="Order"/>
+    <aura:attribute name="poster" type="String"/>
+    <aura:attribute name="iconApproved" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FVxP&amp;d=%2Fa%2F2p0000008ucz%2F1KiOnmi4FxKjz_zNia8TVmtjIdZ6eptjQyrJZnfGRGQ&amp;asPdf=false"/>
+    <aura:attribute name="iconAwaiting" type="String"
+                    default="https://carrentalapp-dev-ed--c.documentforce.com/sfc/dist/version/download/?oid=00D2p00000134ts&amp;ids=0682p000008FVy1&amp;d=%2Fa%2F2p0000008ud4%2FWxDRpyQnBsFj8VWwP_XgGcFmuPkErLu9XxtMgXd1b00&amp;asPdf=false"/>
+
+    <lightning:card title="{!$Label.c.TCR_Order_date + ' ' + v.order.EffectiveDate}" class="slds-p-horizontal_small">
+
+        <lightning:tile class="slds-p-horizontal_medium">
+            <lightning:layout multipleRows="true" verticalAlign="center">
+                <lightning:layoutItem size="1">
+                    <p class="slds-item slds-text-color_weak slds-text-heading_small">{!$Label.c.TCR_Total}</p>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="10" class="slds-text-heading_small">
+                    <lightning:formattedNumber
+                            value="{!v.order.TotalAmount}" style="currency"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1" class="">
+                    <aura:if isTrue="{!(v.order.Status==$Label.c.TCR_Draft)}">
+                        <div class="icon-awaiting">
+                            <img src="{!v.iconAwaiting}"/>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="icon-approved" style="width: 40px">
+                                <img src="{!v.iconApproved}"/>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:layout>
+                <lightning:layoutItem size="1">
+                    <p class="slds-item slds-text-color_weak">{!$Label.c.TCR_Status}</p>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1">{!v.order.Status}
+                </lightning:layoutItem>
+            </lightning:layout>
+            <br/>
+            <lightning:layout>
+                <lightning:layoutItem size="12" class="slds-text-heading_small">
+                        {!$Label.c.TCR_Ordered_Products}
+                </lightning:layoutItem>
+            </lightning:layout>
+
+            <aura:iteration items="{!v.order.OrderItems}"
+                            var="item"
+                            indexVar="index">
+                <ul class="slds-has-dividers_bottom-space">
+                    <li class="slds-item">
+                        <lightning:layout verticalAlign="center">
+
+                            <lightning:layoutItem size="1">
+                                <c:TCR_OrderListItemPoster itemProductId="{!item.Product2.Id}"/>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1">
+                            </lightning:layoutItem>
+
+                            <lightning:layoutItem size="4">
+                                <div class=""
+                                     data-index="{!index}"
+                                     onclick="{!c.navigateToProduct}"
+                                     style="cursor: pointer">
+                                    <p class="link">{!item.Product2.Name}</p>
+                                </div>
+                            </lightning:layoutItem>
+
+                            <lightning:layoutItem size="2" class="field-label">
+                                <aura:unescapedHtml value="{!$Label.c.TCR_Days}"/>
+                                <span class="field-label"> {!item.Quantity}</span>
+                            </lightning:layoutItem>
+
+                            <lightning:layoutItem size="2" class="field-label">
+                                <aura:unescapedHtml value="{!$Label.c.TCR_Price_per_day}"/>
+                                <span class="field-label">
+                            <lightning:formattedNumber value="{!item.UnitPrice}"
+                                                       style="currency"/></span>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="2" class="field-label ">
+                                <aura:unescapedHtml value="{!$Label.c.TCR_Total_Price}"/>
+                                <span class="slds-text-align_right">
+                                    <lightning:formattedNumber value="{!item.TotalPrice}"
+                                                               style="currency"/>
+                                </span>
+                            </lightning:layoutItem>
+                            <lightning:layoutItem size="1">
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </li>
+                </ul>
+            </aura:iteration>
+            <br/>
+        </lightning:tile>
+    </lightning:card>
+    <br/>
+</aura:component>

@@ -37,6 +37,7 @@
                     </div>
                 </lightning:layoutItem>
                 <lightning:layoutItem size="3">
+<!--                {!$Label.c.TCR_Total_Price}-->
                 </lightning:layoutItem>
             </lightning:layout>
         </lightning:tile>
@@ -78,4 +79,5 @@
         <lightning:layout multipleRows="true" class="buttons" horizontalAlign="end">
         </lightning:layout>
     </lightning:card>
+
 </aura:component>

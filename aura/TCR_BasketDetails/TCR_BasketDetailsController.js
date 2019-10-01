@@ -1,5 +1,6 @@
 ({
     init: function (component, event, helper) {
+        console.log('init');
         helper.doInit(component);
         helper.initTotalPrice(component);
     },
@@ -43,5 +44,6 @@
             helper.doInit(component);
             helper.initTotalPrice(component);
         }
+
     }
 })

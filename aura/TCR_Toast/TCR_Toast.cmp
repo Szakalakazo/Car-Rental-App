@@ -1,0 +1,13 @@
+<aura:component description="TCR_Toast">
+
+    <aura:attribute name="messageType" type="string" default="success"/>
+    <aura:attribute name="message" type="string"/>
+
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+
+    <aura:method name="showToastModel" action="{!c.showToast}" access="public">
+        <aura:attribute name="message" type="String" access="public"/>
+        <aura:attribute name="messageType" type="String" access="public"/>
+    </aura:method>
+
+</aura:component>

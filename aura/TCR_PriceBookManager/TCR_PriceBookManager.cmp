@@ -1,0 +1,254 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:appHostable"
+                controller="TCR_PriceBookProducts">
+
+    <aura:attribute name="recordId" type="String" default="01s2p000001DtMNAA0"/>
+    <aura:attribute name="record" type="Pricebook2"/>
+    <aura:attribute name="simpleRecord" type="Pricebook2"/>
+    <aura:attribute name="productEntryWrapperListToDisplayInSearch" type="List"/>
+    <aura:attribute name="cashValue" type="Integer" default="0"/>
+    <aura:attribute name="percentageValue" type="Integer" default="0"/>
+    <aura:attribute name="cashDiscount" type="Boolean" default="false"/>
+    <aura:attribute name="percentageDiscount" type="Boolean" default="false"/>
+    <aura:attribute name="customCategory" type="Boolean" default="false"/>
+    <aura:attribute name="productCategory" type="Boolean" default="false"/>
+    <aura:attribute name="selectedAllCategory" type="Boolean" default="false"/>
+    <aura:attribute name="allCategories" type="String[]"/>
+    <aura:attribute name="startDate" type="Date"/>
+    <aura:attribute name="endDate" type="Date"/>
+    <aura:attribute name="priceBookName" type="String"/>
+    <aura:attribute name="searchedText" type="String"/>
+    <aura:attribute name="isSearchModalOpen" type="Boolean" default="false"/>
+    <aura:attribute name="isPriceBookDetailsOpen" type="Boolean" default="false"/>
+    <aura:attribute type="List" name="selectedCheckBoxes" default="[]"/>
+
+    <aura:registerEvent name="TCR_PriceBookRefreshEvent" type="c:TCR_PriceBookRefreshEvent"/>
+    <aura:registerEvent name="TCR_AddNewPriceBookEvent" type="c:TCR_AddNewPriceBookEvent"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler name="change" value="{!v.searchedText}" action="{!c.handleSearchProduct}"/>
+
+    <aura:handler event="c:TCR_ShowPriceBookDetails" action="{!c.doShowPriceBookDetails}"/>
+    <aura:handler event="c:TCR_DeletePriceBookEvent" action="{!c.doHidePriceBookDetails}"/>
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      layoutType="FULL"
+                      targetRecord="{!v.record}"
+                      targetFields="{!v.simpleRecord}"/>
+
+    <lightning:layout>
+        <lightning:layoutItem size="4" class="slds-m-right_large">
+            <lightning:card title="{!$Label.c.TCR_Manage}">
+
+                <div class="slds-m-around--large">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_5-of-12 ">
+
+                            <lightning:select label="{!$Label.c.TCR_Select_type_of_discount}"
+                                              aura:id="selectedTypeDiscount"
+                                              onchange="{!c.clickTypeDiscount}"
+                                              name="selectedTypeDiscount">
+                                <option value="{!$Label.c.TCR_None}">{!$Label.c.TCR_None}</option>
+                                <option value="{!$Label.c.TCR_Cash_discount}">{!$Label.c.TCR_Cash_discount}</option>
+                                <option value="{!$Label.c.TCR_Percentage_discount}">{!$Label.c.TCR_Percentage_discount}</option>
+                            </lightning:select>
+
+                        </div>
+                    </div>
+
+                    <aura:renderIf isTrue="{!v.cashDiscount || v.percentageDiscount}">
+                        <div class="slds-grid slds-m-top--small">
+                            <div class="slds-col slds-size_5-of-12 ">
+                                <lightning:input type="date"
+                                                 name="startDate"
+                                                 label="{!$Label.c.TCR_Start_Day}"
+                                                 value="{!v.startDate}"/>
+                            </div>
+                            <div class="slds-col slds-size_2-of-12 ">
+                            </div>
+                            <div class="slds-col slds-size_5-of-12 ">
+                                <lightning:input type="date"
+                                                 name="endDate"
+                                                 label="{!$Label.c.TCR_End_Date}"
+                                                 value="{!v.endDate}"/>
+                            </div>
+                        </div>
+                    </aura:renderIf>
+
+                    <aura:renderIf isTrue="{!v.cashDiscount}">
+                        <div class="slds-grid slds-m-top--small">
+                            <div class="slds-col slds-size_5-of-12 ">
+                                <lightning:input type="text"
+                                                 name="priceBookName"
+                                                 label="{!$Label.c.TCR_Name}"
+                                                 value="{!v.priceBookName}"
+                                                 required="true"/>
+                            </div>
+                            <div class="slds-col slds-size_2-of-12 ">
+                            </div>
+                            <div class="slds-col slds-size_5-of-12 ">
+                                <lightning:input label="Amount"
+                                                 placeholder="{!$Label.c.TCR_Enter_Amount}"
+                                                 required="true"
+                                                 type="number" min="0" max="1000000000"
+                                                 aura:id="cashDiscount"
+                                                 name="expenseName"
+                                                 value="{!v.cashValue}"/>
+                            </div>
+                        </div>
+                    </aura:renderIf>
+
+                    <aura:renderIf isTrue="{!v.percentageDiscount}">
+                        <div class="slds-grid slds-m-top--small">
+                            <div class="slds-col slds-size_5-of-12 ">
+                                <lightning:input type="text"
+                                                 name="priceBookName"
+                                                 label="{!$Label.c.TCR_Name}"
+                                                 value="{!v.priceBookName}"/>
+                            </div>
+                            <div class="slds-col slds-size_2-of-12 ">
+                            </div>
+                            <div class="slds-col slds-size_5-of-12 ">
+                                <lightning:input label="Percentage"
+                                                 placeholder="{!$Label.c.TCR_Enter_Discount}"
+                                                 required="true"
+                                                 type="number" min="0" max="100"
+                                                 aura:id="percentageDiscount"
+                                                 name="expenseName"
+                                                 value="{!v.percentageValue}"/>
+                            </div>
+                        </div>
+                    </aura:renderIf>
+
+
+                    <div class="slds-grid slds-m-top--small">
+                        <aura:if isTrue="{!v.cashDiscount || v.percentageDiscount}">
+                            <div class="slds-col slds-size_5-of-12 ">
+                                <lightning:select label="{!$Label.c.TCR_Select}"
+                                                  aura:id="selectedTypeProduct"
+                                                  onchange="{!c.clickTypeProduct}"
+                                                  name="selectedTypeProduct">
+                                    <option value="{!$Label.c.TCR_None}">{!$Label.c.TCR_None}</option>
+                                    <option value="{!$Label.c.TCR_Custom}">{!$Label.c.TCR_Custom}</option>
+                                    <option value="{!$Label.c.TCR_All_Products}">{!$Label.c.TCR_All_Products}</option>
+                                    <option value="{!$Label.c.TCR_Products_By_Category}">{!$Label.c.TCR_Products_By_Category}</option>
+                                </lightning:select>
+                            </div>
+                        </aura:if>
+                        <div class="slds-col slds-size_2-of-12 ">
+                        </div>
+
+                        <div class="slds-col slds-size_5-of-12 ">
+                            <aura:if isTrue="{!v.productCategory}">
+                                <lightning:select label="{!$Label.c.TCR_Select_Category}"
+                                                  aura:id="selectedCategory"
+                                                  onchange="{!c.clickProductCategory}"
+                                                  name="selectedCategory">
+                                    <aura:iteration items="{!v.allCategories}"
+                                                    var="oneCategory">
+                                        <option value="{!oneCategory}">{!oneCategory}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </aura:if>
+                        </div>
+                    </div>
+
+                    <aura:if isTrue="{!or(v.productCategory, v.selectedAllCategory)}">
+                        <div class="slds-m-top--small" style="text-align: center;">
+                            <lightning:button variant="brand"
+                                              class="slds-m-top--medium"
+                                              label="{!$Label.c.TCR_Add_new_discount}"
+                                              onclick="{!c.clickAddNewDiscount}"/>
+                        </div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.customCategory}">
+                        <div class="slds-m-top--small" style="text-align: center;">
+                            <lightning:button variant="brand"
+                                              class="slds-m-top--medium"
+                                              label="{!$Label.c.TCR_Add_products}"
+                                              onclick="{!c.toggleSearchModal}"/>
+                        </div>
+                    </aura:if>
+
+                    <aura:if isTrue="{!v.isSearchModalOpen}">
+                        <lightning:card title="">
+                            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                                     aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
+
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header mainLabel">
+                                        <h1>{!$Label.c.TCR_Search_For_Product}</h1>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_x-small slds-p-bottom_xxx-small">
+                                        <lightning:input label=""
+                                                         value="{!v.searchedText}"
+                                                         type="text"
+                                                         placeholder="{!$Label.c.TCR_Search_For_Product}"
+                                                         class="slds-p-bottom_small"/>
+                                    </div>
+                                    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout">
+                                        <thead>
+                                        <tr class="slds-text-heading_label">
+                                            <th class="col1" style="width: 50%;" scope="col">
+                                                <div class="slds-truncate"
+                                                     title="{!$Label.c.TCR_Name}">{!$Label.c.TCR_Name}</div>
+                                            </th>
+                                            <th class="col1" scope="col">
+                                                <div class="slds-truncate"
+                                                     title="{!$Label.c.TCR_Select}">{!$Label.c.TCR_Select}</div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <aura:iteration items="{!v.productEntryWrapperListToDisplayInSearch}"
+                                                        var="oneProduct"
+                                                        indexVar="ind">
+                                            <tr class="slds-hint-parent"
+                                                onmouseover="{!c.setCurrentOrderItemId}"
+                                                data-id="{!oneProduct.product.Id}"
+                                                id="{!oneProduct.product.Id}">
+                                                <td class="centerColumn">
+                                                        {!oneProduct.product.Name}
+                                                </td>
+                                                <td class="centerColumn">
+                                                    <lightning:input label=""
+                                                                     aura:id="categoryCheckbox"
+                                                                     value="{!oneProduct.product.Id}"
+                                                                     type="checkbox"
+                                                                     onchange="{!c.clickProductCheckbox}"/>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                        </tbody>
+                                    </table>
+                                    <footer class="slds-modal__footer">
+                                        <aura:if isTrue="{!!empty(v.selectedCheckBoxes)}">
+                                            <lightning:button variant="brand"
+                                                              label="{!$Label.c.TCR_Add_and_Close}"
+                                                              onclick="{!c.clickAddSelectedProducts}"/>
+                                        </aura:if>
+                                        <lightning:button variant="neutral"
+                                                          label="{!$Label.c.TCR_Cancel}"
+                                                          title="{!$Label.c.TCR_Cancel}"
+                                                          onclick="{!c.toggleSearchModal}"/>
+                                    </footer>
+                                </div>
+                            </section>
+                        </lightning:card>
+                    </aura:if>
+                </div>
+            </lightning:card>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="8" class="slds-p-right_large">
+            <c:TCR_PriceBookList/>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+    <aura:renderIf isTrue="{!v.isPriceBookDetailsOpen}">
+        <br/>
+        <c:TCR_PriceBookProducts/>
+    </aura:renderIf>
+    <c:TCR_PriceBookToast aura:id="toast"/>
+    <c:TCR_ProductManagerSpinner aura:id="spinner"/>
+</aura:component>

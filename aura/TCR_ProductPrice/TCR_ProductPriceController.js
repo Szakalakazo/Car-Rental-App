@@ -1,6 +1,12 @@
 ({
     init: function (component, event, helper) {
         helper.doInit(component, event, helper);
+        helper.initAverageRating(component, event, helper);
+    },
+
+    getRating: function (component, event, helper) {
+        console.log('catching');
+        helper.initAverageRating(component, event, helper);
     },
 
     clickButtonDown: function (component, event, helper) {

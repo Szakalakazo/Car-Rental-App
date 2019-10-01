@@ -1,0 +1,43 @@
+<aura:component>
+    <aura:attribute name="item"
+                    type="Account"
+                    default=
+                            "{'sobjectType':'Account',
+                              'Id':'',
+                              'Name':'',
+                              'BillingStreet':'',
+                              'BillingCity':'',
+                              'BillingPostalCode':'',
+                              'BillingCountry':''
+                              }"/>
+
+    <aura:registerEvent name="passItemIdEvent" type="c:TCR_E_PassDivision"/>
+    <aura:registerEvent name="sendDivisionLocations" type="c:TCR_E_PassDivisions"/>
+
+    <lightning:recordViewForm recordId="{!v.item.Id}" objectApiName="Account">
+        <div class="slds-media">
+            <section class="slds-p-horizontal--large">
+
+                <lightning:layout class="slds-hint-parent">
+                    <a onclick="{!c.passID}">
+                        <h2 class="slds-text-heading_small slds-m-bottom_xx-small">{!v.item.Name}</h2>
+                    </a>
+                </lightning:layout>
+                <lightning:layout multipleRows="true">
+
+                    <lightning:layoutItem>
+                        <lightning:outputField fieldName="BillingCountry"/>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem>
+                        <lightning:outputField fieldName="BillingState"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem>
+                        <lightning:outputField fieldName="BillingCity"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </section>
+        </div>
+
+    </lightning:recordViewForm>
+</aura:component>

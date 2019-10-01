@@ -1,0 +1,29 @@
+<aura:component description="TCR_ProductDetailAdminView"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                access="global">
+
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="listOfImageUrls" type="String[]"/>
+    <aura:attribute name="fieldLabels" type="Map" default="{'name': 'Product Name',
+                                                            'production_year__c': 'Production Year2',
+                                                            'brand__c': 'Brand2',
+                                                            'model__c': 'Model2',
+                                                            'engine__c': 'Engine2',
+                                                            'productcode': 'Product Code2',
+                                                            'number_of_doors__c': 'Number of Doors2',
+                                                            'description': 'Product Description2'}"/>
+    <aura:attribute name="fields" type="String[]"
+                    default="['Name', 'Production_Year__c','Brand__c', 'Model__c', 'Engine__c', 'Doors_Number__c','Description']"/>
+
+    <lightning:card class="c-container" iconName="action:edit" title="Customize product">
+                <lightning:recordForm aura:id="viewForm"
+                                      recordId="{!v.recordId}"
+                                      objectApiName="Product2"
+                                      fields="{!v.fields}"
+                                      columns="2"
+                                      density="comfy"
+                                      mode="view">
+                </lightning:recordForm>
+    </lightning:card>
+
+</aura:component>

@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="TCR_ShowPriceBookDetails">
+    <aura:attribute name="priceBookId" type="String"/>
+</aura:event>

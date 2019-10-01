@@ -1,0 +1,7 @@
+<aura:component description="TCR_PriceBookToast" implements="flexipage:availableForAllPageTypes">
+    <aura:method name="showToast" action="{!c.showToast}" access="public">
+        <aura:attribute name="message" type="String"/>
+        <aura:attribute name="title" type="String"/>
+        <aura:attribute name="typeToast" type="String"/>
+    </aura:method>
+</aura:component>

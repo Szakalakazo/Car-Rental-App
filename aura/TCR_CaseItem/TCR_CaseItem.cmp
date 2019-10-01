@@ -1,0 +1,34 @@
+<aura:component implements="flexipage:availableForRecordHome,force:appHostable,lightning:actionOverride,force:hasRecordId">
+
+
+    <aura:attribute name="item" type="Case"/>
+
+    <lightning:recordViewForm recordId="{!v.item.Id}" objectApiName="Case">
+        <section class="slds-p-horizontal--large">
+            <lightning:layout class="slds-hint-parent"
+                              horizontalAlign="spread"
+                              pullToBoundary="large">
+                <lightning:layoutItem size="3">
+                    <a onclick="{!c.navigateToCase}">
+                        <h2 class="slds-text-heading_small slds-m-bottom_xx-small">
+                            <lightning:outputField fieldName="CaseNumber"/>
+                        </h2>
+                    </a>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="5">
+                    <lightning:outputField fieldName="Subject"/>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="2">
+                    <lightning:outputField fieldName="CreatedDate"/>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem size="2">
+                    <lightning:outputField fieldName="ClosedDate"/>
+                </lightning:layoutItem>
+
+            </lightning:layout>
+        </section>
+
+    </lightning:recordViewForm>
+</aura:component>

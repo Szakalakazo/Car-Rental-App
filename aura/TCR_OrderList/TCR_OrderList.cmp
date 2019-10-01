@@ -1,0 +1,24 @@
+<aura:component  controller="TCR_OrderListController"
+                implements="forceCommunity:availableForAllPageTypes"
+                access="global">
+
+    <aura:attribute name="ordersList" type="Order[]"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+    <lightning:layout multipleRows="true" class="mainPanel">
+        <aura:if isTrue="{!empty(v.ordersList)}">
+            <div class="listHeader" style="text-align: center">
+               {!$Label.c.TCR_Empty_Order_List}
+            </div>
+            <aura:set attribute="else">
+                <aura:iteration items="{!v.ordersList}" var="order">
+                    <lightning:layoutItem size="12">
+                        <c:TCR_OrderListItem order="{!order}"/>
+                    </lightning:layoutItem>
+                </aura:iteration>
+
+            </aura:set>
+        </aura:if>
+    </lightning:layout>
+</aura:component>

@@ -1,0 +1,54 @@
+<aura:component controller="TCR_ProductImage"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                access="global">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="posterPath" type="Object"/>
+    <aura:attribute name="listOfImages" type="Object[]"/>
+    <aura:attribute name="imageType" type="String" default="image"/>
+
+    <aura:handler event="c:TCR_ReloadRecordPageEvent" action="{!c.TCR_ReloadRecordPageEvent}"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <c:TCR_Toast aura:id="toastCmp"/>
+
+    <lightning:card class="c-container" iconName="action:upload" title="Upload Image">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem padding="around-small" size="6">
+                <div>
+                    <img src="{!v.posterPath.ContentDownloadUrl}" width="600"/>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_2-of-8">
+                    </div>
+                    <div class="slds-col slds-size_4-of-8">
+                    <lightning:fileUpload name="fileUploader"
+                                          multiple="false"
+                                          accept=".jpg, .jpeg, .png"
+                                          recordId="{!v.recordId}"
+                                          label=""
+                                          onuploadfinished="{! c.handleUploadFinished }"/>
+                    </div>
+                    <div class="slds-col slds-size_2-of-8">
+                    </div>
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem size="6">
+                <lightning:layout multipleRows="true">
+                    <lightning:layoutItem padding="around-small">
+                        <aura:if isTrue="{!not(empty(v.posterPath))}">
+                            <c:TCR_ImageGallery distribution="{!v.posterPath}" recordId="{!v.recordId}"/>
+                        </aura:if>
+                    </lightning:layoutItem>
+
+                    <aura:iteration items="{!v.listOfImages}" var="distribution">
+                        <lightning:layoutItem padding="around-small">
+                            <c:TCR_ImageGallery distribution="{!distribution}" recordId="{!v.recordId}"/>
+                        </lightning:layoutItem>
+                    </aura:iteration>
+
+                </lightning:layout>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+</aura:component>

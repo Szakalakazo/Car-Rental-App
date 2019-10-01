@@ -1,0 +1,19 @@
+.THIS .no-border {
+    border: 0px !important;
+}
+
+.THIS .custom-border {
+    border-bottom: 1px !important;
+}
+
+.THIS .no-padding {
+    padding: 0px !important;
+}
+
+
+.THIS .detailHeader {
+    font-size: 25px;
+    margin-top: 10px;
+    padding: 15px;
+    border-top : 1px solid gray;
+}

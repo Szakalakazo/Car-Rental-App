@@ -1,0 +1,54 @@
+<aura:component
+        implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId"
+        access="global"
+        controller="TCR_ProductDetailController">
+
+    <aura:attribute name="item" type="Product2"/>
+    <aura:attribute name="test" type="Account"/>
+    <aura:attribute name="listOfImageUrls" type="String[]"/>
+    <aura:attribute name="isModalVisible" type="Boolean" default="false"/>
+    <aura:attribute name="currentImageURL" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.getAllImages}"/>
+
+
+    <div class="slds-grid slds-wrap slds-m-bottom--large">
+        <div class="slds-col slds-size_1-of-1">
+            <div class="title">
+
+                <lightning:carousel class="imageView noContent" disableAutoScroll="false">
+                    <aura:iteration items="{!v.listOfImageUrls}" var="url" indexVar="index">
+                       <!--<span data-index="{!url}" onclick="{!c.navigate}">-->
+                        <lightning:carouselImage src="{!url}"
+                                                 data-index="{!url}"
+                                                 alternativeText="This is a card"
+                                                 onclick="{!c.navigate}">
+
+                        </lightning:carouselImage>
+                       <!--</span>-->
+                    </aura:iteration>
+
+
+                </lightning:carousel>
+            </div>
+        </div>
+    </div>
+
+    <aura:if isTrue="{!v.isModalVisible}">
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2 onclick="{!c.close}">Modal Header</h2>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the Modal Body</p>
+                    <p>Some other text...</p>
+                </div>
+                <div class="modal-footer">
+                    <h3>Modal Footer</h3>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>
