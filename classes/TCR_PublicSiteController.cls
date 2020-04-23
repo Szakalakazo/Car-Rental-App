@@ -47,7 +47,7 @@ global virtual with sharing class TCR_PublicSiteController {
 
     public TCR_PublicSiteController(ApexPages.StandardController stdController) {
         // Get url parameters
-        surveyId = 'a0G1t000002KgepEAC';
+        surveyId = 'a0G1t000002KgepEAC'; // todo wyalic
         caseId = Apexpages.currentPage().getParameters().get('caId');
         contactId = Apexpages.currentPage().getParameters().get('cId');
         surveyParam = '';
