@@ -1,0 +1,2 @@
+# Car-Rental-App
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/decebcd8db0c4a83be24093d13783d71)](https://app.codacy.com/manual/Szakalakazo/Car-Rental-App?utm_source=github.com&utm_medium=referral&utm_content=Szakalakazo/Car-Rental-App&utm_campaign=Badge_Grade_Settings)
