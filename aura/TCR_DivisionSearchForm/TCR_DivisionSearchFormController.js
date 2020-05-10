@@ -4,7 +4,7 @@
         let searchedDivision = component.get("v.searchedDivision");
         component.set("v.isAnyFieldFilled" , false);
 
-        if ((searchedDivision.Name != null && searchedDivision.Name.length !== 0) ||
+        if ((searchedDivision.Name !== null && searchedDivision.Name.length !== 0) ||
             (searchedDivision.BillingCity != null && searchedDivision.BillingCity.length !== 0) ||
             (searchedDivision.BillingPostalCode != null && searchedDivision.BillingPostalCode.length !== 0) ||
             (searchedDivision.BillingCountry != null && searchedDivision.BillingCountry.length !== 0)) {
