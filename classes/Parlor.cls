@@ -26,4 +26,11 @@ public class Parlor {
             insert acc;
         }
     }
+
+    private static void anotherVeryBadCode(List<String> listOfString) {
+        for (String str : listOfString) {
+            Account acc = new Account(Name = str);
+            insert acc;
+        }
+    }
 }
